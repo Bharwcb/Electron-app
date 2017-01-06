@@ -1,0 +1,23 @@
+{
+  "name": "shriners",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/stayclassy/shriners_import.git"
+  },
+  "author": "Brad Harris",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "https://bitbucket.org/stayclassy/shriners_import#readme",
+  "dependencies": {
+    "classy-node": "2.1.6",
+    "dotenv": "2.0.0"
+  }
+}
