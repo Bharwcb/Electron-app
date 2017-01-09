@@ -22,8 +22,18 @@ app.then(function() {
 	})
 
 	.then(function(response) {
-		// response should be an array of JSON transaction data
+		// response is an array of JSON transaction data
     console.log("RESPONSE: ", response);
+
+    var ws = fs.createWriteStream('./test.csv');
+		// !! How to save file to user's desktop instead?
+
+		csv
+			.write([
+				[response.data[0].member_name]
+				], {headers:true})
+			.pipe(ws);
+
 	})
 
 	.catch(function(error) {
@@ -32,15 +42,5 @@ app.then(function() {
 
 });
 
-// var ws = fs.createWriteStream('./test.csv');
-// // !! How to save file to user's desktop instead?
 
-// csv
-// 	.write([
-// 		["a1", "b1"],
-// 		["b2", "c2"],
-// 		["c2", "d2"],
-// 		["d"]
-// 		], {headers:true})
-// 	.pipe(ws);
 
