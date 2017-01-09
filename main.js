@@ -9,6 +9,20 @@ var classy = new Classy({
 	clientSecret: process.env.CLIENT_SECRET
 });
 
-classy.app().then(function() {
-	console.log("test");
+const app = classy.app();
+
+app.then(function() {
+
+	classy.campaigns.retrieve(72, {
+		token: 'app'
+	})
+
+	.then(function(response) {
+		console.log("RESPONSE: " + response.id);
+	})
+
+	.catch(function(error) {
+		console.log("ERROR: " + error);
+	});
+
 });
