@@ -27,10 +27,10 @@ app.then(function() {
 
     var ws = fs.createWriteStream('./test.csv');
 		// !! How to save file to user's desktop instead?
-
+		
 		csv
 			.write([
-				[response.data[0].member_name]
+				["Contact ID", response.data[0].member_id]
 				], {headers:true})
 			.pipe(ws);
 
