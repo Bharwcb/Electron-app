@@ -32,7 +32,7 @@ app.then(function() {
     var ws = fs.createWriteStream('./result.csv');
 
 		for (i = 0; i < response.data.length; i++) {
-			// formatting in the way fast-csv wants it to put each data point in a new row..
+			// formatting in the way fast-csv wants it to put each data point in a new row.. [[h1,h1], [r1,c1], [r2,c2]]
 			classy_data.push(new Array(response.data[i].member_id.toString()));
 
 			console.log("CLASSY_DATA: ", classy_data)
