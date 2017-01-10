@@ -13,6 +13,10 @@ var classy = new Classy({
 
 const app = classy.app();
 
+const headers = ["Contact ID", "Title"];
+// used to collect list of contact IDs, title, and so on.. then write to CSV from array
+let classy_data = [];
+
 app.then(function() {
 
 	// First, loop through all transactions (with sample time filter)
@@ -25,20 +29,19 @@ app.then(function() {
 		// response is an array of JSON transaction data
     console.log("RESPONSE: ", response);
 
-    var ws = fs.createWriteStream('./test.csv');
-		// !! How to save file to user's desktop instead?
+    var ws = fs.createWriteStream('./result.csv');
 
-		// Matt, thoughts on this? 
+    // remember to accomodate for blank string responses!  ignoreEmpty: true I think. might supposed to use .fromStream not write
 		for (i = 0; i < response.data.length; i++) {
-			// csv
-			// 	.write([
-			// 		["Contact ID", response.data[i].member_id]
-			// 		], {headers:true})
-			// 	.pipe(ws);
+			classy_data.push(response.data[i].member_id);
 			console.log("I: ", i);
 			console.log("MEMBER ID: ", response.data[i].member_id);
-			// spitting out only member id 2619609
+			console.log("CLASSY_DATA: ", classy_data)
 		}
+
+		csv
+			.write([ classy_data ], {headers: true})
+			.pipe(ws);
 
 	})
 
