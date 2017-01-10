@@ -28,8 +28,7 @@ app.then(function() {
 	})
 
 	.then(function(response) {
-		// response is an array of JSON transaction data
-    console.log("RESPONSE: ", response);
+		// response is an array of JSON transaction data, 20 per page
 
     var ws = fs.createWriteStream('./result.csv');
 
