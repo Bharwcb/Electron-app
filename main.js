@@ -14,7 +14,7 @@ var classy = new Classy({
 const app = classy.app();
 
 const headers = ["Contact ID", "Title"];
-// used to collect list of contact IDs, title, and so on.. then write to CSV from array
+// used to collect list of contact IDs, title, or whatever you are fetching. then, write to csv.
 let classy_data = [];
 
 app.then(function() {
@@ -31,16 +31,15 @@ app.then(function() {
 
     var ws = fs.createWriteStream('./result.csv');
 
-    // remember to accomodate for blank string responses!  ignoreEmpty: true I think. might supposed to use .fromStream not write
 		for (i = 0; i < response.data.length; i++) {
-			classy_data.push(response.data[i].member_id);
-			console.log("I: ", i);
-			console.log("MEMBER ID: ", response.data[i].member_id);
+			// formatting in the way fast-csv wants it to put each data point in a new row..
+			classy_data.push(new Array(response.data[i].member_id.toString()));
+
 			console.log("CLASSY_DATA: ", classy_data)
 		}
 
 		csv
-			.write([ classy_data ], {headers: true})
+			.write( classy_data, {headers: true})
 			.pipe(ws);
 
 	})
