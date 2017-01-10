@@ -13,7 +13,9 @@ var classy = new Classy({
 
 const app = classy.app();
 
+// one place to change headers for import
 const headers = ["Contact ID", "Title"];
+
 // used to collect list of contact IDs, title, or whatever you are fetching. then, write to csv.
 let classy_data = [];
 
@@ -34,14 +36,11 @@ app.then(function() {
 		for (i = 0; i < response.data.length; i++) {
 			// formatting in the way fast-csv wants it to put each data point in a new row.. [[h1,h1], [r1,c1], [r2,c2]]
 			classy_data.push(new Array(response.data[i].member_id.toString()));
-
-			console.log("CLASSY_DATA: ", classy_data)
 		}
 
 		csv
-			.write( classy_data, {headers: true})
+			.write( classy_data, {headers: headers} )
 			.pipe(ws);
-
 	})
 
 	.catch(function(error) {
