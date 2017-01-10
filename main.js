@@ -27,12 +27,18 @@ app.then(function() {
 
     var ws = fs.createWriteStream('./test.csv');
 		// !! How to save file to user's desktop instead?
-		
-		csv
-			.write([
-				["Contact ID", response.data[0].member_id]
-				], {headers:true})
-			.pipe(ws);
+
+		// Matt, thoughts on this? 
+		for (i = 0; i < response.data.length; i++) {
+			// csv
+			// 	.write([
+			// 		["Contact ID", response.data[i].member_id]
+			// 		], {headers:true})
+			// 	.pipe(ws);
+			console.log("I: ", i);
+			console.log("MEMBER ID: ", response.data[i].member_id);
+			// spitting out only member id 2619609
+		}
 
 	})
 
