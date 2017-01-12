@@ -35,7 +35,6 @@ app.then(() => {
 		for (var i = 0; i < response.data.length; i++) {
 			// formatting var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[r1,c1], [r2,c2]].. etc.
 			classyData.push(new Array(response.data[i].member_id.toString()));
-			testingTransactionIds.push(new Array(response.data[i].id.toString()));
 		};
 
 		const numberOfPages = response.last_page;
@@ -76,9 +75,8 @@ app.then(() => {
 					// TEST: Use this test to make sure this grabs every single transaction id on all pages: console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
 					var member_id = arrayOfTransactions[transactionIndex].member_id;
 					classyData.push(new Array(member_id.toString()));
-					testingTransactionIds.push(new Array(arrayOfTransactions[transactionIndex].id.toString()));
 				}
-				// TEST: console.log("ALL TRANSACTION IDS!!!", testingTransactionIds);
+				// TEST: print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 
 			}
 		// TEST: console.log("CLASSY DATA LENGTH", classyData.length);
