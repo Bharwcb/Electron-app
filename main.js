@@ -66,8 +66,6 @@ app.then(() => {
 					to: 60, ... }, // eachPageResponse = 3!!
 			]
 			*/
-
-
 			results.forEach(function(promisePageNumber) {
 
 				var arrayOfTransactions = promisePageNumber.data;
@@ -92,6 +90,8 @@ app.then(() => {
 		console.log("ERROR ON FIRST PAGE: " + error);
 	});
 });
+
+
 
 
 
