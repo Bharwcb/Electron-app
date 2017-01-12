@@ -18,6 +18,7 @@ const csvHeaders = ["Contact ID", "Title"];
 
 // used to collect list of contact IDs, title, or whatever you are fetching. then, write to csv.
 let classyData = [];
+let testingTransactionIds = [];
 
 app.then(() => {
 
@@ -30,11 +31,12 @@ app.then(() => {
 	.then((response) => {
 		// response is an array of JSON transaction data, 20 per page. Add the first page of responses to var classyData.
 		var ws = fs.createWriteStream('./result.csv');
-		console.log("PAGE 1");
+		// console.log("PAGE 1");
 
 		for (var i = 0; i < response.data.length; i++) {
 			// formatting var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[h1,h1], [r1,c1], [r2,c2]].
 			classyData.push(new Array(response.data[i].member_id.toString()));
+			testingTransactionIds.push(new Array(response.data[i].id.toString()));
 		};
 
 		const numberOfPages = response.last_page;
@@ -69,38 +71,46 @@ app.then(() => {
 
 			for (var promisePageNumber = 2; promisePageNumber <= (results.length + 1); promisePageNumber++) {
 
-				console.log("JSON RESPONSE PROMISE PAGE NUMBER (starts at 2): ", promisePageNumber);
+				// console.log("JSON RESPONSE PROMISE PAGE NUMBER (starts at 2): ", promisePageNumber);
 
 				// eachPageResponse = what a full page response looks like with the data, an array of 20 transactions objects, as well as all the other stuff like current_page.
 				var eachPageResponse = results[(promisePageNumber - 2)];
-				console.log("EACHPAGERESPONSE: ", eachPageResponse);
+				// console.log("EACHPAGERESPONSE: ", eachPageResponse);
 
 				// TEST: NOW, GO GRAB THE FIRST TRANSACTION FROM EACH PAGE:
 				var arrayOfTransactions = eachPageResponse.data;
-				console.log("TESTING!!!: ", arrayOfTransactions[0].id);
-				console.log("~~~~~~~~~~~ next page ~~~~~~~~~~~");
+				// console.log("TESTING!!!: ", arrayOfTransactions[0].id);
+				// console.log("~~~~~~~~~~~ next page ~~~~~~~~~~~");
 
 				// Now that that's working, GO INTO EACH ARRAY OF TRANSACTIONS, AND PRINT ALL OF THE TRANSACTION ID'S:
 				for (var transactionIndex = 0; transactionIndex < arrayOfTransactions.length; transactionIndex++) {
-					console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
+					// TEST: use this test to make sure this grabs every single transaction id on all pages.
+					// console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
+					var member_id = arrayOfTransactions[transactionIndex].member_id;
+					classyData.push(new Array(member_id.toString()));
+					testingTransactionIds.push(new Array(arrayOfTransactions[transactionIndex].id.toString()));
 				}
-
-
-
-				// classyData.push(new Array(results.data[x].member_id.toString()));
-				// }
+				// console.log("ALL TRANSACTION IDS!!!", testingTransactionIds);
+				// console.log("number of transaction id's on this page", testingTransactionIds.length);
+				
 			}
+
+		console.log("CLASSY DATA!", classyData);
+
+		csv
+			.write( classyData, {headers: csvHeaders} )
+			.pipe(ws);
+			
 		})
 
 		.catch((error) => {
 			console.log("ERROR 2ND THROUGH LAST PAGE: " + error);
 	  });
 		
-		// csv
-		// 	.write( classyData, {headers: csvHeaders} )
-		// 	.pipe(ws);
-
+		
 	})
+
+	
 
 	.catch(function(error) {
 		console.log("ERROR ON FIRST PAGE: " + error);
