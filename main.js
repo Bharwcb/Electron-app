@@ -24,7 +24,7 @@ app.then(() => {
 	// First, loop through all transactions (with sample time filter)
 	classy.organizations.listTransactions(34, {
 		token: 'app',
-		filter: 'purchased_at>2017-01-11T10:00:00'
+		filter: 'purchased_at>2017-01-12T10:00:00'
 	})
 
 	.then((response) => {
@@ -45,42 +45,40 @@ app.then(() => {
 			promises.push(
 					classy.organizations.listTransactions(34, {
 						token: 'app',
-						filter: 'purchased_at>2017-01-11T10:00:00',
+						filter: 'purchased_at>2017-01-12T10:00:00',
 						page: page
 					})
 			);
 		};
 
 		Promise.all(promises).then((results) => {
-			// Callback 'results' looks like this (an array of pages):  
-			// [ 
-				// { current_page: 2,
-	  			// data: [ [Object], [Object], ... to per_page amount ],
-		  		// from: 21, 
-	  			// to: 40, ... }, // eachPageResponse = 2!!
+			/*
+			Callback 'results' looks like this (an array of pages):  
+			[ 
+				{ current_page: 2,
+	  			data: [ [Object], [Object], ... to per_page amount ],
+		  		from: 21, 
+	  			to: 40, ... }, // eachPageResponse = 2!!
 
-				// { current_page: 3,
-	  			// data: [ [Object], [Object], ... to per_page amount ],
-					// from: 41, 
-					// to: 60, ... }, // eachPageResponse = 3!!
-			// ]
+				{ current_page: 3,
+	  			data: [ [Object], [Object], ... to per_page amount ],
+					from: 41, 
+					to: 60, ... }, // eachPageResponse = 3!!
+			]
+			*/
 
-			for (var promisePageNumber = 2; promisePageNumber <= (results.length + 1); promisePageNumber++) {
 
-				// eachPageResponse is what a full page response looks like.. includes data (an array of transactions objects) and current_page, next_page, etc.  Start it at index 0, the first page of RESULTS (which is pages 2 through last)
-				var eachPageResponse = results[(promisePageNumber - 2)];
-				var arrayOfTransactions = eachPageResponse.data;
+			results.forEach(function(promisePageNumber) {
 
-				for (var transactionIndex = 0; transactionIndex < arrayOfTransactions.length; transactionIndex++) {
+				var arrayOfTransactions = promisePageNumber.data;
+				arrayOfTransactions.forEach(function(item, index) {
 					// TEST: Use this test to make sure this grabs every single transaction id on all pages: console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
-					var member_id = arrayOfTransactions[transactionIndex].member_id;
+					var member_id = arrayOfTransactions[index].member_id;
 					classyData.push(new Array(member_id.toString()));
-				}
-				// TEST: print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
-
-			}
-		// TEST: console.log("CLASSY DATA LENGTH", classyData.length);
-
+				});
+				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
+			});
+			// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", classyData.length);
 		csv
 			.write( classyData, {headers: csvHeaders} )
 			.pipe(ws);
