@@ -81,15 +81,9 @@ app.then(() => {
 				console.log("~~~~~~~~~~~ next page ~~~~~~~~~~~");
 
 				// Now that that's working, GO INTO EACH ARRAY OF TRANSACTIONS, AND PRINT ALL OF THE TRANSACTION ID'S:
-				// for (var ) {
-
-				// }
-				// for (var transactionNumberPerPage = 1; transactionNumberPerPage <= results[(promisePageNumber - 2)].data.length; transactionNumberPerPage++) {
-
-					// for each page, need grab the data (an array of 20 transaction objects), and for each transaction, grab its id
-
-
-
+				for (var transactionIndex = 0; transactionIndex < arrayOfTransactions.length; transactionIndex++) {
+					console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
+				}
 
 
 
