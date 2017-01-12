@@ -33,8 +33,6 @@ app.then(() => {
 		console.log("PAGE 1");
 
 		for (var i = 0; i < response.data.length; i++) {
-			console.log("I: ", i);
-			console.log("TRANSACTION_ID: ", response.data[i].id);
 			// formatting var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[h1,h1], [r1,c1], [r2,c2]].
 			classyData.push(new Array(response.data[i].member_id.toString()));
 		};
@@ -60,22 +58,37 @@ app.then(() => {
 					// { current_page: 2,
 		  			// data: [ [Object], [Object], ... ],
 			  		// from: 21, 
-		  			// to: 40, ... },
+		  			// to: 40, ... }, // eachPageResponse = 2!!
 
 					// { current_page: 3,
 		  			// data: [ [Object], [Object], ... ],
 	  				// from: 41, 
-	  				// to: 60, ... },
+	  				// to: 60, ... }, // eachPageResponse = 3!!
 				// ]
 		Promise.all(promises).then((results) => {
-			console.log(results);
+
 			for (var promisePageNumber = 2; promisePageNumber <= (results.length + 1); promisePageNumber++) {
+
 				console.log("JSON RESPONSE PROMISE PAGE NUMBER (starts at 2): ", promisePageNumber);
 
+				// eachPageResponse = what a full page response looks like with the data, an array of 20 transactions objects, as well as all the other stuff like current_page.
+				var eachPageResponse = results[(promisePageNumber - 2)];
+				console.log("EACHPAGERESPONSE: ", eachPageResponse);
+
+				// TEST: GRAB THE FIRST TRANSACTION FROM EACH PAGE:
+					// console.log("TESTING!!!: ", eachPageResponse.data[0]);
+						
 
 				// Go into the data from each page from the promise, and push its array of transaction objects' member id's into classyData
-				for (var transaction = 1; transaction <= results[(promisePageNumber - 2)].data.length; transaction++) {
-					console.log("TRANSACTION_ID: ", transaction.id);
+				for (var transactionNumberPerPage = 1; transactionNumberPerPage <= results[(promisePageNumber - 2)].data.length; transactionNumberPerPage++) {
+
+					// for each page, need grab the data (an array of 20 transaction objects), and for each transaction, grab its id
+
+
+
+
+
+
 				// classyData.push(new Array(results.data[x].member_id.toString()));
 				}
 			}
