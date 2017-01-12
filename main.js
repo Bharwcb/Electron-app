@@ -24,7 +24,7 @@ app.then(() => {
 	// First, loop through all transactions (with sample time filter)
 	classy.organizations.listTransactions(34, {
 		token: 'app',
-		filter: 'purchased_at>2017-01-12T10:00:00'
+		filter: 'purchased_at>2017-01-12T10:00:00,status=success'
 	})
 
 	.then((response) => {
@@ -45,27 +45,13 @@ app.then(() => {
 			promises.push(
 					classy.organizations.listTransactions(34, {
 						token: 'app',
-						filter: 'purchased_at>2017-01-12T10:00:00',
+						filter: 'purchased_at>2017-01-12T10:00:00,status=success',
 						page: page
 					})
 			);
 		};
 
 		Promise.all(promises).then((results) => {
-			/*
-			Callback 'results' looks like this (an array of pages):  
-			[ 
-				{ current_page: 2,
-	  			data: [ [Object], [Object], ... to per_page amount ],
-		  		from: 21, 
-	  			to: 40, ... }, // eachPageResponse = 2!!
-
-				{ current_page: 3,
-	  			data: [ [Object], [Object], ... to per_page amount ],
-					from: 41, 
-					to: 60, ... }, // eachPageResponse = 3!!
-			]
-			*/
 			results.forEach(function(promisePageNumber) {
 
 				var arrayOfTransactions = promisePageNumber.data;
@@ -77,6 +63,7 @@ app.then(() => {
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
 			// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", classyData.length);
+		
 		csv
 			.write( classyData, {headers: csvHeaders} )
 			.pipe(ws);
@@ -85,13 +72,10 @@ app.then(() => {
 			console.log("ERROR 2ND THROUGH LAST PAGE: " + error);
 	  });
 	})
-
 	.catch((error) => {
 		console.log("ERROR ON FIRST PAGE: " + error);
 	});
 });
-
-
 
 
 
