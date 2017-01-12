@@ -18,7 +18,6 @@ const csvHeaders = ["Contact ID", "Title"];
 
 // used to collect list of contact IDs, title, or whatever you are fetching. then, write to csv.
 let classyData = [];
-let testingTransactionIds = [];
 
 app.then(() => {
 
@@ -74,32 +73,28 @@ app.then(() => {
 				var arrayOfTransactions = eachPageResponse.data;
 
 				for (var transactionIndex = 0; transactionIndex < arrayOfTransactions.length; transactionIndex++) {
-					// TEST: use this test to make sure this grabs every single transaction id on all pages: console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
+					// TEST: Use this test to make sure this grabs every single transaction id on all pages: console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
 					var member_id = arrayOfTransactions[transactionIndex].member_id;
 					classyData.push(new Array(member_id.toString()));
 					testingTransactionIds.push(new Array(arrayOfTransactions[transactionIndex].id.toString()));
 				}
-				// console.log("ALL TRANSACTION IDS!!!", testingTransactionIds);
-				// console.log("number of transaction id's on this page", testingTransactionIds.length);
+				// TEST: console.log("ALL TRANSACTION IDS!!!", testingTransactionIds);
+
 			}
-		console.log("CLASSY DATA LENGTH", classyData.length);
+		// TEST: console.log("CLASSY DATA LENGTH", classyData.length);
 
 		csv
 			.write( classyData, {headers: csvHeaders} )
 			.pipe(ws);
-			
 		})
-
 		.catch((error) => {
 			console.log("ERROR 2ND THROUGH LAST PAGE: " + error);
 	  });
-		
 	})
 
-	.catch(function(error) {
+	.catch((error) => {
 		console.log("ERROR ON FIRST PAGE: " + error);
 	});
-
 });
 
 
