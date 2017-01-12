@@ -69,10 +69,15 @@ app.then(() => {
 				// ]
 		Promise.all(promises).then((results) => {
 			console.log(results);
-			for (var x = 2; x <= (results.length + 1); x++) {
-				console.log("JSON RESPONSE PROMISE PAGE NUMBER: ", x);
-				// console.log("HIGHER TRANSACTION_ID: ", results.data[x].id);
-			// 	classyData.push(new Array(response.data[x].member_id.toString()));
+			for (var promisePageNumber = 2; promisePageNumber <= (results.length + 1); promisePageNumber++) {
+				console.log("JSON RESPONSE PROMISE PAGE NUMBER (starts at 2): ", promisePageNumber);
+
+
+				// Go into the data from each page from the promise, and push its array of transaction objects' member id's into classyData
+				for (var transaction = 1; transaction <= results[(promisePageNumber - 2)].data.length; transaction++) {
+					console.log("TRANSACTION_ID: ", transaction.id);
+				// classyData.push(new Array(results.data[x].member_id.toString()));
+				}
 			}
 		})
 
