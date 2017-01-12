@@ -29,12 +29,12 @@ app.then(() => {
 	})
 
 	.then((response) => {
+
 		// response is an array of JSON transaction data, 20 per page. Add the first page of responses to var classyData.
 		var ws = fs.createWriteStream('./result.csv');
-		// console.log("PAGE 1");
-
+	
 		for (var i = 0; i < response.data.length; i++) {
-			// formatting var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[h1,h1], [r1,c1], [r2,c2]].
+			// formatting var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[r1,c1], [r2,c2]].. etc.
 			classyData.push(new Array(response.data[i].member_id.toString()));
 			testingTransactionIds.push(new Array(response.data[i].id.toString()));
 		};
@@ -42,10 +42,9 @@ app.then(() => {
 		const numberOfPages = response.last_page;
 		let promises = [];
 
-		// Request all remaining pages after the first page, add to promises array and call later with Promise.all
+		// Request all remaining pages after the first page, add to promises array to call asynchronously with Promise.all
 		for (var page = 2; page < (numberOfPages + 1); page++) {
 			promises.push(
-
 					classy.organizations.listTransactions(34, {
 						token: 'app',
 						filter: 'purchased_at>2017-01-11T10:00:00',
@@ -54,48 +53,36 @@ app.then(() => {
 			);
 		};
 
-		// Request all promises for pages 2 through last page.
-		// RESULTS:  
-			// 	[ 
-					// { current_page: 2,
-		  			// data: [ [Object], [Object], ... ],
-			  		// from: 21, 
-		  			// to: 40, ... }, // eachPageResponse = 2!!
-
-					// { current_page: 3,
-		  			// data: [ [Object], [Object], ... ],
-	  				// from: 41, 
-	  				// to: 60, ... }, // eachPageResponse = 3!!
-				// ]
 		Promise.all(promises).then((results) => {
+			// Callback 'results' looks like this (an array of pages):  
+			// [ 
+				// { current_page: 2,
+	  			// data: [ [Object], [Object], ... to per_page amount ],
+		  		// from: 21, 
+	  			// to: 40, ... }, // eachPageResponse = 2!!
+
+				// { current_page: 3,
+	  			// data: [ [Object], [Object], ... to per_page amount ],
+					// from: 41, 
+					// to: 60, ... }, // eachPageResponse = 3!!
+			// ]
 
 			for (var promisePageNumber = 2; promisePageNumber <= (results.length + 1); promisePageNumber++) {
 
-				// console.log("JSON RESPONSE PROMISE PAGE NUMBER (starts at 2): ", promisePageNumber);
-
-				// eachPageResponse = what a full page response looks like with the data, an array of 20 transactions objects, as well as all the other stuff like current_page.
+				// eachPageResponse is what a full page response looks like.. includes data (an array of transactions objects) and current_page, next_page, etc.  Start it at index 0, the first page of RESULTS (which is pages 2 through last)
 				var eachPageResponse = results[(promisePageNumber - 2)];
-				// console.log("EACHPAGERESPONSE: ", eachPageResponse);
-
-				// TEST: NOW, GO GRAB THE FIRST TRANSACTION FROM EACH PAGE:
 				var arrayOfTransactions = eachPageResponse.data;
-				// console.log("TESTING!!!: ", arrayOfTransactions[0].id);
-				// console.log("~~~~~~~~~~~ next page ~~~~~~~~~~~");
 
-				// Now that that's working, GO INTO EACH ARRAY OF TRANSACTIONS, AND PRINT ALL OF THE TRANSACTION ID'S:
 				for (var transactionIndex = 0; transactionIndex < arrayOfTransactions.length; transactionIndex++) {
-					// TEST: use this test to make sure this grabs every single transaction id on all pages.
-					// console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
+					// TEST: use this test to make sure this grabs every single transaction id on all pages: console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
 					var member_id = arrayOfTransactions[transactionIndex].member_id;
 					classyData.push(new Array(member_id.toString()));
 					testingTransactionIds.push(new Array(arrayOfTransactions[transactionIndex].id.toString()));
 				}
 				// console.log("ALL TRANSACTION IDS!!!", testingTransactionIds);
 				// console.log("number of transaction id's on this page", testingTransactionIds.length);
-				
 			}
-
-		console.log("CLASSY DATA!", classyData);
+		console.log("CLASSY DATA LENGTH", classyData.length);
 
 		csv
 			.write( classyData, {headers: csvHeaders} )
@@ -107,10 +94,7 @@ app.then(() => {
 			console.log("ERROR 2ND THROUGH LAST PAGE: " + error);
 	  });
 		
-		
 	})
-
-	
 
 	.catch(function(error) {
 		console.log("ERROR ON FIRST PAGE: " + error);
