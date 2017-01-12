@@ -78,8 +78,12 @@ app.then(() => {
 				// TEST: NOW, GO GRAB THE FIRST TRANSACTION FROM EACH PAGE:
 				var arrayOfTransactions = eachPageResponse.data;
 				console.log("TESTING!!!: ", arrayOfTransactions[0].id);
+				console.log("~~~~~~~~~~~ next page ~~~~~~~~~~~");
 
-				// Go into the data from each page from the promise, and push its array of transaction objects' member id's into classyData
+				// Now that that's working, GO INTO EACH ARRAY OF TRANSACTIONS, AND PRINT ALL OF THE TRANSACTION ID'S:
+				// for (var ) {
+
+				// }
 				// for (var transactionNumberPerPage = 1; transactionNumberPerPage <= results[(promisePageNumber - 2)].data.length; transactionNumberPerPage++) {
 
 					// for each page, need grab the data (an array of 20 transaction objects), and for each transaction, grab its id
