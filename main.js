@@ -38,17 +38,22 @@ app.then(() => {
 
 			// ~~~ Building classyData for First Page
 			let last_name = transaction.billing_last_name;
-			if (last_name == null) {
+			if (last_name == null || last_name == "") {
 				last_name = "last_name";
 			};
 
 			let first_name = transaction.billing_first_name;
-			if (first_name == null) {
+			if (first_name == null || first_name == "") {
 				first_name = "first_name";
-			}
+			};
+
+			let company_name = transaction.company_name;
+			if (company_name == null || company_name == "") {
+				company_name = "company_name";
+			};
 			
 			// !!! template for adding an attribute: classyData.push(new Array(transaction.member_id.toString()));
-			classyData.push(new Array("contact ID", "title", last_name, first_name));
+			classyData.push(new Array("contact ID", "title", last_name, first_name, company_name));
 		};
 
 		const numberOfPages = response.last_page;
@@ -69,25 +74,30 @@ app.then(() => {
 			results.forEach(function(promisePageNumber) {
 
 				var arrayOfTransactions = promisePageNumber.data;
-				arrayOfTransactions.forEach(function(item, index) {
+				arrayOfTransactions.forEach(function(transaction, index) {
 					// ~~~ Building classyData for Promises ~~~
 
-					let last_name = item.billing_last_name;
-					if (last_name == null) {
+					let last_name = transaction.billing_last_name;
+					if (last_name == null || last_name == "") {
 						last_name = "last_name";
 					};
 
 					let first_name = transaction.billing_first_name;
-					if (first_name == null) {
+					if (first_name == null || first_name == "") {
 						first_name = "first_name";
-					}
-			
+					};
+
+					let company_name = transaction.company_name;
+					if (company_name == null || company_name == "") {
+						company_name = "company_name";
+					};
+
 					/* 
 					!!! template for adding an attribute: 
 					var member_id = arrayOfTransactions[index].member_id;
 					classyData.push(new Array(member_id.toString()));
 					*/
-					classyData.push(new Array("contact ID", "title", last_name, first_name));
+					classyData.push(new Array("contact ID", "title", last_name, first_name, company_name));
 				});
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
