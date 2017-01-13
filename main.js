@@ -37,11 +37,14 @@ app.then(() => {
 			var transaction = response.data[i];
 
 			// ~~~ Building classyData for First Page
-			
+			let last_name = transaction.billing_last_name;
+			if (last_name == null) {
+				last_name = "last_name";
+			};
 
 			
 			// !!! template for adding an attribute: classyData.push(new Array(transaction.member_id.toString()));
-			classyData.push(new Array("contact ID", "title"));
+			classyData.push(new Array("contact ID", "title", last_name));
 		};
 
 		const numberOfPages = response.last_page;
@@ -57,7 +60,7 @@ app.then(() => {
 					})
 			);
 		};
-		
+
 		Promise.all(promises).then((results) => {
 			results.forEach(function(promisePageNumber) {
 
@@ -65,14 +68,17 @@ app.then(() => {
 				arrayOfTransactions.forEach(function(item, index) {
 					// ~~~ Building classyData for Promises ~~~
 
-
+					let last_name = item.billing_last_name;
+					if (last_name == null) {
+						last_name = "last_name";
+					};
 
 					/* 
 					!!! template for adding an attribute: 
 					var member_id = arrayOfTransactions[index].member_id;
 					classyData.push(new Array(member_id.toString()));
 					*/
-					classyData.push(new Array("contact ID", "title"));
+					classyData.push(new Array("contact ID", "title", last_name));
 				});
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
