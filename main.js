@@ -14,7 +14,7 @@ var classy = new Classy({
 const app = classy.app();
 
 // one place to change headers for import
-const csvHeaders = ["Contact ID", "Title"];
+const csvHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
 
 // used to collect list of contact IDs, title, or whatever you are fetching. then, write to csv.
 let classyData = [];
@@ -33,8 +33,12 @@ app.then(() => {
 		var ws = fs.createWriteStream('./result.csv');
 	
 		for (var i = 0; i < response.data.length; i++) {
-			// formatting var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[r1,c1], [r2,c2]].. etc.
-			classyData.push(new Array(response.data[i].member_id.toString()));
+			// format var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[r1,c1], [r2,c2]].. etc..
+
+			var transaction = response.data[i];
+
+			
+			classyData.push(new Array(transaction.member_id.toString()));
 		};
 
 		const numberOfPages = response.last_page;
@@ -57,6 +61,9 @@ app.then(() => {
 				var arrayOfTransactions = promisePageNumber.data;
 				arrayOfTransactions.forEach(function(item, index) {
 					// TEST: Use this test to make sure this grabs every single transaction id on all pages: console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
+
+
+					// ~~~ Building classyData for Promises ~~~
 					var member_id = arrayOfTransactions[index].member_id;
 					classyData.push(new Array(member_id.toString()));
 				});
