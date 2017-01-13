@@ -33,12 +33,15 @@ app.then(() => {
 		var ws = fs.createWriteStream('./result.csv');
 	
 		for (var i = 0; i < response.data.length; i++) {
-			// format var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[r1,c1], [r2,c2]].. etc..
-
+			// format var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[contact ID1, title1], [contact ID2, title2]].. etc.
 			var transaction = response.data[i];
 
+			// ~~~ Building classyData for First Page
 			
-			classyData.push(new Array(transaction.member_id.toString()));
+
+			
+			// !!! template for adding an attribute: classyData.push(new Array(transaction.member_id.toString()));
+			classyData.push(new Array("contact ID", "title"));
 		};
 
 		const numberOfPages = response.last_page;
@@ -54,18 +57,22 @@ app.then(() => {
 					})
 			);
 		};
-
+		
 		Promise.all(promises).then((results) => {
 			results.forEach(function(promisePageNumber) {
 
 				var arrayOfTransactions = promisePageNumber.data;
 				arrayOfTransactions.forEach(function(item, index) {
-					// TEST: Use this test to make sure this grabs every single transaction id on all pages: console.log("TESTING ID: ", arrayOfTransactions[transactionIndex].id);
-
-
 					// ~~~ Building classyData for Promises ~~~
+
+
+
+					/* 
+					!!! template for adding an attribute: 
 					var member_id = arrayOfTransactions[index].member_id;
 					classyData.push(new Array(member_id.toString()));
+					*/
+					classyData.push(new Array("contact ID", "title"));
 				});
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
