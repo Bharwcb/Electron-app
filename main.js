@@ -42,9 +42,13 @@ app.then(() => {
 				last_name = "last_name";
 			};
 
+			let first_name = transaction.billing_first_name;
+			if (first_name == null) {
+				first_name = "first_name";
+			}
 			
 			// !!! template for adding an attribute: classyData.push(new Array(transaction.member_id.toString()));
-			classyData.push(new Array("contact ID", "title", last_name));
+			classyData.push(new Array("contact ID", "title", last_name, first_name));
 		};
 
 		const numberOfPages = response.last_page;
@@ -73,12 +77,17 @@ app.then(() => {
 						last_name = "last_name";
 					};
 
+					let first_name = transaction.billing_first_name;
+					if (first_name == null) {
+						first_name = "first_name";
+					}
+			
 					/* 
 					!!! template for adding an attribute: 
 					var member_id = arrayOfTransactions[index].member_id;
 					classyData.push(new Array(member_id.toString()));
 					*/
-					classyData.push(new Array("contact ID", "title", last_name));
+					classyData.push(new Array("contact ID", "title", last_name, first_name));
 				});
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
