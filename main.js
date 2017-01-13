@@ -4,6 +4,7 @@ require('dotenv').load();
 var Classy = require('classy-node');
 var fs = require('fs');
 var csv = require('fast-csv');
+var attributes = require('./attributes.js');
 
 var classy = new Classy({
 	baseUrl: 'https://stagingapi.stayclassy.org',
@@ -37,6 +38,13 @@ app.then(() => {
 			var transaction = response.data[i];
 
 			// ~~~ Building classyData for First Page
+
+			// attributes.fetchAttributes();
+
+			// contact ID - Classy does not collect
+
+			// title - Classy does not collect
+			
 			let last_name = transaction.billing_last_name;
 			if (last_name == null || last_name == "") {
 				last_name = "last_name";
@@ -47,13 +55,18 @@ app.then(() => {
 				first_name = "first_name";
 			};
 
+			let middle_name = transaction.middle_name;
+			if (middle_name == null || middle_name == "") {
+				middle_name = "middle_name";
+			};
+
 			let company_name = transaction.company_name;
 			if (company_name == null || company_name == "") {
 				company_name = "company_name";
 			};
 			
 			// !!! template for adding an attribute: classyData.push(new Array(transaction.member_id.toString()));
-			classyData.push(new Array("contact ID", "title", last_name, first_name, company_name));
+			classyData.push(new Array("contact ID", "title", last_name, first_name, middle_name, company_name));
 		};
 
 		const numberOfPages = response.last_page;
@@ -77,6 +90,12 @@ app.then(() => {
 				arrayOfTransactions.forEach(function(transaction, index) {
 					// ~~~ Building classyData for Promises ~~~
 
+					// attributes.fetchAttributes();
+
+					// contact ID - Classy does not collect
+
+					// title - Classy does not collect
+
 					let last_name = transaction.billing_last_name;
 					if (last_name == null || last_name == "") {
 						last_name = "last_name";
@@ -85,6 +104,11 @@ app.then(() => {
 					let first_name = transaction.billing_first_name;
 					if (first_name == null || first_name == "") {
 						first_name = "first_name";
+					};
+
+					let middle_name = transaction.middle_name;
+					if (middle_name == null || middle_name == "") {
+						middle_name = "middle_name";
 					};
 
 					let company_name = transaction.company_name;
@@ -97,7 +121,7 @@ app.then(() => {
 					var member_id = arrayOfTransactions[index].member_id;
 					classyData.push(new Array(member_id.toString()));
 					*/
-					classyData.push(new Array("contact ID", "title", last_name, first_name, company_name));
+					classyData.push(new Array("contact ID", "title", last_name, first_name, middle_name, company_name));
 				});
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
