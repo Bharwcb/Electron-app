@@ -65,6 +65,7 @@ app.then(() => {
 		csv
 			.write( classyData, {headers: csvHeaders} )
 			.pipe(ws);
+		console.log("CSV Complete.");
 		})
 		.catch((error) => {
 			console.log("ERROR 2ND THROUGH LAST PAGE: " + error);
@@ -74,6 +75,8 @@ app.then(() => {
 		console.log("ERROR ON FIRST PAGE: " + error);
 	});
 });
+
+
 
 
 
