@@ -25,7 +25,7 @@ module.exports = {
 			company_name = "company_name";
 		};
 
-		// !!! template for adding an attribute: classyData.push(new Array(transaction.member_id.toString()));
+		// !!! template for adding an attribute (each row is an array, using Fast CSV module): classyData.push(new Array(transaction.member_id.toString()));
 		classyData.push(new Array("contact ID", "title", last_name, first_name, middle_name, company_name));
 	}
 };

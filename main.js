@@ -26,33 +26,27 @@ app.then(() => {
 	// First, loop through all transactions (with sample time filter)
 	classy.organizations.listTransactions(34, {
 		token: 'app',
-		filter: 'purchased_at>2017-01-12T10:00:00,status=success'
+		filter: 'purchased_at>2017-01-13T10:00:00,status=success'
 	})
 
 	.then((response) => {
-
 		// response is an array of JSON transaction data, 20 per page. Add the first page of responses to var classyData.
 		var ws = fs.createWriteStream('./result.csv');
-	
 		for (var i = 0; i < response.data.length; i++) {
 			// format var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[contact ID1, title1], [contact ID2, title2]].. etc.
 			var transaction = response.data[i];
-
 			// ~~~ Building classyData for First Page
-
 			attributes.fetchAttributes(transaction, classyData);
-			
 		};
 
 		const numberOfPages = response.last_page;
 		let promises = [];
-
 		// Request all remaining pages after the first page, add to promises array to call asynchronously with Promise.all
 		for (var page = 2; page < (numberOfPages + 1); page++) {
 			promises.push(
 					classy.organizations.listTransactions(34, {
 						token: 'app',
-						filter: 'purchased_at>2017-01-12T10:00:00,status=success',
+						filter: 'purchased_at>2017-01-13T10:00:00,status=success',
 						page: page
 					})
 			);
@@ -60,48 +54,14 @@ app.then(() => {
 
 		Promise.all(promises).then((results) => {
 			results.forEach(function(promisePageNumber) {
-
 				var arrayOfTransactions = promisePageNumber.data;
 				arrayOfTransactions.forEach(function(transaction, index) {
 					// ~~~ Building classyData for Promises ~~~
-
-					// attributes.fetchAttributes();
-
-					// contact ID - Classy does not collect
-
-					// title - Classy does not collect
-
-					let last_name = transaction.billing_last_name;
-					if (last_name == null || last_name == "") {
-						last_name = "last_name";
-					};
-
-					let first_name = transaction.billing_first_name;
-					if (first_name == null || first_name == "") {
-						first_name = "first_name";
-					};
-
-					let middle_name = transaction.middle_name;
-					if (middle_name == null || middle_name == "") {
-						middle_name = "middle_name";
-					};
-
-					let company_name = transaction.company_name;
-					if (company_name == null || company_name == "") {
-						company_name = "company_name";
-					};
-
-					/* 
-					!!! template for adding an attribute: 
-					var member_id = arrayOfTransactions[index].member_id;
-					classyData.push(new Array(member_id.toString()));
-					*/
-					classyData.push(new Array("contact ID", "title", last_name, first_name, middle_name, company_name));
+					attributes.fetchAttributes(transaction, classyData);
 				});
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
 			// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", classyData.length);
-		
 		csv
 			.write( classyData, {headers: csvHeaders} )
 			.pipe(ws);
