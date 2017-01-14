@@ -1,6 +1,6 @@
 module.exports = {
 	fetchAttributes: function(transaction, classyData) {
-		// contact ID - Classy does not collect
+		// contact ID - Classy does not collect, not used for import
 
 		// title - Classy does not collect
 
@@ -30,7 +30,13 @@ module.exports = {
 
 		let country = transaction.billing_country || "country";
 
+		// member id - not used for import
+
+		// campaign title - use transaction.campaign_id, then additional campaign fetch to get its name
+
+		// form title - not used for import
+
 		// !!! template for adding an attribute (each row is an array, using Fast CSV module): classyData.push(new Array(transaction.member_id.toString()));
-		classyData.push(["contact ID", "title", last_name, first_name, "middle_name", "company_name", "suffix", billing_email, phone, street1, street2, city, state, zip, country]);
+		classyData.push(["contact ID", "title", last_name, first_name, "middle_name", "company_name", "suffix", billing_email, phone, street1, street2, city, state, zip, country, "member ID", "campaign title", "form title"]);
 	}
 };
