@@ -38,7 +38,36 @@ module.exports = {
 
 		let net_transaction_amount = transaction.overhead_net_amount || "net_transaction_amount";
 
+		// format transaction_date to take date from purchased_at
+		let transaction_date = transaction.purchased_at.toString();
+		if (transaction_date == null || transaction_date == "") {
+		    transaction_date = "transaction_date";
+		} else {
+			let date = new Date();
+			date.setDate(date.getDate());
+			transaction_date = ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
+		};
+
+		
+		
+
+
+
+
 		// !!! template for adding an attribute (each row is an array, using Fast CSV module): classyData.push(new Array(transaction.member_id.toString()));
-		classyData.push(["contact ID", "title", last_name, first_name, "middle_name", "company_name", "suffix", billing_email, phone, street1, street2, city, state, zip, country, "member ID", "campaign title", "form title", net_transaction_amount]);
+		classyData.push(["contact ID", "title", last_name, first_name, "middle_name", "company_name", "suffix", billing_email, phone, street1, street2, city, state, zip, country, "member ID", "campaign title", "form title", net_transaction_amount, transaction_date]);
 	}
 };
+
+
+
+/*
+	let last_name = transaction.billing_last_name || "last_name";
+
+	~~ is short for.. ~~
+
+	let last_name = transaction.billing_last_name;
+	if (last_name == null || last_name == "") {
+	    last_name = "last_name";
+	};
+*/
