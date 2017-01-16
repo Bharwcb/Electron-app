@@ -39,16 +39,18 @@ module.exports = {
 		let net_transaction_amount = transaction.overhead_net_amount || "net_transaction_amount";
 
 		// format transaction_date to take date from purchased_at
-		let transaction_date = transaction.purchased_at.toString();
+		let transaction_date = transaction.purchased_at;
 		if (transaction_date == null || transaction_date == "") {
 		    transaction_date = "transaction_date";
 		} else {
-			let date = new Date();
+			// moment(transaction_date).format('MM/DD/YYYY');
+
+			let date = new Date(transaction_date);
 			date.setDate(date.getDate());
 			transaction_date = ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
 		};
 
-		
+
 		
 
 
