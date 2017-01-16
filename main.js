@@ -26,7 +26,7 @@ app.then(() => {
 	// First, loop through all transactions (with sample time filter)
 	classy.organizations.listTransactions(34, {
 		token: 'app',
-		filter: 'purchased_at>2017-01-13T10:00:00,status=success'
+		filter: 'purchased_at>2017-01-13T10:00:00,purchased_at<2017-01-15T10:00:00,status=success'
 	})
 
 	.then((response) => {
@@ -46,7 +46,7 @@ app.then(() => {
 			promises.push(
 					classy.organizations.listTransactions(34, {
 						token: 'app',
-						filter: 'purchased_at>2017-01-13T10:00:00,status=success',
+						filter: 'purchased_at>2017-01-13T10:00:00,purchased_at<2017-01-15T10:00:00,status=success',
 						page: page
 					})
 			);
