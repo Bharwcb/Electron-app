@@ -1,12 +1,11 @@
 module.exports = {
 	fetchAttributes: function(transaction, classyData) {
 		
-		
+
 		// contact ID - not used for import
 
-		// title - custom question
-		let title_question_id = "46362";
-		
+		// title - CUSTOM QUESTION
+	
 
 
 		let last_name = transaction.billing_last_name;
@@ -127,12 +126,14 @@ module.exports = {
 
 
 /*
-	let last_name = transaction.billing_last_name || null;
-
-	~~ "if it's blank or null, default to null (catches blank answers) ~~
-
-	let last_name = transaction.billing_last_name;
-	if (last_name == null || last_name == "") {
-	    last_name = null;
-	};
+answers = [
+	{
+    "question_id": 46362,
+    "answer": "Miss", ...
+  },
+  {
+		"question_id": 12345,
+    "answer": "asgdasg", ...
+  }
+]  
 */

@@ -36,8 +36,6 @@ app.then(() => {
 			// format var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[contact ID1, title1], [contact ID2, title2]].. etc.
 			var transaction = response.data[i];
 			let transaction_id = transaction.id; 
-			// ~~~ Building classyData for First Page ~~~
-			attributes.fetchAttributes(transaction, classyData, transaction_id);
 
 			// ~~ Start of Additional Requests ~~ 
 
@@ -49,13 +47,40 @@ app.then(() => {
 					with: 'answers'
 				}).then((transactionResponse) => {
 					
-					if (transactionResponse.answers.length > 0) {
-						console.log("FOO");
-					};
+
+
+
+
+
+
+
+					/* answers is an array of objects
+						answers = [
+							{
+						    "question_id": 46362,
+						    "answer": "Miss", ...
+						  },
+						  {
+								"question_id": 12345,
+						    "answer": "asgdasg", ...
+					    }
+					  ]
+					*/
+				
+
+
+
+
+
+
+
 
 				});
 
 			// ~~ End of Additional Requests
+
+			// ~~~ Building classyData for First Page ~~~
+			attributes.fetchAttributes(transaction, classyData);
 		};
 
 		const numberOfPages = response.last_page;
@@ -75,8 +100,6 @@ app.then(() => {
 			results.forEach(function(promisePageNumber) {
 				var arrayOfTransactions = promisePageNumber.data;
 				arrayOfTransactions.forEach(function(transaction, index) {
-					// ~~~ Building classyData for Promises ~~~
-					attributes.fetchAttributes(transaction, classyData);
 
 					// ~~ Start of Additional Requests ~~ 
 					let transaction_id = transaction.id;
@@ -86,18 +109,62 @@ app.then(() => {
 						classy.transactions.retrieve(transaction_id, {
 							token: 'app',
 							with: 'answers'
-						}).then((transactionResponse) => {
+						}).then((transactionResults) => {
 
 
-							if (transactionResponse.answers.length > 0) {
-								console.log("FOO");
+							
+
+
+
+
+
+
+
+
+							
+
+							/* answers is an array of objects
+								answers = [
+									{
+								    "question_id": 46362,
+								    "answer": "Miss", ...
+								  },
+								  {
+										"question_id": 12345,
+								    "answer": "asgdasg", ...
+							    }
+							  ]
+							*/
+							let title_question_id = "46362";
+							let customAnswers = transactionResults.answers;
+							// goes through every transaction, and checks if there are custom answers
+							if (transactionResults.answers.length > 0) {
+								// if there are, iterate through each answer object
+								customAnswers.forEach(function(answer, index) {
+									// and check if it has the title question_id
+									if (answer["question_id"] == title_question_id) {
+
+										// set title here.
+										console.log("BEEP BEEP BEEP!  TITLE QUESTION DETECTED");
+									};
+
+								});
 							};
+
+						
+
+
+
+
+
+
 
 
 						});
 
 					// ~~ End of Additional Requests
-
+					// ~~~ Building classyData for Promises ~~~
+					attributes.fetchAttributes(transaction, classyData);
 				});
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
