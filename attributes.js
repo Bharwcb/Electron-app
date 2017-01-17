@@ -43,21 +43,83 @@ module.exports = {
 		if (transaction_date == null || transaction_date == "") {
 		    transaction_date = "transaction_date";
 		} else {
-			// moment(transaction_date).format('MM/DD/YYYY');
-
 			let date = new Date(transaction_date);
 			date.setDate(date.getDate());
 			transaction_date = ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
 		};
 
+		// gift type
 
+		// temple name
 		
+		// designee 1 administrative name
+
+		// origin of gift - not used for import
+
+		// payment method - cc_type only for recurring donations, how else to get CC type?
+
+		// Settlement Status - not used for import/dupe
+
+		// Billing Last Name - not used for import/dupe
+
+		// Billing First Name - not used for import/dupe
+
+		// Billing Middle Name - not used for import/dupe
+
+		// Billing Suffix - not used for import/dupe
+
+		// Billing Street1 - not used for import/dupe
+
+		// Billing Street2 - not used for import/dupe
+
+		// Billing City - not used for import/dupe
+
+		// Billing State - not used for import/dupe
+
+		// Billing Zip - not used for import/dupe
+
+		// Billing Phone - not used for import/dupe
+
+		// Is Honor Gift - not used for import/dupe
+
+		// tribute first name
+
+		// tribute last name
 
 
+		// Sender Title
+
+		// Sender First Name
+
+		// Sender Last Name
+
+		// Sender Address 1
+
+		// Sender Address 2
+
+		// Sender City
+
+		// Sender State
+
+		// Sender Zip
+
+		// Sender Country
+
+		// Source Code Type
+
+		// Source Code Text
+
+		// Sub Source Code Text
+
+		// Name of Staff Member
+
+		// Donation Comment
+
+		// Store Name
 
 
 		// !!! template for adding an attribute (each row is an array, using Fast CSV module): classyData.push(new Array(transaction.member_id.toString()));
-		classyData.push(["contact ID", "title", last_name, first_name, "middle_name", "company_name", "suffix", billing_email, phone, street1, street2, city, state, zip, country, "member ID", "campaign title", "form title", net_transaction_amount, transaction_date]);
+		classyData.push(["contact ID", "title", last_name, first_name, "middle_name", "company_name", "suffix", billing_email, phone, street1, street2, city, state, zip, country, "member ID", "campaign title", "form title", net_transaction_amount, transaction_date, "gift type", "temple name", "designee 1 administrative name", "origin of gift", "payment_method", "settlement_status", "billing_last_name", "billing_first_name", "billing_middle_name", "billing_suffix", "billing street1", "billing street2", "billing city", "billing state", "billing zip", "billing phone", "is honor gift", "tribute first name", "tribute last name", "sender title", "sender first name", "sender last name", "sender address 1", "sender address 2", "sender city", "sender state", "sender zip", "sender country", "source code type", "source code text", "sub source code text", "name of staff member", "donation comment", "store name"]);
 	}
 };
 
