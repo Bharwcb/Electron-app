@@ -26,7 +26,7 @@ app.then(() => {
 	// First, loop through all transactions (with sample time filter)
 	classy.organizations.listTransactions(34, {
 		token: 'app',
-		filter: 'purchased_at>2017-01-13T10:00:00,purchased_at<2017-01-15T10:00:00,status=success'
+		filter: 'purchased_at>2017-01-16T10:00:00,status=success'
 	})
 
 	.then((response) => {
@@ -35,8 +35,27 @@ app.then(() => {
 		for (var i = 0; i < response.data.length; i++) {
 			// format var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[contact ID1, title1], [contact ID2, title2]].. etc.
 			var transaction = response.data[i];
-			// ~~~ Building classyData for First Page
-			attributes.fetchAttributes(transaction, classyData);
+			let transaction_id = transaction.id; 
+			// ~~~ Building classyData for First Page ~~~
+			attributes.fetchAttributes(transaction, classyData, transaction_id);
+
+			// ~~ Start of Additional Requests ~~ 
+
+				// Custom Questions:
+
+				// try transactions.listAnswers too
+				classy.transactions.retrieve(transaction_id, {
+					token: 'app',
+					with: 'answers'
+				}).then((transactionResponse) => {
+					
+					if (transactionResponse.answers.length > 0) {
+						console.log("FOO");
+					};
+
+				});
+
+			// ~~ End of Additional Requests
 		};
 
 		const numberOfPages = response.last_page;
@@ -46,7 +65,7 @@ app.then(() => {
 			promises.push(
 					classy.organizations.listTransactions(34, {
 						token: 'app',
-						filter: 'purchased_at>2017-01-13T10:00:00,purchased_at<2017-01-15T10:00:00,status=success',
+						filter: 'purchased_at>2017-01-16T10:00:00,status=success',
 						page: page
 					})
 			);
@@ -58,6 +77,27 @@ app.then(() => {
 				arrayOfTransactions.forEach(function(transaction, index) {
 					// ~~~ Building classyData for Promises ~~~
 					attributes.fetchAttributes(transaction, classyData);
+
+					// ~~ Start of Additional Requests ~~ 
+					let transaction_id = transaction.id;
+						// Custom Questions:
+
+						// try transactions.listAnswers too
+						classy.transactions.retrieve(transaction_id, {
+							token: 'app',
+							with: 'answers'
+						}).then((transactionResponse) => {
+
+
+							if (transactionResponse.answers.length > 0) {
+								console.log("FOO");
+							};
+
+
+						});
+
+					// ~~ End of Additional Requests
+
 				});
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
@@ -65,7 +105,7 @@ app.then(() => {
 		csv
 			.write( classyData, {headers: csvHeaders} )
 			.pipe(ws);
-		console.log("CSV Complete.");
+			console.log("CSV Complete.");
 		})
 		.catch((error) => {
 			console.log("ERROR 2ND THROUGH LAST PAGE: " + error);
@@ -75,6 +115,7 @@ app.then(() => {
 		console.log("ERROR ON FIRST PAGE: " + error);
 	});
 });
+
 
 
 

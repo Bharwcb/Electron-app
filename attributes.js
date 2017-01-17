@@ -1,8 +1,13 @@
 module.exports = {
 	fetchAttributes: function(transaction, classyData) {
-		// contact ID - Classy does not collect, not used for import
+		
+		
+		// contact ID - not used for import
 
-		// title - CUSTOM QUESTION
+		// title - custom question
+		let title_question_id = "46362";
+		
+
 
 		let last_name = transaction.billing_last_name;
 
@@ -83,35 +88,35 @@ module.exports = {
 		// tribute last name
 
 
-		// Sender Title
+		// Sender Title - not used for import/dupe
 
-		// Sender First Name
+		// Sender First Name - not used for import/dupe
 
-		// Sender Last Name
+		// Sender Last Name - not used for import/dupe
 
-		// Sender Address 1
+		// Sender Address 1 - not used for import/dupe
 
-		// Sender Address 2
+		// Sender Address 2 - not used for import/dupe
 
-		// Sender City
+		// Sender City - not used for import/dupe
 
-		// Sender State
+		// Sender State - not used for import/dupe
 
-		// Sender Zip
+		// Sender Zip - not used for import/dupe
 
-		// Sender Country
+		// Sender Country - not used for import/dupe
 
-		// Source Code Type
+		// Source Code Type - not used for import/dupe
 
-		// Source Code Text
+		// Source Code Text - not used for import/dupe
 
-		// Sub Source Code Text
+		// Sub Source Code Text - not used for import/dupe
 
-		// Name of Staff Member
+		// Name of Staff Member - not used for import/dupe
 
-		// Donation Comment
+		// Donation Comment - not used for import/dupe
 
-		// Store Name
+		// Store Name - not used for import/dupe
 
 
 		// !!! template for adding an attribute (each row is an array, using Fast CSV module): classyData.push(new Array(transaction.member_id.toString()));
