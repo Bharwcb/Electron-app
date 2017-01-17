@@ -4,9 +4,9 @@ module.exports = {
 
 		// title - CUSTOM QUESTION
 
-		let last_name = transaction.billing_last_name || "last_name";
+		let last_name = transaction.billing_last_name;
 
-		let first_name = transaction.billing_first_name || "first_name";
+		let first_name = transaction.billing_first_name;
 	
 		// middle name - custom question
 
@@ -14,21 +14,21 @@ module.exports = {
 
 		// suffix - custom question
 
-		let billing_email = transaction.member_email_address || "billing email";
+		let billing_email = transaction.member_email_address;
 
-		let phone = transaction.member_phone || "phone";
+		let phone = transaction.member_phone;
 
-		let street1 = transaction.billing_address1 || "street1";
+		let street1 = transaction.billing_address1;
 
-		let street2 = transaction.billing_address2 || "street2";
+		let street2 = transaction.billing_address2;
 
-		let city = transaction.billing_city || "city";
+		let city = transaction.billing_city;
 
-		let state = transaction.billing_state || "state";
+		let state = transaction.billing_state;
 
-		let zip = transaction.billing_postal_code || "zip";
+		let zip = transaction.billing_postal_code;
 
-		let country = transaction.billing_country || "country";
+		let country = transaction.billing_country;
 
 		// member id - not used for import
 
@@ -36,18 +36,14 @@ module.exports = {
 
 		// form title - not used for import
 
-		let net_transaction_amount = transaction.overhead_net_amount || "net_transaction_amount";
+		let net_transaction_amount = transaction.overhead_net_amount;
 
 		// format transaction_date to take date from purchased_at
 		let transaction_date = transaction.purchased_at;
-		if (transaction_date == null || transaction_date == "") {
-		    transaction_date = "transaction_date";
-		} else {
-			let date = new Date(transaction_date);
-			date.setDate(date.getDate());
-			transaction_date = ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
-		};
-
+		let date = new Date(transaction_date);
+		date.setDate(date.getDate());
+		transaction_date = ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
+		
 		// gift type
 
 		// temple name
@@ -126,12 +122,12 @@ module.exports = {
 
 
 /*
-	let last_name = transaction.billing_last_name || "last_name";
+	let last_name = transaction.billing_last_name || null;
 
-	~~ is short for.. ~~
+	~~ "if it's blank or null, default to null (catches blank answers) ~~
 
 	let last_name = transaction.billing_last_name;
 	if (last_name == null || last_name == "") {
-	    last_name = "last_name";
+	    last_name = null;
 	};
 */
