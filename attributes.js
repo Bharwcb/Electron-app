@@ -2,7 +2,7 @@ module.exports = {
 	fetchAttributes: function(transaction, classyData) {
 		// contact ID - Classy does not collect, not used for import
 
-		// title - CUSTOM QUESTION? 
+		// title - CUSTOM QUESTION
 
 		let last_name = transaction.billing_last_name || "last_name";
 
@@ -56,7 +56,7 @@ module.exports = {
 
 		// origin of gift - not used for import
 
-		// payment method - cc_type only for recurring donations, how else to get CC type?
+		// payment method - DO NOT THINK SINGLE TRANSACTIONS STORE CC TYPE. cc_type only for recurring donations.
 
 		// Settlement Status - not used for import/dupe
 
