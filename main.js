@@ -143,9 +143,9 @@ app.then(() => {
 								customAnswers.forEach(function(answer, index) {
 									// and check if it has the title question_id
 									if (answer["question_id"] == title_question_id) {
-
-										// set title here.
-										console.log("BEEP BEEP BEEP!  TITLE QUESTION DETECTED");
+										// console.log("BEEP BEEP BEEP!  TITLE QUESTION DETECTED");
+										// if found, it means this is the custom answer object for title. return the value of 'answer' key.
+										console.log(answer["answer"]);
 									};
 
 								});
