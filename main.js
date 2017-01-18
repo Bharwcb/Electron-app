@@ -23,17 +23,16 @@ let classyData = [];
 // used for custom answers, to avoid querying API more than have to.
 let indexedTitle = {};
 
+// ~~ Start of Additional Requests ~~ 
 app.then(() => {
-
-	// ~~ Start of Additional Requests ~~ 
 	classy.questions.listAnswers(46362, {
 		token: 'app',
 		per_page: '1'
 	}).then((answersResults) => {
-		console.log("page 1 answer results (what it's supposed to look like: ", answersResults);
+		console.log("page 1 answer results: ", answersResults);
 		let answers = answersResults.data;
 		answers.forEach(answer => {
-			console.log("answer on page 1: ", answer);
+			// console.log("answer on page 1: ", answer);
 			indexedTitle[answer.answerable_id] = answer.answer;
 		});
 
@@ -53,19 +52,16 @@ app.then(() => {
 		};
 		
 		Promise.all(titlePromises).then((titleResults) => {
-			console.log("array of title results", titleResults);
+			console.log("Title results pages 2 through end: ", titleResults);
 			titleResults.forEach(function(arrayofTitlesPerPage) {
+
 				var arrayofTitles = arrayofTitlesPerPage.data;
-				console.log("Title page number: ", arrayofTitlesPerPage);
-				// console.log("what to add: ", answer.answer);
-				// console.log("or this: ", answer.data.answer);
 				arrayofTitles.forEach(function(answer, index) {
-					console.log("Answer.answer: ", answer.answer);
 					indexedTitle[answer.answerable_id] = answer.answer;
-					console.log("indexed title: ", indexedTitle);
 				});
 				// so, it's building indexed title correctly.
 			});
+			console.log("indexed title works here: ", indexedTitle); 
 		}).catch((error) => {
 			console.log("ERROR IN ANSWERS OTHER PAGES", error);
 		})
@@ -73,10 +69,13 @@ app.then(() => {
 	}).catch((error) => {
 		console.log("ERROR IN ANSWERS FIRST PAGE: ", error);
 	});
-// ~~ End of Additional Requests
 
+});
 
+// ~~ End of Additional Requests.  SHOULD collect the whole indexedTitle by now.
+console.log("but need indexed title to work here: ", indexedTitle);
 
+app.then(() => {
 	// First, loop through all transactions (with sample time filter)
 	classy.organizations.listTransactions(34, {
 		token: 'app',
