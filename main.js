@@ -20,8 +20,25 @@ const csvHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Na
 
 // used to collect list of contact IDs, title, or whatever you are fetching. then, write to csv.
 let classyData = [];
+// used for custom answers, to avoid querying API more than have to.
+let indexedTitle = {};
 
 app.then(() => {
+
+	// ~~ Start of Additional Requests ~~ 
+		classy.questions.listAnswers(46362, {
+			token: 'app'
+		}).then((answersResults) => {
+			let answers = answersResults.data;
+			answers.forEach(answer => {
+				indexedTitle[answer.answerable_id] = answer.answer;
+			});
+		}).catch((error) => {
+			console.log("ERROR IN ANSWERS RESULTS: ", error);
+		});
+	// ~~ End of Additional Requests
+
+
 
 	// First, loop through all transactions (with sample time filter)
 	classy.organizations.listTransactions(34, {
@@ -36,27 +53,23 @@ app.then(() => {
 		for (var i = 0; i < response.data.length; i++) {
 			var transaction = response.data[i];
 
+			/*
+				// ~~ Start of Additional Requests ~~ 
 
-
-			// ~~ Start of Additional Requests ~~ 
-
-			// ~~~~~~~~~~~~~~NOT WORKING -- WRITING CUSTOM FOR EVERYTHING
-			let indexedTitle = {};
-
-			classy.questions.listAnswers(46362, {
-				token: 'app'
-			}).then((answersResponse) => {
-				let answers = answersResponse.data;
-				answers.forEach(answer => {
-					indexedTitle[answer.answerable_id] = answer.answer;
+				// ~~~~~~~~~~~~~~NOT WORKING -- WRITING CUSTOM FOR EVERYTHING
+				classy.questions.listAnswers(46362, {
+					token: 'app'
+				}).then((answersResponse) => {
+					let answers = answersResponse.data;
+					answers.forEach(answer => {
+						indexedTitle[answer.answerable_id] = answer.answer;
+					});
+					console.log("INDEXED TITLE: ", indexedTitle);
+				}).catch((error) => {
+					console.log("ERROR IN ANSWERS RESPONSE: ", error);
 				});
-				console.log("INDEXED TITLE: ", indexedTitle);
-
-			}).catch((error) => {
-				console.log("ERROR IN ANSWERS RESPONSE: ", error);
-			});
-			// ~~ End of Additional Requests
-
+				// ~~ End of Additional Requests
+			*/
 
 			// ~~~ Building classyData for First Page ~~~
 			attributes.fetchAttributes(transaction, classyData, indexedTitle);
@@ -77,23 +90,23 @@ app.then(() => {
 
 		Promise.all(promises).then((results) => {
 
-			// ~~ Start of Additional Requests ~~ 
-			// ~~~~~~~~~~~~~~NOT WORKING -- WRITING CUSTOM FOR EVERYTHING
-			let indexedTitle = {};
+			/*
+						// ~~ Start of Additional Requests ~~ 
+						// ~~~~~~~~~~~~~~NOT WORKING -- WRITING CUSTOM FOR EVERYTHING
+						classy.questions.listAnswers(46362, {
+							token: 'app'
+						}).then((answersResults) => {
+							let answers = answersResults.data;
+							answers.forEach(answer => {
+								indexedTitle[answer.answerable_id] = answer.answer;
+							});
+							
 
-			classy.questions.listAnswers(46362, {
-				token: 'app'
-			}).then((answersResults) => {
-				let answers = answersResults.data;
-				answers.forEach(answer => {
-					indexedTitle[answer.answerable_id] = answer.answer;
-				});
-				console.log("INDEXED TITLE: ", indexedTitle);
-
-			}).catch((error) => {
-				console.log("ERROR IN ANSWERS RESULTS: ", error);
-			});
-			// ~~ End of Additional Requests
+						}).catch((error) => {
+							console.log("ERROR IN ANSWERS RESULTS: ", error);
+						});
+						// ~~ End of Additional Requests
+			*/
 
 			results.forEach(function(promisePageNumber) {
 				var arrayOfTransactions = promisePageNumber.data;
@@ -106,6 +119,7 @@ app.then(() => {
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
 			// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", classyData.length);
+
 		csv
 			.write( classyData, {headers: csvHeaders} )
 			.pipe(ws);

@@ -1,12 +1,15 @@
 module.exports = {
-	fetchAttributes: function(transaction, classyData, indexedAnswers) {
+	fetchAttributes: function(transaction, classyData, indexedTitle) {
 		
 
 		// contact ID - not used for import
 
 		// title - CUSTOM QUESTION
-		transaction.titleCustomAnswer = indexedAnswers[transaction.id];
-		let title = transaction.titleCustomAnswer || "custom";
+		console.log("INDEXED TITLE HASH: ", indexedTitle);
+		let foo = indexedTitle[transaction.id];
+		let title = foo;
+		console.log("FOR THIS TRANSACTION #", transaction.id);
+		console.log("I AM WRITING ITS TITLE TO BE: ", title);
 		
 
 
