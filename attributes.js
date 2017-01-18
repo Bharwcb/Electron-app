@@ -5,7 +5,6 @@ module.exports = {
 		// contact ID - not used for import
 		console.log("~~~~~~~");
 		console.log("transaction id: ", transaction.id);
-		console.log("indexed title: ", indexedTitle);
 		let customTitle = indexedTitle[transaction.id];
 		console.log("maybe custom title isn't converting: ", customTitle);
 		console.log("~~~~~~~");
