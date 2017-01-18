@@ -1,39 +1,13 @@
-// module.exports = {
-// 	fetchTitle: function(classy) {
+/* 
 
-// 		classy.questions.listAnswers(46362, {
-// 		token: 'app',
-// 		per_page: '1'
-// 	}).then((answersResults) => {
-// 		let answers = answersResults.data;
-// 		answers.forEach(answer => {
-// 			indexedTitle[answer.answerable_id] = answer.answer;
-// 		});
+Lets make any request for custom answer a function, then have a separate file for populating the indexed Title hash.
 
-// 		// all additional pages of title
-		
-// 		const numberOfTitlePages = answersResults.last_page;
-// 		let titlePromises = [];
+So for example,
 
-// 		for (var page = 2; page < (numberOfTitlePages + 1); page++) {
-// 			titlePromises.push(
-// 				classy.questions.listAnswers(46362, {
-// 					token: 'app',
-// 					per_page: '1',
-// 					page: page
-// 				})
-// 				);
-// 		}
+/custom-answers directory
+- function to send the request to all pages of a certain question_id
+- title.js:  uses it to build the indexedTitle hash
+- company.js: uses it to build the indexedCompany hash
 
-// 		Promise.all(titlePromises).then((titleResults) => {
-// 			console.log("title results", titleResults);
-// 		}).catch((error) => {
-// 			console.log("ERROR IN ANSWERS OTHER PAGES", error);
-// 		})
+..and so on.
 
-// 	}).catch((error) => {
-// 		console.log("ERROR IN ANSWERS FIRST PAGE: ", error);
-// 	});
-// // ~~ End of Additional Requests
-// 	}
-// }
