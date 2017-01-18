@@ -4,14 +4,8 @@ module.exports = {
 
 		// contact ID - not used for import
 
-		// title - CUSTOM QUESTION
-		console.log("INDEXED TITLE HASH: ", indexedTitle);
-		let foo = indexedTitle[transaction.id];
-		let title = foo;
-		console.log("FOR THIS TRANSACTION #", transaction.id);
-		console.log("I AM WRITING ITS TITLE TO BE: ", title);
-		
-
+		let customTitle = indexedTitle[transaction.id];
+		let title = customTitle;
 
 		let last_name = transaction.billing_last_name;
 

@@ -26,17 +26,54 @@ let indexedTitle = {};
 app.then(() => {
 
 	// ~~ Start of Additional Requests ~~ 
-		classy.questions.listAnswers(46362, {
-			token: 'app'
-		}).then((answersResults) => {
-			let answers = answersResults.data;
-			answers.forEach(answer => {
-				indexedTitle[answer.answerable_id] = answer.answer;
+	classy.questions.listAnswers(46362, {
+		token: 'app',
+		per_page: '1'
+	}).then((answersResults) => {
+		console.log("page 1 answer results (what it's supposed to look like: ", answersResults);
+		let answers = answersResults.data;
+		answers.forEach(answer => {
+			console.log("answer on page 1: ", answer);
+			indexedTitle[answer.answerable_id] = answer.answer;
+		});
+
+		// all additional pages of title
+		
+		const numberOfTitlePages = answersResults.last_page;
+		let titlePromises = [];
+
+		for (var page = 2; page < (numberOfTitlePages + 1); page++) {
+			titlePromises.push(
+				classy.questions.listAnswers(46362, {
+					token: 'app',
+					per_page: '1',
+					page: page
+				})
+			);
+		};
+		
+		Promise.all(titlePromises).then((titleResults) => {
+			console.log("array of title results", titleResults);
+			titleResults.forEach(function(arrayofTitlesPerPage) {
+				var arrayofTitles = arrayofTitlesPerPage.data;
+				console.log("Title page number: ", arrayofTitlesPerPage);
+				// console.log("what to add: ", answer.answer);
+				// console.log("or this: ", answer.data.answer);
+				arrayofTitles.forEach(function(answer, index) {
+					console.log("Answer.answer: ", answer.answer);
+					indexedTitle[answer.answerable_id] = answer.answer;
+					console.log("indexed title: ", indexedTitle);
+				});
+				// so, it's building indexed title correctly.
 			});
 		}).catch((error) => {
-			console.log("ERROR IN ANSWERS RESULTS: ", error);
-		});
-	// ~~ End of Additional Requests
+			console.log("ERROR IN ANSWERS OTHER PAGES", error);
+		})
+
+	}).catch((error) => {
+		console.log("ERROR IN ANSWERS FIRST PAGE: ", error);
+	});
+// ~~ End of Additional Requests
 
 
 
@@ -52,34 +89,15 @@ app.then(() => {
 
 		for (var i = 0; i < response.data.length; i++) {
 			var transaction = response.data[i];
-
-			/*
-				// ~~ Start of Additional Requests ~~ 
-
-				// ~~~~~~~~~~~~~~NOT WORKING -- WRITING CUSTOM FOR EVERYTHING
-				classy.questions.listAnswers(46362, {
-					token: 'app'
-				}).then((answersResponse) => {
-					let answers = answersResponse.data;
-					answers.forEach(answer => {
-						indexedTitle[answer.answerable_id] = answer.answer;
-					});
-					console.log("INDEXED TITLE: ", indexedTitle);
-				}).catch((error) => {
-					console.log("ERROR IN ANSWERS RESPONSE: ", error);
-				});
-				// ~~ End of Additional Requests
-			*/
-
 			// ~~~ Building classyData for First Page ~~~
 			attributes.fetchAttributes(transaction, classyData, indexedTitle);
 		};
 
 		const numberOfPages = response.last_page;
-		let promises = [];
+		let transactionPromises = [];
 		// Request all remaining pages after the first page, add to promises array to call asynchronously with Promise.all
 		for (var page = 2; page < (numberOfPages + 1); page++) {
-			promises.push(
+			transactionPromises.push(
 					classy.organizations.listTransactions(34, {
 						token: 'app',
 						filter: 'purchased_at>2017-01-17T10:00:00,status=success',
@@ -88,34 +106,14 @@ app.then(() => {
 			);
 		};
 
-		Promise.all(promises).then((results) => {
-
-			/*
-						// ~~ Start of Additional Requests ~~ 
-						// ~~~~~~~~~~~~~~NOT WORKING -- WRITING CUSTOM FOR EVERYTHING
-						classy.questions.listAnswers(46362, {
-							token: 'app'
-						}).then((answersResults) => {
-							let answers = answersResults.data;
-							answers.forEach(answer => {
-								indexedTitle[answer.answerable_id] = answer.answer;
-							});
-							
-
-						}).catch((error) => {
-							console.log("ERROR IN ANSWERS RESULTS: ", error);
-						});
-						// ~~ End of Additional Requests
-			*/
+		Promise.all(transactionPromises).then((results) => {
 
 			results.forEach(function(promisePageNumber) {
 				var arrayOfTransactions = promisePageNumber.data;
 				arrayOfTransactions.forEach(function(transaction, index) {
-
 					// ~~~ Building classyData for Promises ~~~
 					attributes.fetchAttributes(transaction, classyData, indexedTitle);
 				});
-
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
 			// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", classyData.length);
