@@ -26,7 +26,7 @@ app.then(() => {
 	// First, loop through all transactions (with sample time filter)
 	classy.organizations.listTransactions(34, {
 		token: 'app',
-		filter: 'purchased_at>2017-01-16T10:00:00,status=success'
+		filter: 'purchased_at>2017-01-17T10:00:00,status=success'
 	})
 
 	.then((response) => {
@@ -35,25 +35,14 @@ app.then(() => {
 		for (var i = 0; i < response.data.length; i++) {
 			// format var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[contact ID1, title1], [contact ID2, title2]].. etc.
 			var transaction = response.data[i];
-			let transaction_id = transaction.id; 
 
 			// ~~ Start of Additional Requests ~~ 
-
-				// Custom Questions:
-
+				// let transaction_id = transaction.id; 
 				// try transactions.listAnswers too
-				classy.transactions.retrieve(transaction_id, {
-					token: 'app',
-					with: 'answers'
-				}).then((transactionResponse) => {
-					
-
-
-
-
-
-
-
+				// classy.transactions.retrieve(transaction_id, {
+				// 	token: 'app',
+				// 	with: 'answers'
+				// }).then((transactionResponse) => {
 					/* answers is an array of objects
 						answers = [
 							{
@@ -66,17 +55,7 @@ app.then(() => {
 					    }
 					  ]
 					*/
-				
-
-
-
-
-
-
-
-
-				});
-
+				// });
 			// ~~ End of Additional Requests
 
 			// ~~~ Building classyData for First Page ~~~
@@ -90,7 +69,7 @@ app.then(() => {
 			promises.push(
 					classy.organizations.listTransactions(34, {
 						token: 'app',
-						filter: 'purchased_at>2017-01-16T10:00:00,status=success',
+						filter: 'purchased_at>2017-01-17T10:00:00,status=success',
 						page: page
 					})
 			);
@@ -102,67 +81,28 @@ app.then(() => {
 				arrayOfTransactions.forEach(function(transaction, index) {
 
 					// ~~ Start of Additional Requests ~~ 
-					let transaction_id = transaction.id;
-						// Custom Questions:
-
-						// try transactions.listAnswers too
-						classy.transactions.retrieve(transaction_id, {
-							token: 'app',
-							with: 'answers'
-						}).then((transactionResults) => {
-
-
-							
-
-
-
-
-
-
-
-
-							
-
-							/* answers is an array of objects
-								answers = [
-									{
-								    "question_id": 46362,
-								    "answer": "Miss", ...
-								  },
-								  {
-										"question_id": 12345,
-								    "answer": "asgdasg", ...
-							    }
-							  ]
-							*/
-							let title_question_id = "46362";
-							let customAnswers = transactionResults.answers;
-							// goes through every transaction, and checks if there are custom answers
-							if (transactionResults.answers.length > 0) {
-								// if there are, iterate through each answer object
-								customAnswers.forEach(function(answer, index) {
-									// and check if it has the title question_id
-									if (answer["question_id"] == title_question_id) {
-										// console.log("BEEP BEEP BEEP!  TITLE QUESTION DETECTED");
-										// if found, it means this is the custom answer object for title. return the value of 'answer' key.
-										console.log(answer["answer"]);
-									};
-
-								});
-							};
-
-						
-
-
-
-
-
-
-
-
-						});
-
+						// let transaction_id = transaction.id;
+						// classy.transactions.retrieve(transaction_id, {
+						// 	token: 'app',
+						// 	with: 'answers'
+						// }).then((transactionResults) => {
+							// let title_question_id = "46362";
+							// let customAnswers = transactionResults.answers;
+							// // goes through every transaction, and checks if there are custom answers
+							// if (transactionResults.answers.length > 0) {
+							// 	// if there are, iterate through each answer object
+							// 	customAnswers.forEach(function(answer, index) {
+							// 		// and check if it has the title question_id
+							// 		if (answer["question_id"] == title_question_id) {
+							// 			// console.log("BEEP BEEP BEEP!  TITLE QUESTION DETECTED");
+							// 			// if found, it means this is the custom answer object for title. return the value of 'answer' key.
+							// 			console.log(answer["answer"]);
+							// 		};
+							// 	});
+							// };
+						// });
 					// ~~ End of Additional Requests
+					
 					// ~~~ Building classyData for Promises ~~~
 					attributes.fetchAttributes(transaction, classyData);
 				});
