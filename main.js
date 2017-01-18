@@ -14,6 +14,8 @@ var classy = new Classy({
 	requestDebug: false
 });
 
+const time_filter = '>2017-01-17T10:00:00';
+
 const app = classy.app();
 
 // one place to change headers for import
@@ -32,7 +34,7 @@ async.series([
 			classy.questions.listAnswers(46362, {
 				token: 'app',
 				per_page: '1',
-				filter: 'created_at>2017-01-17T10:00:00'
+				filter: 'created_at' + time_filter
 			}).then((answersResults) => {
 				console.log("page 1 answer results: ", answersResults);
 				let answers = answersResults.data;
@@ -51,7 +53,7 @@ async.series([
 							token: 'app',
 							per_page: '1',
 							page: page,
-							filter: 'created_at>2017-01-17T10:00:00'
+							filter: 'created_at' + time_filter
 						})
 					);
 				};
@@ -84,7 +86,7 @@ async.series([
 			// First, loop through all transactions (with sample time filter)
 			classy.organizations.listTransactions(34, {
 				token: 'app',
-				filter: 'purchased_at>2017-01-17T10:00:00,status=success'
+				filter: 'status=success,purchased_at' + time_filter
 			})
 
 			.then((response) => {
@@ -105,7 +107,7 @@ async.series([
 					transactionPromises.push(
 							classy.organizations.listTransactions(34, {
 								token: 'app',
-								filter: 'purchased_at>2017-01-17T10:00:00,status=success',
+								filter: 'status=success,purchased_at' + time_filter,
 								page: page
 							})
 					);
