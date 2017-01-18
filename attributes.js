@@ -1,11 +1,13 @@
 module.exports = {
-	fetchAttributes: function(transaction, classyData) {
+	fetchAttributes: function(transaction, classyData, indexedAnswers) {
 		
 
 		// contact ID - not used for import
 
 		// title - CUSTOM QUESTION
-	
+		transaction.titleCustomAnswer = indexedAnswers[transaction.id];
+		let title = transaction.titleCustomAnswer || "custom";
+		
 
 
 		let last_name = transaction.billing_last_name;
@@ -119,7 +121,7 @@ module.exports = {
 
 
 		// !!! template for adding an attribute (each row is an array, using Fast CSV module): classyData.push(new Array(transaction.member_id.toString()));
-		classyData.push(["contact ID", "title", last_name, first_name, "middle_name", "company_name", "suffix", billing_email, phone, street1, street2, city, state, zip, country, "member ID", "campaign title", "form title", net_transaction_amount, transaction_date, "gift type", "temple name", "designee 1 administrative name", "origin of gift", "payment_method", "settlement_status", "billing_last_name", "billing_first_name", "billing_middle_name", "billing_suffix", "billing street1", "billing street2", "billing city", "billing state", "billing zip", "billing phone", "is honor gift", "tribute first name", "tribute last name", "sender title", "sender first name", "sender last name", "sender address 1", "sender address 2", "sender city", "sender state", "sender zip", "sender country", "source code type", "source code text", "sub source code text", "name of staff member", "donation comment", "store name"]);
+		classyData.push(["contact ID", title, last_name, first_name, "middle_name", "company_name", "suffix", billing_email, phone, street1, street2, city, state, zip, country, "member ID", "campaign title", "form title", net_transaction_amount, transaction_date, "gift type", "temple name", "designee 1 administrative name", "origin of gift", "payment_method", "settlement_status", "billing_last_name", "billing_first_name", "billing_middle_name", "billing_suffix", "billing street1", "billing street2", "billing city", "billing state", "billing zip", "billing phone", "is honor gift", "tribute first name", "tribute last name", "sender title", "sender first name", "sender last name", "sender address 1", "sender address 2", "sender city", "sender state", "sender zip", "sender country", "source code type", "source code text", "sub source code text", "name of staff member", "donation comment", "store name"]);
 	}
 };
 

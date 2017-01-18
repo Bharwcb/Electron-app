@@ -34,10 +34,32 @@ app.then(() => {
 		var ws = fs.createWriteStream('./result.csv');
 
 		for (var i = 0; i < response.data.length; i++) {
-			// format var classyData in the way fast-csv wants it to put each of 20 transactions row by row.. [[contact ID1, title1], [contact ID2, title2]].. etc.
 			var transaction = response.data[i];
+
+
+
+			// ~~ Start of Additional Requests ~~ 
+
+			// ~~~~~~~~~~~~~~NOT WORKING -- WRITING CUSTOM FOR EVERYTHING
+			let indexedTitle = {};
+
+			classy.questions.listAnswers(46362, {
+				token: 'app'
+			}).then((answersResponse) => {
+				let answers = answersResponse.data;
+				answers.forEach(answer => {
+					indexedTitle[answer.answerable_id] = answer.answer;
+				});
+				console.log("INDEXED TITLE: ", indexedTitle);
+
+			}).catch((error) => {
+				console.log("ERROR IN ANSWERS RESPONSE: ", error);
+			});
+			// ~~ End of Additional Requests
+
+
 			// ~~~ Building classyData for First Page ~~~
-			attributes.fetchAttributes(transaction, classyData);
+			attributes.fetchAttributes(transaction, classyData, indexedTitle);
 		};
 
 		const numberOfPages = response.last_page;
@@ -56,10 +78,18 @@ app.then(() => {
 		Promise.all(promises).then((results) => {
 
 			// ~~ Start of Additional Requests ~~ 
+			// ~~~~~~~~~~~~~~NOT WORKING -- WRITING CUSTOM FOR EVERYTHING
+			let indexedTitle = {};
+
 			classy.questions.listAnswers(46362, {
 				token: 'app'
 			}).then((answersResults) => {
-				console.log("ANSWERS RESULTS: ", answersResults);
+				let answers = answersResults.data;
+				answers.forEach(answer => {
+					indexedTitle[answer.answerable_id] = answer.answer;
+				});
+				console.log("INDEXED TITLE: ", indexedTitle);
+
 			}).catch((error) => {
 				console.log("ERROR IN ANSWERS RESULTS: ", error);
 			});
@@ -68,10 +98,11 @@ app.then(() => {
 			results.forEach(function(promisePageNumber) {
 				var arrayOfTransactions = promisePageNumber.data;
 				arrayOfTransactions.forEach(function(transaction, index) {
+
 					// ~~~ Building classyData for Promises ~~~
-					attributes.fetchAttributes(transaction, classyData);
+					attributes.fetchAttributes(transaction, classyData, indexedTitle);
 				});
-				
+
 				// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 			});
 			// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", classyData.length);
