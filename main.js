@@ -31,7 +31,8 @@ async.series([
 		app.then(() => {
 			classy.questions.listAnswers(46362, {
 				token: 'app',
-				per_page: '1'
+				per_page: '1',
+				filter: 'created_at>2017-01-17T10:00:00'
 			}).then((answersResults) => {
 				console.log("page 1 answer results: ", answersResults);
 				let answers = answersResults.data;
@@ -49,7 +50,8 @@ async.series([
 						classy.questions.listAnswers(46362, {
 							token: 'app',
 							per_page: '1',
-							page: page
+							page: page,
+							filter: 'created_at>2017-01-17T10:00:00'
 						})
 					);
 				};
@@ -77,7 +79,7 @@ async.series([
 	},
 
 	function(next){
-
+		console.log("indexed title: ", indexedTitle);
 		app.then(() => {
 			// First, loop through all transactions (with sample time filter)
 			classy.organizations.listTransactions(34, {

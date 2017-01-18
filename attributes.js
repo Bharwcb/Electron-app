@@ -1,13 +1,17 @@
 module.exports = {
 	fetchAttributes: function(transaction, classyData, indexedTitle) {
 		
-
 		// contact ID - not used for import
-		console.log("~~~~~~~");
-		console.log("transaction id: ", transaction.id);
+
+		// if doesn't find that transaction.id in customTitle hash, doesn't set it
 		let customTitle = indexedTitle[transaction.id];
-		console.log("maybe custom title isn't converting: ", customTitle);
-		console.log("~~~~~~~");
+		if (customTitle != undefined) {
+			console.log("~~~~~~~");
+			console.log("transaction id: ", transaction.id);
+			console.log("custom title that will get written: ", customTitle);
+			console.log("but does it still recognize indexedTitle? ", indexedTitle);
+			console.log("~~~~~~~");
+		}
 		let title = customTitle;
 
 		let last_name = transaction.billing_last_name;
