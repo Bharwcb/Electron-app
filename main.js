@@ -76,11 +76,25 @@ app.then(() => {
 		};
 
 		Promise.all(promises).then((results) => {
+
+			// ~~ Start of Additional Requests ~~ 
+			classy.questions.listAnswers(46362, {
+				token: 'app'
+			}).then((answersResults) => {
+				console.log("ANSWERS RESULTS: ", answersResults);
+			}).catch((error) => {
+				console.log("ERROR IN ANSWERS RESULTS: ", error);
+			});
+			// ~~ End of Additional Requests
+
+
 			results.forEach(function(promisePageNumber) {
 				var arrayOfTransactions = promisePageNumber.data;
 				arrayOfTransactions.forEach(function(transaction, index) {
 
-					// ~~ Start of Additional Requests ~~ 
+					
+					
+
 						// let transaction_id = transaction.id;
 						// classy.transactions.retrieve(transaction_id, {
 						// 	token: 'app',
@@ -101,8 +115,8 @@ app.then(() => {
 							// 	});
 							// };
 						// });
-					// ~~ End of Additional Requests
 					
+
 					// ~~~ Building classyData for Promises ~~~
 					attributes.fetchAttributes(transaction, classyData);
 				});
