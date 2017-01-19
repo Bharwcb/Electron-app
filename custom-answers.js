@@ -10,12 +10,9 @@ So for example,
 - maybe a reusable function to send the request to ALL CUSTOM QUESTIONS, just plugin the question_id, blank indexed hash, etc.
 
 */
-var main = require('./main.js');
-
-console.log(app);
 
 module.exports = {
-	fetchAttributes: function() {
+	fetchCustomTitle: function() {
 		// ~~ Start of Additional Requests ~~ 
 		app.then(() => {
 			classy.questions.listAnswers(46362, {

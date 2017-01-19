@@ -1,22 +1,12 @@
 // manages .env file
 require('dotenv').load();
 
-var Classy = require('classy-node');
 var fs = require('fs');
 var csv = require('fast-csv');
 var attributes = require('./attributes');
-var async=require('async');
-var customAnswers = require('./custom-answers');
-
-var classy = new Classy({
-	baseUrl: 'https://stagingapi.stayclassy.org',
-	clientId: process.env.CLIENT_ID,
-	clientSecret: process.env.CLIENT_SECRET,
-	requestDebug: false
-});
-
+var async = require('async');
+var classy = require('./classy-build');
 const app = classy.app();
-module.exports = classy.app();
 
 const time_filter = '>2017-01-18T10:00:00';
 
@@ -28,11 +18,63 @@ let classyData = [];
 // used for custom answers, to avoid querying API more than have to.
 let indexedTitle = {};
 
+var customAnswers = require('./custom-answers');
+
 async.series([
 
 	function(next){
 		// build the indexed custom title hash to apply in next function when retreive entire list of transactions
-		customAnswers.fetchCustomTitle();
+		// customAnswers.fetchCustomTitle();
+
+
+
+		// ~~ Start of Additional Requests ~~ 
+		app.then(() => {
+			classy.questions.listAnswers(46362, {
+				token: 'app',
+				filter: 'created_at' + time_filter
+			}).then((answersResults) => {
+				console.log("page 1 answer results: ", answersResults);
+				let answers = answersResults.data;
+				answers.forEach(answer => {
+					indexedTitle[answer.answerable_id] = answer.answer;
+				});
+
+				// all additional pages of title
+				
+				const numberOfTitlePages = answersResults.last_page;
+				let titlePromises = [];
+
+				for (var page = 2; page < (numberOfTitlePages + 1); page++) {
+					titlePromises.push(
+						classy.questions.listAnswers(46362, {
+							token: 'app',
+							page: page,
+							filter: 'created_at' + time_filter
+						})
+					);
+				};
+				
+				Promise.all(titlePromises).then((titleResults) => {
+					console.log("Title results pages 2 through end: ", titleResults);
+					titleResults.forEach(function(arrayofTitlesPerPage) {
+
+						var arrayofTitles = arrayofTitlesPerPage.data;
+						arrayofTitles.forEach(function(answer, index) {
+							indexedTitle[answer.answerable_id] = answer.answer;
+						});
+						// so, it's building indexed title correctly.
+					});
+					next();
+				}).catch((error) => {
+					console.log("ERROR IN ANSWERS OTHER PAGES", error);
+				})
+
+			}).catch((error) => {
+				console.log("ERROR IN ANSWERS FIRST PAGE: ", error);
+			});
+		});
+		// ~~ End of async step 1 (title).  SHOULD collect the whole indexedTitle by now.
 	},
 
 	function(next){
