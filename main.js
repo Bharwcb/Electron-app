@@ -18,67 +18,18 @@ let classyData = [];
 // used for custom answers, to avoid querying API more than have to.
 let indexedTitle = {};
 
-var customAnswers = require('./custom-answers');
+app.then(() => {
 
-async.series([
+	async.series([
 
-	function(next){
-		// build the indexed custom title hash to apply in next function when retreive entire list of transactions
+		function(next){
+			// build the indexed custom title hash to apply in next function when retreive entire list of transactions
+			require('./title')(next, indexedTitle, time_filter);
+		},
 
-		// customAnswers.fetchCustomTitle();
-
-		// ~~ Start of Additional Requests ~~ 
-		app.then(() => {
-			classy.questions.listAnswers(46362, {
-				token: 'app',
-				filter: 'created_at' + time_filter
-			}).then((answersResults) => {
-				console.log("page 1 answer results: ", answersResults);
-				let answers = answersResults.data;
-				answers.forEach(answer => {
-					indexedTitle[answer.answerable_id] = answer.answer;
-				});
-
-				// all additional pages of title
-				
-				const numberOfTitlePages = answersResults.last_page;
-				let titlePromises = [];
-
-				for (var page = 2; page < (numberOfTitlePages + 1); page++) {
-					titlePromises.push(
-						classy.questions.listAnswers(46362, {
-							token: 'app',
-							page: page,
-							filter: 'created_at' + time_filter
-						})
-					);
-				};
-				
-				Promise.all(titlePromises).then((titleResults) => {
-					console.log("Title results pages 2 through end: ", titleResults);
-					titleResults.forEach(function(arrayofTitlesPerPage) {
-
-						var arrayofTitles = arrayofTitlesPerPage.data;
-						arrayofTitles.forEach(function(answer, index) {
-							indexedTitle[answer.answerable_id] = answer.answer;
-						});
-						// so, it's building indexed title correctly.
-					});
-					next();
-				}).catch((error) => {
-					console.log("ERROR IN ANSWERS OTHER PAGES", error);
-				})
-
-			}).catch((error) => {
-				console.log("ERROR IN ANSWERS FIRST PAGE: ", error);
-			});
-		});
-		// ~~ End of async step 1 (title).  SHOULD collect the whole indexedTitle by now.
-	},
-
-	function(next){
-		console.log("indexed title: ", indexedTitle);
-		app.then(() => {
+		function(next){
+			console.log("indexed title: ", indexedTitle);
+			
 			// First, loop through all transactions (with sample time filter)
 			classy.organizations.listTransactions(34, {
 				token: 'app',
@@ -133,11 +84,14 @@ async.series([
 			.catch((error) => {
 				console.log("ERROR ON FIRST PAGE: " + error);
 			});
-		});
-	}
-	// end of asynch 2 (transactions)
+		}
+		// end of asynch 2 (transactions)
 
-]);
+	]);
+
+})
+
+
 
 
 
