@@ -6,6 +6,7 @@ var fs = require('fs');
 var csv = require('fast-csv');
 var attributes = require('./attributes');
 var async=require('async');
+var customAnswers = require('./custom-answers');
 
 var classy = new Classy({
 	baseUrl: 'https://stagingapi.stayclassy.org',
@@ -14,9 +15,10 @@ var classy = new Classy({
 	requestDebug: false
 });
 
-const time_filter = '>2017-01-18T10:00:00';
-
 const app = classy.app();
+module.exports = classy.app();
+
+const time_filter = '>2017-01-18T10:00:00';
 
 // one place to change headers for import
 const csvHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
@@ -29,53 +31,8 @@ let indexedTitle = {};
 async.series([
 
 	function(next){
-		// ~~ Start of Additional Requests ~~ 
-		app.then(() => {
-			classy.questions.listAnswers(46362, {
-				token: 'app',
-				filter: 'created_at' + time_filter
-			}).then((answersResults) => {
-				console.log("page 1 answer results: ", answersResults);
-				let answers = answersResults.data;
-				answers.forEach(answer => {
-					indexedTitle[answer.answerable_id] = answer.answer;
-				});
-
-				// all additional pages of title
-				
-				const numberOfTitlePages = answersResults.last_page;
-				let titlePromises = [];
-
-				for (var page = 2; page < (numberOfTitlePages + 1); page++) {
-					titlePromises.push(
-						classy.questions.listAnswers(46362, {
-							token: 'app',
-							page: page,
-							filter: 'created_at' + time_filter
-						})
-					);
-				};
-				
-				Promise.all(titlePromises).then((titleResults) => {
-					console.log("Title results pages 2 through end: ", titleResults);
-					titleResults.forEach(function(arrayofTitlesPerPage) {
-
-						var arrayofTitles = arrayofTitlesPerPage.data;
-						arrayofTitles.forEach(function(answer, index) {
-							indexedTitle[answer.answerable_id] = answer.answer;
-						});
-						// so, it's building indexed title correctly.
-					});
-					next();
-				}).catch((error) => {
-					console.log("ERROR IN ANSWERS OTHER PAGES", error);
-				})
-
-			}).catch((error) => {
-				console.log("ERROR IN ANSWERS FIRST PAGE: ", error);
-			});
-		});
-		// ~~ End of async step 1 (title).  SHOULD collect the whole indexedTitle by now.
+		// build the indexed custom title hash to apply in next function when retreive entire list of transactions
+		customAnswers.fetchCustomTitle();
 	},
 
 	function(next){
