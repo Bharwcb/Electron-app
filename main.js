@@ -14,7 +14,7 @@ var classy = new Classy({
 	requestDebug: false
 });
 
-const time_filter = '>2017-01-17T10:00:00';
+const time_filter = '>2017-01-18T10:00:00';
 
 const app = classy.app();
 
@@ -33,7 +33,6 @@ async.series([
 		app.then(() => {
 			classy.questions.listAnswers(46362, {
 				token: 'app',
-				per_page: '1',
 				filter: 'created_at' + time_filter
 			}).then((answersResults) => {
 				console.log("page 1 answer results: ", answersResults);
@@ -51,7 +50,6 @@ async.series([
 					titlePromises.push(
 						classy.questions.listAnswers(46362, {
 							token: 'app',
-							per_page: '1',
 							page: page,
 							filter: 'created_at' + time_filter
 						})
