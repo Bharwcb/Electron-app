@@ -14,9 +14,9 @@ So for example,
 classy = require('./classy-build');
 
 // ~~ Start of Additional Requests ~~ 
-var buildCustomTitleHash = function(next, indexedTitle, time_filter) {
+var buildCustomTitleHash = function(indexedTitle, time_filter) {
 
-	classy.questions.listAnswers(46362, {
+	return classy.questions.listAnswers(46362, {
 		token: 'app',
 		filter: 'created_at' + time_filter
 	})
@@ -42,25 +42,28 @@ var buildCustomTitleHash = function(next, indexedTitle, time_filter) {
 			);
 		};
 		
-		Promise.all(titlePromises).then((titleResults) => {
-			console.log("Title results pages 2 through end: ", titleResults);
-			titleResults.forEach(function(arrayofTitlesPerPage) {
+		return Promise.all(titlePromises);
+	})
+	.then((response) => {
+		return response;
+	}, (err) => {
+		console.log('error earlier', err);
+	})
+	.then((titleResults) => {
+		console.log("Title results pages 2 through end: ", titleResults);
+		titleResults.forEach(function(arrayofTitlesPerPage) {
 
-				var arrayofTitles = arrayofTitlesPerPage.data;
-				arrayofTitles.forEach(function(answer, index) {
-					indexedTitle[answer.answerable_id] = answer.answer;
-				});
-				// so, it's building indexed title correctly.
+			var arrayofTitles = arrayofTitlesPerPage.data;
+			arrayofTitles.forEach(function(answer, index) {
+				indexedTitle[answer.answerable_id] = answer.answer;
 			});
-			next();
-		}).catch((error) => {
-			console.log("ERROR IN ANSWERS OTHER PAGES", error);
+			// so, it's building indexed title correctly.
 		});
-
-	}).catch((error) => {
-		console.log("ERROR IN ANSWERS FIRST PAGE: ", error);
 	});
-	// ~~ End of async step 1 (title).  SHOULD collect the whole indexedTitle by now.
+	// .catch((error) => {
+	// 	console.log("ERROR IN ANSWERS OTHER PAGES", error);
+	// });
+	// // ~~ End of async step 1 (title).  SHOULD collect the whole indexedTitle by now.
 };
 
 module.exports = buildCustomTitleHash;
