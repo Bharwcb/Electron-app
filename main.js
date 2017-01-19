@@ -24,9 +24,8 @@ async.series([
 
 	function(next){
 		// build the indexed custom title hash to apply in next function when retreive entire list of transactions
+
 		// customAnswers.fetchCustomTitle();
-
-
 
 		// ~~ Start of Additional Requests ~~ 
 		app.then(() => {
