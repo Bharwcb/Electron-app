@@ -70,12 +70,15 @@ app
 		});
 		// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 	});
-			// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", classyData.length);
+	// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", classyData.length);
 
 	csv
 		.write( classyData, {headers: csvHeaders} )
-		.pipe(ws);
-		console.log("CSV Complete.");
+		.pipe(ws)
+		.on("finish", () => {
+			console.log("CSV complete");
+		})
+
 })
 .catch((error) => {
 	console.log("Error somewhere in the chain: " + error);
