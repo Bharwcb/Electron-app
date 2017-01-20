@@ -3,7 +3,6 @@ module.exports = {
 		
 		// contact ID - not used for import
 
-		// if doesn't find that transaction.id in customTitle hash, doesn't set it
 		let title = indexedTitle[transaction.id];
 
 		let last_name = transaction.billing_last_name;
