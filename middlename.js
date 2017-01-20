@@ -11,9 +11,6 @@ var buildCustomMiddlenameHash = function(indexedMiddlename, time_filter, middlen
 
 		let answers = answersResults.data;
 		answers.forEach(answer => {
-			console.log("answer object: ", answer);
-			console.log("answer transaction id: ", answer.answerable_id);
-			console.log("answer value: ", answer.answer)
 			indexedMiddlename[answer.answerable_id] = answer.answer;
 		});
 
