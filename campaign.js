@@ -3,12 +3,14 @@ classy = require('./classy-build');
 
 var fetchCampaignTitle = function(transaction_id) {
 
-	return classy.transactions.retrieve(transaction_id, {
+	classy.transactions.retrieve(transaction_id, {
 		token: 'app'
 	})
 
 	.then((transactionResponse) => {
 		let campaignTitle = transactionResponse.campaign.name;
+
+		// CAMPAIGN TITLE WORKS HERE, BUT NOT BACK IN MAIN.JS
 		console.log("transaction_id: ", transaction_id);
 		console.log("campaign title: ", campaignTitle);
 		return campaignTitle;

@@ -37,7 +37,7 @@ module.exports = {
 
 		// campaign title - use transaction.campaign_id, then additional campaign fetch to get its name
 		let campaign_title = campaignTitle;
-		console.log("Campaign title: ", campaign_title);
+		// console.log("Campaign title: ", campaign_title);
 
 		// form title - not used for import
 

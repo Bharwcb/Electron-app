@@ -8,7 +8,7 @@ var async = require('async');
 var classy = require('./classy-build');
 const app = classy.app();
 var ws = fs.createWriteStream('./result.csv');
-const time_filter = '>2017-01-19T10:00:00';
+const time_filter = '>2017-01-19T20:00:00';
 const title_question_id = 46362;
 const middlename_question_id = 46183;
 const company_question_id = 46182;
@@ -63,7 +63,7 @@ app
 		let campaignTitle = require('./campaign')(transaction_id);
 		// then inject into to attributes
 		// ~~~ End of GET transaction/id
-
+		console.log("campaign title page 1: ", campaignTitle);
 
 		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignTitle);
 	};
@@ -91,6 +91,8 @@ app
 
 			let transaction_id = transaction.id;
 			let campaignTitle = require('./campaign')(transaction_id);
+
+			console.log("campaign title rest of pages: ", campaignTitle);
 
 			// ~~~ Building classyData for Promises ~~~
 			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, transaction_id);
