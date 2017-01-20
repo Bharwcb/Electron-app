@@ -1,14 +1,16 @@
 /* 
-- GET org/id/campaigns (used for campaign names).  
-- Org/id/transactions returns only campaign_id but not the campaign name, ?with=campaign does not work, so this uses fewest API calls.  Reference the name with campaign id when iterating through all transactions.
+- this file is used for retrieving campaign names.
+- GET org/id/campaigns to build a campaign object that can later be used when iterating through org/id/transactions:
+{ campaign id: campaign name,
+		campaign id: campaign name, 
+		...
+	}
+- Org/id/transactions returns only campaign_id but not the campaign name, ?with=campaign does not work, so this uses fewest API calls. 
 */
 classy = require('./classy-build');
 
 /* builds a campaign hash for all active campaigns:
-	{ campaign id: campaign name,
-		campaign id: campaign name, 
-		...
-	}
+	
 */
 var buildCampaign = function(campaignIdKeyNameValue) {
 

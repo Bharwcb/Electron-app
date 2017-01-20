@@ -59,22 +59,7 @@ app
 		// console.log("Indexed Middlename: ", indexedMiddlename);
 		// console.log("Indexed Company: ", indexedCompany);
 		// console.log("Indexed Suffix: ", indexedSuffix);
-		console.log("campaignIdKeyNameValue: ", campaignIdKeyNameValue);
-
-
-		// // ~~~ GET transaction/id to retrieve company name ~~~
-		// let transaction_id = transaction.id;
-		// // call campaign.js's fetchCompanyTitle and return value (campaign name)
-		// let fetchCampaignTitle = require('./campaign');
-		// fetchCampaignTitle(transaction_id)
-		// .then((campaignTitle) => {
-		// 	console.log("campaign title: ", campaignTitle);
-		// }).catch((err) => {
-		// 	console.log("error in GET transaction/id page 1 to retrieve campaign title", err);
-		// });
-		// // then inject into to attributes...
-		// // ~~~ End of GET transaction/id
-		
+		// console.log("campaignIdKeyNameValue: ", campaignIdKeyNameValue);
 
 		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue);
 	};
