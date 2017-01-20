@@ -11,6 +11,8 @@ var ws = fs.createWriteStream('./result.csv');
 const time_filter = '>2017-01-19T10:00:00';
 const title_question_id = 46362;
 const middlename_question_id = 46183;
+const company_question_id = 46182;
+
 
 
 // one place to change headers for import
@@ -21,6 +23,7 @@ let classyData = [];
 // the following indexed hashes are used for custom answers.. to avoid querying API for every transaction.
 let indexedTitle = {};
 let indexedMiddlename = {};
+let indexedCompany = {};
 
 app
 .then(() => {
@@ -28,6 +31,9 @@ app
 })
 .then(() => {
 	return require('./middlename')(indexedMiddlename, time_filter, middlename_question_id);
+})
+.then(() => {
+	return require('./company')(indexedCompany, time_filter, company_question_id);
 })
 .then(() => {
 	// First, loop through all transactions (with sample time filter)
@@ -44,7 +50,8 @@ app
 		// ~~~ Building classyData for First Page ~~~
 		console.log("Indexed Title: ", indexedTitle);
 		console.log("Indexed Middlename: ", indexedMiddlename);
-		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename);
+		console.log("Indexed Company: ", indexedCompany);
+		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany);
 	};
 
 	const numberOfPages = response.last_page;
@@ -68,7 +75,7 @@ app
 		var arrayOfTransactions = promisePageNumber.data;
 		arrayOfTransactions.forEach(function(transaction, index) {
 			// ~~~ Building classyData for Promises ~~~
-			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename);
+			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany);
 		});
 		// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 	});
