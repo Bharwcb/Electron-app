@@ -1,22 +1,9 @@
-/* 
-
-1st, build indexed custom title hash to avoid hitting custom questoins api for every transactions..  just do it once.
-
-then, when iterating through transactions, if doesn't find that transaction.id in customTitle hash, means they didn't enter it, doesn't set it
-
-{
-	12345: 'Mr.',
-	23456: 'Mrs.'
-}
-
-*/
-
 classy = require('./classy-build');
 
 // ~~ Start of Additional Requests ~~ 
-var buildCustomTitleHash = function(indexedTitle, time_filter, title_question_id) {
+var buildCustomMiddlenameHash = function(indexedMiddlename, time_filter) {
 
-	return classy.questions.listAnswers(title_question_id, {
+	return classy.questions.listAnswers(46362, {
 		token: 'app',
 		filter: 'created_at' + time_filter
 	})
@@ -33,7 +20,7 @@ var buildCustomTitleHash = function(indexedTitle, time_filter, title_question_id
 
 		for (var page = 2; page < (numberOfTitlePages + 1); page++) {
 			titlePromises.push(
-				classy.questions.listAnswers(title_question_id, {
+				classy.questions.listAnswers(46362, {
 					token: 'app',
 					page: page,
 					filter: 'created_at' + time_filter
