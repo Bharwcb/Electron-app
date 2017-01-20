@@ -1,5 +1,5 @@
 module.exports = {
-	fetchAttributes: function(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignTitle) {
+	fetchAttributes: function(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue) {
 		
 		// contact ID - not used for import
 
@@ -35,8 +35,8 @@ module.exports = {
 
 		// member id - not used for import
 
-		// campaign title - use transaction.campaign_id, then additional campaign fetch to get its name
-		let campaign_title = campaignTitle;
+		// campaign title uses campaign object to reference its id to its name
+		let campaign_title = campaignIdKeyNameValue[transaction.campaign_id];
 		// console.log("Campaign title: ", campaign_title);
 
 		// form title - not used for import

@@ -24,6 +24,7 @@ let indexedTitle = {};
 let indexedMiddlename = {};
 let indexedCompany = {};
 let indexedSuffix = {};
+let campaignIdKeyNameValue = {};
 
 app
 .then(() => {
@@ -38,8 +39,11 @@ app
 .then(() => {
 	return require('./suffix')(indexedSuffix, time_filter, suffix_question_id);
 })
+.then(() => {
+	return require('./campaign')(campaignIdKeyNameValue);
+})
 
-// Finally, loop through all transactions (sample time filter), matching against custom question hashes, and perform some additional calls like transaction/id to get campaign name
+// Finally, loop through all transactions (sample time filter), matching against custom question hashes, campaign reference hash, etc...
 .then(() => {
 	return classy.organizations.listTransactions(34, {
 		token: 'app',
@@ -57,21 +61,21 @@ app
 		// console.log("Indexed Suffix: ", indexedSuffix);
 
 
-		// ~~~ GET transaction/id to retrieve company name ~~~
-		let transaction_id = transaction.id;
-		// call campaign.js's fetchCompanyTitle and return value (campaign name)
-		let fetchCampaignTitle = require('./campaign');
-		fetchCampaignTitle(transaction_id)
-		.then((campaignTitle) => {
-			console.log("campaign title: ", campaignTitle);
-		}).catch((err) => {
-			console.log("error in GET transaction/id page 1 to retrieve campaign title", err);
-		});
-		// then inject into to attributes...
-		// ~~~ End of GET transaction/id
+		// // ~~~ GET transaction/id to retrieve company name ~~~
+		// let transaction_id = transaction.id;
+		// // call campaign.js's fetchCompanyTitle and return value (campaign name)
+		// let fetchCampaignTitle = require('./campaign');
+		// fetchCampaignTitle(transaction_id)
+		// .then((campaignTitle) => {
+		// 	console.log("campaign title: ", campaignTitle);
+		// }).catch((err) => {
+		// 	console.log("error in GET transaction/id page 1 to retrieve campaign title", err);
+		// });
+		// // then inject into to attributes...
+		// // ~~~ End of GET transaction/id
 		
 
-		// attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignTitle);
+		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue);
 	};
 
 	const numberOfPages = response.last_page;
@@ -95,19 +99,8 @@ app
 		var arrayOfTransactions = promisePageNumber.data;
 		arrayOfTransactions.forEach(function(transaction, index) {
 
-			// ~~~ GET transaction/id to retrieve company name ~~~
-			let transaction_id = transaction.id;
-			let fetchCampaignTitle = require('./campaign');
-			
-			fetchCampaignTitle(transaction_id).then((campaignTitle) => {
-				console.log("campaign title: ", campaignTitle);
-			}).catch((err) => {
-				console.log("error in GET transaction/id pages 2-end to retrieve campaign title", err);
-			});
-			// ~~~ End of GET transaction/id
-
 			// ~~~ Building classyData for Promises ~~~
-			// attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignTitle);
+			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue);
 		});
 		// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 	});

@@ -1,22 +1,55 @@
-// GET transaction/id to fetch campaign.name
+/* 
+- GET org/id/campaigns (used for campaign names).  
+- Org/id/transactions returns only campaign_id but not the campaign name, ?with=campaign does not work, so this uses fewest API calls.  Reference the name with campaign id when iterating through all transactions.
+*/
 classy = require('./classy-build');
 
-var fetchCampaignTitle = function(transaction_id) {
+/* builds a campaign hash for all active campaigns:
+	{ campaign id: campaign name,
+		campaign id: campaign name, 
+		...
+	}
+*/
+var buildCampaign = function(campaignIdKeyNameValue) {
 
-	return classy.transactions.retrieve(transaction_id, {
-		token: 'app'
+	return classy.organizations.listCampaigns(34, {
+		token: 'app',
+		filter: 'status=active'
 	})
 
-	.then((transactionResponse) => {
-		let campaignTitle = transactionResponse.campaign.name;
+	.then((response) => {
+		let campaigns = response.data;
+		campaigns.forEach(campaign => {
+			campaignIdKeyNameValue[campaign.id] = campaignIdKeyNameValue[campaign.name];
+		});
 
-		// CAMPAIGN TITLE WORKS HERE, JUST NEED TO RETURN IT AND SEND BACK TO MAIN.JS
-		console.log("transaction_id: ", transaction_id);
-		console.log("campaign title: ", campaignTitle);
-		return campaignTitle;
-	});
+		// all additional pages of campaigns
+		const numberofCampaignPages = response.last_page;
+		let campaignPromises = [];
+
+		for (var page = 2; page < (numberofCampaignPages + 1); page++) {
+			campaignPromises.push(
+				classy.organizations.listCampaigns(34, {
+					token: 'app',
+					filter: 'status=active'
+				})
+			);
+		};
+
+		return Promise.all(campaignPromises);
+	})
+
+	.then((results => {
+		results.forEach(function(arrayofCampaignsPerPage) {
+			var arrayofCampaigns = arrayofCampaignsPerPage.data;
+			arrayofCampaigns.forEach(function(campaign, index) {
+				campaignIdKeyNameValue[campaign.id] = campaignIdKeyNameValue[campaign.name];
+			})
+		});
+	})
+
 		
 };
 
-// and in the end, just need to send company title back to main.js
-module.exports = fetchCampaignTitle;
+// send this campaign reference object back to main.js
+module.exports = buildCampaign;
