@@ -1,9 +1,9 @@
 classy = require('./classy-build');
 
 // ~~ Start of Additional Requests ~~ 
-var buildCustomMiddlenameHash = function(indexedMiddlename, time_filter) {
+var buildCustomMiddlenameHash = function(indexedMiddlename, time_filter, middlename_question_id) {
 
-	return classy.questions.listAnswers(46362, {
+	return classy.questions.listAnswers(middlename_question_id, {
 		token: 'app',
 		filter: 'created_at' + time_filter
 	})
@@ -11,16 +11,19 @@ var buildCustomMiddlenameHash = function(indexedMiddlename, time_filter) {
 
 		let answers = answersResults.data;
 		answers.forEach(answer => {
-			indexedTitle[answer.answerable_id] = answer.answer;
+			console.log("answer object: ", answer);
+			console.log("answer transaction id: ", answer.answerable_id);
+			console.log("answer value: ", answer.answer)
+			indexedMiddlename[answer.answerable_id] = answer.answer;
 		});
 
 		// all additional pages of title
-		const numberOfTitlePages = answersResults.last_page;
-		let titlePromises = [];
+		const numberOfMiddlenamePages = answersResults.last_page;
+		let middlenamePromises = [];
 
-		for (var page = 2; page < (numberOfTitlePages + 1); page++) {
-			titlePromises.push(
-				classy.questions.listAnswers(46362, {
+		for (var page = 2; page < (numberOfMiddlenamePages + 1); page++) {
+			middlenamePromises.push(
+				classy.questions.listAnswers(middlename_question_id, {
 					token: 'app',
 					page: page,
 					filter: 'created_at' + time_filter
@@ -28,14 +31,14 @@ var buildCustomMiddlenameHash = function(indexedMiddlename, time_filter) {
 			);
 		};
 		
-		return Promise.all(titlePromises);
+		return Promise.all(middlenamePromises);
 	})
-	.then((titleResults) => {
-		titleResults.forEach(function(arrayofTitlesPerPage) {
+	.then((middlenameResults) => {
+		middlenameResults.forEach(function(arrayofMiddlenamePerPage) {
 
-			var arrayofTitles = arrayofTitlesPerPage.data;
-			arrayofTitles.forEach(function(answer, index) {
-				indexedTitle[answer.answerable_id] = answer.answer;
+			var arrayofMiddlename = arrayofMiddlenamePerPage.data;
+			arrayofMiddlename.forEach(function(answer, index) {
+				indexedMiddlename[answer.answerable_id] = answer.answer;
 			})
 			
 		});
@@ -43,5 +46,5 @@ var buildCustomMiddlenameHash = function(indexedMiddlename, time_filter) {
 	
 };
 
-module.exports = buildCustomTitleHash;
+module.exports = buildCustomMiddlenameHash;
 
