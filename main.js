@@ -9,18 +9,31 @@ var classy = require('./classy-build');
 const app = classy.app();
 var ws = fs.createWriteStream('./result.csv');
 const time_filter = '>2017-01-19T10:00:00';
+const title_question_id = 46362;
+const middlename_question_id = 46183;
+const company_question_id = 46182;
+
+
 
 // one place to change headers for import
 const csvHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
 
 // used to collect list of contact IDs, title, or whatever you are fetching. then, write to csv.
 let classyData = [];
-// used for custom answers, to avoid querying API more than have to.
+// the following indexed hashes are used for custom answers.. to avoid querying API for every transaction.
 let indexedTitle = {};
+let indexedMiddlename = {};
+let indexedCompany = {};
 
 app
 .then(() => {
-	return require('./title')(indexedTitle, time_filter);
+	return require('./title')(indexedTitle, time_filter, title_question_id);
+})
+.then(() => {
+	return require('./middlename')(indexedMiddlename, time_filter, middlename_question_id);
+})
+.then(() => {
+	return require('./company')(indexedCompany, time_filter, company_question_id);
 })
 .then(() => {
 	// First, loop through all transactions (with sample time filter)
@@ -36,7 +49,9 @@ app
 		var transaction = response.data[i];
 		// ~~~ Building classyData for First Page ~~~
 		console.log("Indexed Title: ", indexedTitle);
-		attributes.fetchAttributes(transaction, classyData, indexedTitle);
+		console.log("Indexed Middlename: ", indexedMiddlename);
+		console.log("Indexed Company: ", indexedCompany);
+		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany);
 	};
 
 	const numberOfPages = response.last_page;
@@ -60,7 +75,7 @@ app
 		var arrayOfTransactions = promisePageNumber.data;
 		arrayOfTransactions.forEach(function(transaction, index) {
 			// ~~~ Building classyData for Promises ~~~
-			attributes.fetchAttributes(transaction, classyData, indexedTitle);
+			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany);
 		});
 		// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 	});

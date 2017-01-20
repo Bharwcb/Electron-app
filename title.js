@@ -14,9 +14,9 @@ then, when iterating through transactions, if doesn't find that transaction.id i
 classy = require('./classy-build');
 
 // ~~ Start of Additional Requests ~~ 
-var buildCustomTitleHash = function(indexedTitle, time_filter) {
+var buildCustomTitleHash = function(indexedTitle, time_filter, title_question_id) {
 
-	return classy.questions.listAnswers(46362, {
+	return classy.questions.listAnswers(title_question_id, {
 		token: 'app',
 		filter: 'created_at' + time_filter
 	})
@@ -33,7 +33,7 @@ var buildCustomTitleHash = function(indexedTitle, time_filter) {
 
 		for (var page = 2; page < (numberOfTitlePages + 1); page++) {
 			titlePromises.push(
-				classy.questions.listAnswers(46362, {
+				classy.questions.listAnswers(title_question_id, {
 					token: 'app',
 					page: page,
 					filter: 'created_at' + time_filter
