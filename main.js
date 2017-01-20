@@ -61,9 +61,12 @@ app
 
 		let transaction_id = transaction.id;
 
-		// invoke campaign.js
+		// call campaign.js's fetchCompanyName and return value (campaign name)
 		require('./campaign')(transaction_id);
+		// then send back toattributes
 
+
+		
 
 		// ~~~ End of GET transaction/id
 
