@@ -38,7 +38,8 @@ app
 .then(() => {
 	return require('./suffix')(indexedSuffix, time_filter, suffix_question_id);
 })
-// finally, loop through all transactions (sample time filter), matching against custom question hashes
+
+// Finally, loop through all transactions (sample time filter), matching against custom question hashes, and perform some additional calls like transaction/id to get campaign name
 .then(() => {
 	return classy.organizations.listTransactions(34, {
 		token: 'app',
@@ -47,14 +48,23 @@ app
 })
 .then((response) => {
 	// response is an array of JSON transaction data, 20 per page. Add the first page of responses to var classyData.
-
 	for (var i = 0; i < response.data.length; i++) {
 		var transaction = response.data[i];
 		// ~~~ Building classyData for First Page ~~~
 		// console.log("Indexed Title: ", indexedTitle);
 		// console.log("Indexed Middlename: ", indexedMiddlename);
 		// console.log("Indexed Company: ", indexedCompany);
-		console.log("Indexed Suffix: ", indexedSuffix);
+		// console.log("Indexed Suffix: ", indexedSuffix);
+
+
+		// ~~~ Fire off GET transaction/id to retrieve company name ~~~
+
+		let transaction_id = transaction.id;
+		console.log("trans", transaction_id);
+
+		// ~~~ End of GET transaction/id
+
+
 		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix);
 	};
 

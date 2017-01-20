@@ -3,16 +3,18 @@ module.exports = {
 		
 		// contact ID - not used for import
 
+		// custom q
 		let title = indexedTitle[transaction.id];
 
 		let last_name = transaction.billing_last_name;
 
 		let first_name = transaction.billing_first_name;
 	
+		// custom q
 		let middle_name = indexedMiddlename[transaction.id];
-
+		// custom q
 		let company_name = indexedCompany[transaction.id];
-
+		// custom q
 		let suffix = indexedSuffix[transaction.id];
 
 		let billing_email = transaction.member_email_address;
