@@ -62,8 +62,9 @@ app
 		// call campaign.js's fetchCompanyTitle and return value (campaign name)
 		let campaignTitle = require('./campaign')(transaction_id);
 		// then inject into to attributes
+		// console.log("campaign title page 1: ", campaignTitle);
 		// ~~~ End of GET transaction/id
-		console.log("campaign title page 1: ", campaignTitle);
+		
 
 		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignTitle);
 	};
@@ -92,10 +93,10 @@ app
 			let transaction_id = transaction.id;
 			let campaignTitle = require('./campaign')(transaction_id);
 
-			console.log("campaign title rest of pages: ", campaignTitle);
+			// console.log("campaign title rest of pages: ", campaignTitle);
 
 			// ~~~ Building classyData for Promises ~~~
-			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, transaction_id);
+			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignTitle);
 		});
 		// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 	});

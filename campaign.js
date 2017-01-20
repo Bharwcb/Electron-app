@@ -10,7 +10,7 @@ var fetchCampaignTitle = function(transaction_id) {
 	.then((transactionResponse) => {
 		let campaignTitle = transactionResponse.campaign.name;
 
-		// CAMPAIGN TITLE WORKS HERE, BUT NOT BACK IN MAIN.JS
+		// CAMPAIGN TITLE WORKS HERE, JUST NEED TO RETURN IT AND SEND BACK TO MAIN.JS
 		console.log("transaction_id: ", transaction_id);
 		console.log("campaign title: ", campaignTitle);
 		return campaignTitle;
