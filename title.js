@@ -1,13 +1,13 @@
 /* 
 
-Lets make any request for custom answer a function, then have a separate file for populating the indexed Title hash.
+1st, build indexed custom title hash to avoid hitting custom questoins api for every transactions..  just do it once.
 
-So for example,
+then, when iterating through transactions, if doesn't find that transaction.id in customTitle hash, means they didn't enter it, doesn't set it
 
-/custom-answers directory
-- title.js:  uses it to build the indexedTitle hash
-- company.js: uses it to build the indexedCompany hash
-- maybe a reusable function to send the request to ALL CUSTOM QUESTIONS, just plugin the question_id, blank indexed hash, etc.
+{
+	12345: 'Mr.',
+	23456: 'Mrs.'
+}
 
 */
 
@@ -22,7 +22,6 @@ var buildCustomTitleHash = function(indexedTitle, time_filter) {
 	})
 	.then((answersResults) => {
 
-		console.log("page 1 answer results: ", answersResults);
 		let answers = answersResults.data;
 		answers.forEach(answer => {
 			indexedTitle[answer.answerable_id] = answer.answer;
@@ -44,26 +43,17 @@ var buildCustomTitleHash = function(indexedTitle, time_filter) {
 		
 		return Promise.all(titlePromises);
 	})
-	.then((response) => {
-		return response;
-	}, (err) => {
-		console.log('error earlier', err);
-	})
 	.then((titleResults) => {
-		console.log("Title results pages 2 through end: ", titleResults);
 		titleResults.forEach(function(arrayofTitlesPerPage) {
 
 			var arrayofTitles = arrayofTitlesPerPage.data;
 			arrayofTitles.forEach(function(answer, index) {
 				indexedTitle[answer.answerable_id] = answer.answer;
-			});
-			// so, it's building indexed title correctly.
+			})
+			
 		});
-	});
-	// .catch((error) => {
-	// 	console.log("ERROR IN ANSWERS OTHER PAGES", error);
-	// });
-	// // ~~ End of async step 1 (title).  SHOULD collect the whole indexedTitle by now.
+	})
+	
 };
 
 module.exports = buildCustomTitleHash;
