@@ -58,27 +58,21 @@ app
 
 
 		// ~~~ Fire off GET transaction/id to retrieve company name ~~~
-
 		let transaction_id = transaction.id;
-
-		// call campaign.js's fetchCompanyName and return value (campaign name)
-		require('./campaign')(transaction_id);
-		// then send back toattributes
-
-
-		
-
+		// call campaign.js's fetchCompanyTitle and return value (campaign name)
+		let campaignTitle = require('./campaign')(transaction_id);
+		// then inject into to attributes
 		// ~~~ End of GET transaction/id
 
 
-		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix);
+		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignTitle);
 	};
 
 	const numberOfPages = response.last_page;
-	let transactionPromises = [];
+	let transactionListPromises = [];
 	// Request all remaining pages after the first page, add to promises array to call asynchronously with Promise.all
 	for (var page = 2; page < (numberOfPages + 1); page++) {
-		transactionPromises.push(
+		transactionListPromises.push(
 				classy.organizations.listTransactions(34, {
 					token: 'app',
 					filter: 'status=success,purchased_at' + time_filter,
@@ -87,15 +81,19 @@ app
 		);
 	};
 
-	return Promise.all(transactionPromises);
+	return Promise.all(transactionListPromises);
 })
 .then((results) => {
 
 	results.forEach(function(promisePageNumber) {
 		var arrayOfTransactions = promisePageNumber.data;
 		arrayOfTransactions.forEach(function(transaction, index) {
+
+			let transaction_id = transaction.id;
+			let campaignTitle = require('./campaign')(transaction_id);
+
 			// ~~~ Building classyData for Promises ~~~
-			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix);
+			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, transaction_id);
 		});
 		// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 	});
