@@ -2,11 +2,13 @@
 
 classy = require('./classy-build');
 
-var fetchCompanyName = function(time_filter, transaction_id) {
+var fetchCompanyName = function(transaction_id) {
 
-	return classy.transactions.retrieve("each trans id", {
-		token: 'app'
-	})
+	// return classy.transactions.retrieve("each trans id", {
+	// 	token: 'app'
+	// })
+
+	console.log("trans: ", transaction_id);
 
 };
 

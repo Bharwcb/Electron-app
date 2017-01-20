@@ -60,7 +60,10 @@ app
 		// ~~~ Fire off GET transaction/id to retrieve company name ~~~
 
 		let transaction_id = transaction.id;
-		console.log("trans", transaction_id);
+
+		// invoke campaign.js
+		require('./campaign')(transaction_id);
+
 
 		// ~~~ End of GET transaction/id
 
