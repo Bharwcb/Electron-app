@@ -3,7 +3,7 @@ classy = require('./classy-build');
 
 var fetchCampaignTitle = function(transaction_id) {
 
-	classy.transactions.retrieve(transaction_id, {
+	return classy.transactions.retrieve(transaction_id, {
 		token: 'app'
 	})
 
