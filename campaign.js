@@ -18,9 +18,11 @@ var buildCampaign = function(campaignIdKeyNameValue) {
 	})
 
 	.then((response) => {
+
 		let campaigns = response.data;
-		campaigns.forEach(campaign => {
-			campaignIdKeyNameValue[campaign.id] = campaignIdKeyNameValue[campaign.name];
+		campaigns.forEach((campaign) => {
+			campaignIdKeyNameValue[campaign.id] = campaign.name;
+			console.log("test: ", campaignIdKeyNameValue);
 		});
 
 		// all additional pages of campaigns
@@ -39,11 +41,11 @@ var buildCampaign = function(campaignIdKeyNameValue) {
 		return Promise.all(campaignPromises);
 	})
 
-	.then((results => {
+	.then((results) => {
 		results.forEach(function(arrayofCampaignsPerPage) {
 			var arrayofCampaigns = arrayofCampaignsPerPage.data;
 			arrayofCampaigns.forEach(function(campaign, index) {
-				campaignIdKeyNameValue[campaign.id] = campaignIdKeyNameValue[campaign.name];
+				campaignIdKeyNameValue[campaign.id] = campaign.name;
 			})
 		});
 	})

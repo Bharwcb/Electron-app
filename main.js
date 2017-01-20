@@ -59,6 +59,7 @@ app
 		// console.log("Indexed Middlename: ", indexedMiddlename);
 		// console.log("Indexed Company: ", indexedCompany);
 		// console.log("Indexed Suffix: ", indexedSuffix);
+		console.log("campaignIdKeyNameValue: ", campaignIdKeyNameValue);
 
 
 		// // ~~~ GET transaction/id to retrieve company name ~~~
