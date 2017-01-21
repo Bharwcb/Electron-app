@@ -8,7 +8,7 @@ var async = require('async');
 var classy = require('./classy-build');
 const app = classy.app();
 var ws = fs.createWriteStream('./result.csv');
-const time_filter = '>2017-01-19T10:00:00';
+const time_filter = '>2017-01-19T20:00:00';
 const title_question_id = 46362;
 const middlename_question_id = 46183;
 const company_question_id = 46182;
@@ -24,6 +24,7 @@ let indexedTitle = {};
 let indexedMiddlename = {};
 let indexedCompany = {};
 let indexedSuffix = {};
+let campaignIdKeyNameValue = {};
 
 app
 .then(() => {
@@ -38,7 +39,11 @@ app
 .then(() => {
 	return require('./suffix')(indexedSuffix, time_filter, suffix_question_id);
 })
-// finally, loop through all transactions (sample time filter), matching against custom question hashes
+.then(() => {
+	return require('./campaign')(campaignIdKeyNameValue);
+})
+
+// Finally, loop through all transactions (sample time filter), matching against custom question hashes, campaign reference hash, etc...
 .then(() => {
 	return classy.organizations.listTransactions(34, {
 		token: 'app',
@@ -47,22 +52,23 @@ app
 })
 .then((response) => {
 	// response is an array of JSON transaction data, 20 per page. Add the first page of responses to var classyData.
-
 	for (var i = 0; i < response.data.length; i++) {
 		var transaction = response.data[i];
 		// ~~~ Building classyData for First Page ~~~
 		// console.log("Indexed Title: ", indexedTitle);
 		// console.log("Indexed Middlename: ", indexedMiddlename);
 		// console.log("Indexed Company: ", indexedCompany);
-		console.log("Indexed Suffix: ", indexedSuffix);
-		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix);
+		// console.log("Indexed Suffix: ", indexedSuffix);
+		// console.log("campaignIdKeyNameValue: ", campaignIdKeyNameValue);
+
+		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue);
 	};
 
 	const numberOfPages = response.last_page;
-	let transactionPromises = [];
+	let transactionListPromises = [];
 	// Request all remaining pages after the first page, add to promises array to call asynchronously with Promise.all
 	for (var page = 2; page < (numberOfPages + 1); page++) {
-		transactionPromises.push(
+		transactionListPromises.push(
 				classy.organizations.listTransactions(34, {
 					token: 'app',
 					filter: 'status=success,purchased_at' + time_filter,
@@ -71,15 +77,16 @@ app
 		);
 	};
 
-	return Promise.all(transactionPromises);
+	return Promise.all(transactionListPromises);
 })
 .then((results) => {
 
 	results.forEach(function(promisePageNumber) {
 		var arrayOfTransactions = promisePageNumber.data;
 		arrayOfTransactions.forEach(function(transaction, index) {
+
 			// ~~~ Building classyData for Promises ~~~
-			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix);
+			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue);
 		});
 		// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 	});

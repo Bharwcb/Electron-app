@@ -1,18 +1,20 @@
 module.exports = {
-	fetchAttributes: function(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix) {
+	fetchAttributes: function(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue) {
 		
 		// contact ID - not used for import
 
+		// custom q
 		let title = indexedTitle[transaction.id];
 
 		let last_name = transaction.billing_last_name;
 
 		let first_name = transaction.billing_first_name;
 	
+		// custom q
 		let middle_name = indexedMiddlename[transaction.id];
-
+		// custom q
 		let company_name = indexedCompany[transaction.id];
-
+		// custom q
 		let suffix = indexedSuffix[transaction.id];
 
 		let billing_email = transaction.member_email_address;
@@ -33,7 +35,9 @@ module.exports = {
 
 		// member id - not used for import
 
-		// campaign title - use transaction.campaign_id, then additional campaign fetch to get its name
+		// campaign title uses campaign object to reference its id to its name
+		let campaign_title = campaignIdKeyNameValue[transaction.campaign_id];
+		// console.log("Campaign title: ", campaign_title);
 
 		// form title - not used for import
 
@@ -116,7 +120,7 @@ module.exports = {
 
 
 		// !!! template for adding an attribute (each row is an array, using Fast CSV module): classyData.push(new Array(transaction.member_id.toString()));
-		classyData.push(["contact ID", title, last_name, first_name, middle_name, company_name, suffix, billing_email, phone, street1, street2, city, state, zip, country, "member ID", "campaign title", "form title", net_transaction_amount, transaction_date, "gift type", "temple name", "designee 1 administrative name", "origin of gift", "payment_method", "settlement_status", "billing_last_name", "billing_first_name", "billing_middle_name", "billing_suffix", "billing street1", "billing street2", "billing city", "billing state", "billing zip", "billing phone", "is honor gift", "tribute first name", "tribute last name", "sender title", "sender first name", "sender last name", "sender address 1", "sender address 2", "sender city", "sender state", "sender zip", "sender country", "source code type", "source code text", "sub source code text", "name of staff member", "donation comment", "store name"]);
+		classyData.push(["contact ID", title, last_name, first_name, middle_name, company_name, suffix, billing_email, phone, street1, street2, city, state, zip, country, "member ID", campaign_title, "form title", net_transaction_amount, transaction_date, "gift type", "temple name", "designee 1 administrative name", "origin of gift", "payment_method", "settlement_status", "billing_last_name", "billing_first_name", "billing_middle_name", "billing_suffix", "billing street1", "billing street2", "billing city", "billing state", "billing zip", "billing phone", "is honor gift", "tribute first name", "tribute last name", "sender title", "sender first name", "sender last name", "sender address 1", "sender address 2", "sender city", "sender state", "sender zip", "sender country", "source code type", "source code text", "sub source code text", "name of staff member", "donation comment", "store name"]);
 	}
 };
 
