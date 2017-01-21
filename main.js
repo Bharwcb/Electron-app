@@ -8,7 +8,7 @@ var async = require('async');
 var classy = require('./classy-build');
 const app = classy.app();
 var ws = fs.createWriteStream('./result.csv');
-const time_filter = '>2017-01-19T20:00:00';
+const time_filter = '>2017-01-18T10:00:00';
 const title_question_id = 46362;
 const middlename_question_id = 46183;
 const company_question_id = 46182;
@@ -55,10 +55,6 @@ app
 	for (var i = 0; i < response.data.length; i++) {
 		var transaction = response.data[i];
 		// ~~~ Building classyData for First Page ~~~
-		// console.log("Indexed Title: ", indexedTitle);
-		// console.log("Indexed Middlename: ", indexedMiddlename);
-		// console.log("Indexed Company: ", indexedCompany);
-		// console.log("Indexed Suffix: ", indexedSuffix);
 		// console.log("campaignIdKeyNameValue: ", campaignIdKeyNameValue);
 
 		attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue);

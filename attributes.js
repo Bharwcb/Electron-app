@@ -2,6 +2,7 @@ module.exports = {
 	fetchAttributes: function(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue) {
 		
 		// contact ID - not used for import
+		let contact_id = null;
 
 		// custom q
 		let title = indexedTitle[transaction.id];
@@ -37,7 +38,6 @@ module.exports = {
 
 		// campaign title uses campaign object to reference its id to its name
 		let campaign_title = campaignIdKeyNameValue[transaction.campaign_id];
-		// console.log("Campaign title: ", campaign_title);
 
 		// form title - not used for import
 
@@ -56,75 +56,74 @@ module.exports = {
 		// designee 1 administrative name
 
 		// origin of gift - not used for import
+		let origin_of_gift = null;
 
 		// payment method - DO NOT THINK SINGLE TRANSACTIONS STORE CC TYPE. cc_type only for recurring donations.
 
 		// Settlement Status - not used for import/dupe
-
+		let settlement_status = null;
 		// Billing Last Name - not used for import/dupe
-
+		let billing_last_name = null;
 		// Billing First Name - not used for import/dupe
-
+		let billing_first_name = null;
 		// Billing Middle Name - not used for import/dupe
-
+		let billing_middle_name = null;
 		// Billing Suffix - not used for import/dupe
-
+		let billing_suffix = null;
 		// Billing Street1 - not used for import/dupe
-
+		let billing_street1 = null;
 		// Billing Street2 - not used for import/dupe
-
+		let billing_street2 = null;
 		// Billing City - not used for import/dupe
-
+		let billing_city = null;		
 		// Billing State - not used for import/dupe
-
+		let billing_state = null;
 		// Billing Zip - not used for import/dupe
-
+		let billing_zip = null;
 		// Billing Phone - not used for import/dupe
-
+		let billing_phone = null;
 		// Is Honor Gift - not used for import/dupe
+		let is_honor_gift = null;
 
 		// tribute first name
 
 		// tribute last name
 
-
 		// Sender Title - not used for import/dupe
-
+		let sender_title = null;
 		// Sender First Name - not used for import/dupe
-
+		let sender_first_name = null;
 		// Sender Last Name - not used for import/dupe
-
+		let sender_last_name = null;
 		// Sender Address 1 - not used for import/dupe
-
+		let sender_address1 = null;
 		// Sender Address 2 - not used for import/dupe
-
+		let sender_address2 = null;
 		// Sender City - not used for import/dupe
-
+		let sender_city = null;
 		// Sender State - not used for import/dupe
-
+		let sender_state = null;
 		// Sender Zip - not used for import/dupe
-
+		let sender_zip = null;
 		// Sender Country - not used for import/dupe
-
+		let sender_country = null;
 		// Source Code Type - not used for import/dupe
-
+		let source_code_type = null;
 		// Source Code Text - not used for import/dupe
-
+		let source_code_text = null;
 		// Sub Source Code Text - not used for import/dupe
-
+		let sub_source_code_text = null;
 		// Name of Staff Member - not used for import/dupe
-
+		let name_of_staff_member = null;
 		// Donation Comment - not used for import/dupe
-
+		let donation_comment = null;
 		// Store Name - not used for import/dupe
-
+		let store_name = null;
 
 		// !!! template for adding an attribute (each row is an array, using Fast CSV module): classyData.push(new Array(transaction.member_id.toString()));
-		classyData.push(["contact ID", title, last_name, first_name, middle_name, company_name, suffix, billing_email, phone, street1, street2, city, state, zip, country, "member ID", campaign_title, "form title", net_transaction_amount, transaction_date, "gift type", "temple name", "designee 1 administrative name", "origin of gift", "payment_method", "settlement_status", "billing_last_name", "billing_first_name", "billing_middle_name", "billing_suffix", "billing street1", "billing street2", "billing city", "billing state", "billing zip", "billing phone", "is honor gift", "tribute first name", "tribute last name", "sender title", "sender first name", "sender last name", "sender address 1", "sender address 2", "sender city", "sender state", "sender zip", "sender country", "source code type", "source code text", "sub source code text", "name of staff member", "donation comment", "store name"]);
+		classyData.push([contact_id, title, last_name, first_name, middle_name, company_name, suffix, billing_email, phone, street1, street2, city, state, zip, country, "member ID", campaign_title, "form title", net_transaction_amount, transaction_date, "gift type", "temple name", "designee 1 administrative name", origin_of_gift, "payment_method", settlement_status, billing_last_name, billing_first_name, billing_middle_name, billing_suffix, billing_street1, billing_street2, billing_city, billing_state, billing_zip, billing_phone, is_honor_gift, "tribute first name", "tribute last name", sender_title, sender_first_name, sender_last_name, sender_address1, sender_address2, sender_city, sender_state, sender_zip, sender_country, source_code_type, source_code_text, sub_source_code_text, name_of_staff_member, donation_comment, store_name]);
 	}
 };
-
-
 
 /*
 answers = [
