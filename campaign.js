@@ -9,9 +9,6 @@
 */
 classy = require('./classy-build');
 
-/* builds a campaign hash for all active campaigns:
-	
-*/
 var buildCampaign = function(campaignIdKeyNameValue) {
 
 	return classy.organizations.listCampaigns(34, {
@@ -24,7 +21,6 @@ var buildCampaign = function(campaignIdKeyNameValue) {
 		let campaigns = response.data;
 		campaigns.forEach((campaign) => {
 			campaignIdKeyNameValue[campaign.id] = campaign.name;
-			console.log("test: ", campaignIdKeyNameValue);
 		});
 
 		// all additional pages of campaigns
