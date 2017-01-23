@@ -31,7 +31,8 @@ var buildCampaign = function(campaignIdKeyNameValue) {
 			campaignPromises.push(
 				classy.organizations.listCampaigns(34, {
 					token: 'app',
-					filter: 'status=active'
+					filter: 'status=active',
+					page: page
 				})
 			);
 		};
@@ -42,7 +43,7 @@ var buildCampaign = function(campaignIdKeyNameValue) {
 	.then((results) => {
 		results.forEach(function(arrayofCampaignsPerPage) {
 			var arrayofCampaigns = arrayofCampaignsPerPage.data;
-			arrayofCampaigns.forEach(function(campaign, index) {
+			arrayofCampaigns.forEach((campaign, index) => {
 				campaignIdKeyNameValue[campaign.id] = campaign.name;
 			})
 		});
