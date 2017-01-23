@@ -38,7 +38,8 @@ module.exports = {
 		// form title - not used for import
 		let form_title = null;
 
-		let net_transaction_amount = transaction.overhead_net_amount;
+		let net_transaction_amount = transaction.donation_net_amount;
+		console.log(net_transaction_amount);
 
 		// format transaction_date to take date from purchased_at
 		let transaction_date = transaction.purchased_at;
