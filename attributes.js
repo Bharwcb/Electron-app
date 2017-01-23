@@ -92,17 +92,13 @@ module.exports = {
 		// tribute first and last name
 		let tribute_first_name = null;
 		let tribute_last_name = null;
-		console.log("trans id: ", transaction.id);
-		console.log("dedication: ", transaction.dedication);
 
 		if (transaction.dedication !== null) { 
 			let tribute_full_name_arr = transaction.dedication.honoree_name.split(" "); 
-			console.log("full name arr: ", tribute_full_name_arr);
 			tribute_first_name = tribute_full_name_arr[0];
-				// write if statement if full name.length > 0, do this, otherwise last_name = null
 			if (tribute_full_name_arr.length > 1) {
 				tribute_last_name = tribute_full_name_arr[tribute_full_name_arr.length - 1];
-			}
+			};
 		};
 		
 		
