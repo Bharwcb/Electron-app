@@ -8,7 +8,7 @@ var async = require('async');
 var classy = require('./classy-build');
 const app = classy.app();
 var ws = fs.createWriteStream('./result.csv');
-const time_filter = '>2017-01-18T10:00:00';
+const time_filter = '>2017-01-23T10:00:00';
 const title_question_id = 46362;
 const middlename_question_id = 46183;
 const company_question_id = 46182;
@@ -47,6 +47,7 @@ app
 .then(() => {
 	return classy.organizations.listTransactions(34, {
 		token: 'app',
+		with: 'dedication',
 		filter: 'status=success,purchased_at' + time_filter
 	});
 })
@@ -67,6 +68,7 @@ app
 		transactionListPromises.push(
 				classy.organizations.listTransactions(34, {
 					token: 'app',
+					with: 'dedication',
 					filter: 'status=success,purchased_at' + time_filter,
 					page: page
 				})
