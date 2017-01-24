@@ -54,9 +54,6 @@ module.exports = {
 			gift_type = "Tribute";
 		} else if (gift_type.slice(0,12) == "in memory of") {
 			gift_type = "Memory";
-		} else {
-			console.log("trans id: ", transaction.id);
-			console.log("gift_type: ", gift_type);
 		};
 
 		// temple name
