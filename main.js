@@ -8,7 +8,8 @@ var async = require('async');
 var classy = require('./classy-build');
 const app = classy.app();
 var ws = fs.createWriteStream('./result.csv');
-const time_filter = '>2017-01-23T10:00:00';
+var prompt = require('prompt');
+
 const title_question_id = 46362;
 const middlename_question_id = 46183;
 const company_question_id = 46182;
@@ -25,7 +26,19 @@ let indexedMiddlename = {};
 let indexedCompany = {};
 let indexedSuffix = {};
 let campaignIdKeyNameValue = {};
+// const time_filter = '>2017-01-23T10:00:00';
 
+prompt.start();
+// need to return the time_filter
+prompt.get(['date_range'], (err, result) => {
+	console.log("Input Received: ");
+	console.log("Date Range: " + result.date_range);
+	let time_filter = result.date_range;
+	runReport(time_filter);
+});
+
+var runReport = function(time_filter) {
+// ~~~ then this, need time_filter from user input
 app
 .then(() => {
 	return require('./title')(indexedTitle, time_filter, title_question_id);
@@ -101,9 +114,7 @@ app
 .catch((error) => {
 	console.log("Error somewhere in the chain: " + error);
 });
-
-
-
+}
 
 
 
