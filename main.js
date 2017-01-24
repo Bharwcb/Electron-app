@@ -26,30 +26,31 @@ let indexedMiddlename = {};
 let indexedCompany = {};
 let indexedSuffix = {};
 let campaignIdKeyNameValue = {};
-// const start_date = '>2017-01-23T10:00:00';
+// const start_date = '>2017-01-21T10:00:00';
+const end_date = '<2017-01-22T10:00:00';
 
 prompt.start();
 // need to return the start_date
 prompt.get(['start_date'], (err, result) => {
 	console.log("Input Received.");
 	let start_date = result.start_date;
-	runReport(start_date);
+	runReport(start_date, end_date);
 });
 
-var runReport = ((start_date) => {
+var runReport = ((start_date, end_date) => {
 	console.log("Running report...");
 	app
 	.then(() => {
-		return require('./title')(indexedTitle, start_date, title_question_id);
+		return require('./title')(indexedTitle, start_date, end_date, title_question_id);
 	})
 	.then(() => {
-		return require('./middlename')(indexedMiddlename, start_date, middlename_question_id);
+		return require('./middlename')(indexedMiddlename, start_date, end_date, middlename_question_id);
 	})
 	.then(() => {
-		return require('./company')(indexedCompany, start_date, company_question_id);
+		return require('./company')(indexedCompany, start_date, end_date, company_question_id);
 	})
 	.then(() => {
-		return require('./suffix')(indexedSuffix, start_date, suffix_question_id);
+		return require('./suffix')(indexedSuffix, start_date, end_date, suffix_question_id);
 	})
 	.then(() => {
 		return require('./campaign')(campaignIdKeyNameValue);
@@ -60,7 +61,7 @@ var runReport = ((start_date) => {
 		return classy.organizations.listTransactions(34, {
 			token: 'app',
 			with: 'dedication',
-			filter: 'status=success,purchased_at' + start_date
+			filter: 'status=success,purchased_at' + start_date + ',purchased_at' + end_date
 		});
 	})
 	.then((response) => {
@@ -81,7 +82,7 @@ var runReport = ((start_date) => {
 					classy.organizations.listTransactions(34, {
 						token: 'app',
 						with: 'dedication',
-						filter: 'status=success,purchased_at' + start_date,
+						filter: 'status=success,purchased_at' + start_date + ',purchased_at' + end_date,
 						page: page
 					})
 			);
