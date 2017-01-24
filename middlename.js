@@ -1,11 +1,11 @@
 classy = require('./classy-build');
 
 // ~~ Start of Additional Requests ~~ 
-var buildCustomMiddlenameHash = function(indexedMiddlename, time_filter, middlename_question_id) {
+var buildCustomMiddlenameHash = function(indexedMiddlename, start_date, middlename_question_id) {
 
 	return classy.questions.listAnswers(middlename_question_id, {
 		token: 'app',
-		filter: 'created_at' + time_filter
+		filter: 'created_at' + start_date
 	})
 	.then((answersResults) => {
 
@@ -23,7 +23,7 @@ var buildCustomMiddlenameHash = function(indexedMiddlename, time_filter, middlen
 				classy.questions.listAnswers(middlename_question_id, {
 					token: 'app',
 					page: page,
-					filter: 'created_at' + time_filter
+					filter: 'created_at' + start_date
 				})
 			);
 		};

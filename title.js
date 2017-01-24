@@ -14,11 +14,11 @@ then, when iterating through transactions, if doesn't find that transaction.id i
 classy = require('./classy-build');
 
 // ~~ Start of Additional Requests ~~ 
-var buildCustomTitleHash = function(indexedTitle, time_filter, title_question_id) {
+var buildCustomTitleHash = function(indexedTitle, start_date, title_question_id) {
 
 	return classy.questions.listAnswers(title_question_id, {
 		token: 'app',
-		filter: 'created_at' + time_filter
+		filter: 'created_at' + start_date
 	})
 	.then((answersResults) => {
 
@@ -36,7 +36,7 @@ var buildCustomTitleHash = function(indexedTitle, time_filter, title_question_id
 				classy.questions.listAnswers(title_question_id, {
 					token: 'app',
 					page: page,
-					filter: 'created_at' + time_filter
+					filter: 'created_at' + start_date
 				})
 			);
 		};

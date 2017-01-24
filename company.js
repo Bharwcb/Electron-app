@@ -1,11 +1,11 @@
 classy = require('./classy-build');
 
 // ~~ Start of Additional Requests ~~ 
-var buildCustomCompanyHash = function(indexedCompany, time_filter, company_question_id) {
+var buildCustomCompanyHash = function(indexedCompany, start_date, company_question_id) {
 
 	return classy.questions.listAnswers(company_question_id, {
 		token: 'app',
-		filter: 'created_at' + time_filter
+		filter: 'created_at' + start_date
 	})
 	.then((answersResults) => {
 
@@ -23,7 +23,7 @@ var buildCustomCompanyHash = function(indexedCompany, time_filter, company_quest
 				classy.questions.listAnswers(company_question_id, {
 					token: 'app',
 					page: page,
-					filter: 'created_at' + time_filter
+					filter: 'created_at' + start_date
 				})
 			);
 		};
