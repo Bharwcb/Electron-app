@@ -26,14 +26,16 @@ let indexedMiddlename = {};
 let indexedCompany = {};
 let indexedSuffix = {};
 let campaignIdKeyNameValue = {};
-// const start_date = '>2017-01-21T10:00:00';
-const end_date = '<2017-01-22T10:00:00';
+
+// const start_date = '2017-01-21T10:00:00';
+// const end_date = '2017-01-22T10:00:00';
 
 prompt.start();
-// need to return the start_date
-prompt.get(['start_date'], (err, result) => {
+console.log("Please enter Date/Time in the following format: YYYY-MM-DDTHH:MM:SS+0000 ");
+prompt.get(['start_date', 'end_date'], (err, result) => {
 	console.log("Input Received.");
 	let start_date = result.start_date;
+	let end_date = result.end_date;
 	runReport(start_date, end_date);
 });
 
@@ -61,7 +63,7 @@ var runReport = ((start_date, end_date) => {
 		return classy.organizations.listTransactions(34, {
 			token: 'app',
 			with: 'dedication',
-			filter: 'status=success,purchased_at' + start_date + ',purchased_at' + end_date
+			filter: 'status=success,purchased_at>' + start_date + ',purchased_at<' + end_date
 		});
 	})
 	.then((response) => {
@@ -82,7 +84,7 @@ var runReport = ((start_date, end_date) => {
 					classy.organizations.listTransactions(34, {
 						token: 'app',
 						with: 'dedication',
-						filter: 'status=success,purchased_at' + start_date + ',purchased_at' + end_date,
+						filter: 'status=success,purchased_at>' + start_date + ',purchased_at<' + end_date,
 						page: page
 					})
 			);
