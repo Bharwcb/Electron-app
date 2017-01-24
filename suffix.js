@@ -1,11 +1,11 @@
 classy = require('./classy-build');
 
 // ~~ Start of Additional Requests ~~ 
-var buildCustomSuffixHash = function(indexedSuffix, time_filter, suffix_question_id) {
+var buildCustomSuffixHash = function(indexedSuffix, start_date, end_date, suffix_question_id) {
 
 	return classy.questions.listAnswers(suffix_question_id, {
 		token: 'app',
-		filter: 'created_at' + time_filter
+		filter: 'created_at>' + start_date + ',created_at<' + end_date
 	})
 	.then((answersResults) => {
 
@@ -23,7 +23,7 @@ var buildCustomSuffixHash = function(indexedSuffix, time_filter, suffix_question
 				classy.questions.listAnswers(suffix_question_id, {
 					token: 'app',
 					page: page,
-					filter: 'created_at' + time_filter
+					filter: 'created_at>' + start_date + ',created_at<' + end_date
 				})
 			);
 		};
