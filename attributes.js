@@ -1,5 +1,5 @@
 module.exports = {
-	fetchAttributes: function(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue) {
+	fetchAttributes: function(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue) {
 		// contact ID - not used for import
 		let contact_id = null;
 		// custom q
@@ -136,9 +136,9 @@ module.exports = {
 		// Store Name - not used for import/dupe
 		let store_name = null;
 
-		// !!! template for adding an attribute (each row is an array, using Fast CSV module): classyData.push([transaction.member_id.toString()]);
+		// !!! template for adding an attribute (each row is an array, using Fast CSV module): constituentData.push([transaction.member_id.toString()]);
 
-		classyData.push([contact_id, title, last_name, first_name, middle_name, company_name, suffix, billing_email, phone, street1, street2, city, state, zip, country, member_id, campaign_title, form_title, net_transaction_amount, transaction_date, gift_type, temple_name, designee, origin_of_gift, payment_method, settlement_status, billing_last_name, billing_first_name, billing_middle_name, billing_suffix, billing_street1, billing_street2, billing_city, billing_state, billing_zip, billing_phone, is_honor_gift, tribute_first_name, tribute_last_name, sender_title, sender_first_name, sender_last_name, sender_address1, sender_address2, sender_city, sender_state, sender_zip, sender_country, source_code_type, source_code_text, sub_source_code_text, name_of_staff_member, donation_comment, store_name]);
+		constituentData.push([contact_id, title, last_name, first_name, middle_name, company_name, suffix, billing_email, phone, street1, street2, city, state, zip, country, member_id, campaign_title, form_title, net_transaction_amount, transaction_date, gift_type, temple_name, designee, origin_of_gift, payment_method, settlement_status, billing_last_name, billing_first_name, billing_middle_name, billing_suffix, billing_street1, billing_street2, billing_city, billing_state, billing_zip, billing_phone, is_honor_gift, tribute_first_name, tribute_last_name, sender_title, sender_first_name, sender_last_name, sender_address1, sender_address2, sender_city, sender_state, sender_zip, sender_country, source_code_type, source_code_text, sub_source_code_text, name_of_staff_member, donation_comment, store_name]);
 	}
 };
 
