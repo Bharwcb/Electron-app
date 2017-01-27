@@ -3,7 +3,7 @@ require('dotenv').load();
 
 var fs = require('fs');
 var csv = require('fast-csv');
-var attributes = require('./attributes');
+var constituent_attributes = require('./constituent-attributes');
 var async = require('async');
 var classy = require('./classy-build');
 const app = classy.app();
@@ -19,10 +19,11 @@ const temple_name_question_id = 46758;
 const designee_question_id = 46763;
 
 // one place to change headers for import
-const csvHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
+const csvConstituentHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
 
-// used to collect list of contact IDs, title, or whatever you are fetching. then, write to csv.
+// constituentData and revenueData used to collect data for CSV creation.
 let constituentData = [];
+let revenueData = [];
 // the following indexed hashes are used for custom answers.. to avoid querying API for every transaction.
 let indexedTitle = {};
 let indexedMiddlename = {};
@@ -84,7 +85,7 @@ var runReport = ((start_date, end_date) => {
 			// ~~~ Building constituentData for First Page ~~~
 			// console.log("campaignIdKeyNameValue: ", campaignIdKeyNameValue);
 
-			attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
+			constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
 		};
 
 		const numberOfPages = response.last_page;
@@ -110,14 +111,14 @@ var runReport = ((start_date, end_date) => {
 			arrayOfTransactions.forEach(function(transaction, index) {
 
 				// ~~~ Building constituentData for Promises ~~~
-				attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
+				constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
 			});
 			// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to constituentData)
 		});
 		// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", constituentData.length);
 
 		csv
-			.write( constituentData, {headers: csvHeaders} )
+			.write( constituentData, {headers: csvConstituentHeaders} )
 			.pipe(constituent)
 			.on("finish", () => {
 				console.log("CSV complete");
