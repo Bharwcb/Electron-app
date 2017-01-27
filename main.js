@@ -110,6 +110,7 @@ var runReport = ((start_date, end_date) => {
 			.pipe(ws)
 			.on("finish", () => {
 				console.log("CSV complete");
+				process.exit();
 			})
 
 	})
