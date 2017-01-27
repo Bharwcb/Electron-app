@@ -14,6 +14,7 @@ const title_question_id = 46362;
 const middlename_question_id = 46183;
 const company_question_id = 46182;
 const suffix_question_id = 46519;
+const temple_name_question_id = 46758;
 
 // one place to change headers for import
 const csvHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
@@ -25,6 +26,7 @@ let indexedTitle = {};
 let indexedMiddlename = {};
 let indexedCompany = {};
 let indexedSuffix = {};
+let indexedTempleName = {};
 let campaignIdKeyNameValue = {};
 
 // const start_date = '2017-01-21T10:00:00';
@@ -55,6 +57,9 @@ var runReport = ((start_date, end_date) => {
 		return require('./suffix')(indexedSuffix, start_date, end_date, suffix_question_id);
 	})
 	.then(() => {
+		return require('./templename')(indexedTempleName, start_date, end_date, temple_name_question_id);
+	})
+	.then(() => {
 		return require('./campaign')(campaignIdKeyNameValue);
 	})
 
@@ -73,7 +78,7 @@ var runReport = ((start_date, end_date) => {
 			// ~~~ Building classyData for First Page ~~~
 			// console.log("campaignIdKeyNameValue: ", campaignIdKeyNameValue);
 
-			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue);
+			attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, campaignIdKeyNameValue);
 		};
 
 		const numberOfPages = response.last_page;
@@ -99,7 +104,7 @@ var runReport = ((start_date, end_date) => {
 			arrayOfTransactions.forEach(function(transaction, index) {
 
 				// ~~~ Building classyData for Promises ~~~
-				attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, campaignIdKeyNameValue);
+				attributes.fetchAttributes(transaction, classyData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, campaignIdKeyNameValue);
 			});
 			// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to classyData)
 		});
