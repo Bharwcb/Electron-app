@@ -4,6 +4,7 @@ require('dotenv').load();
 var fs = require('fs');
 var csv = require('fast-csv');
 var constituent_attributes = require('./constituent-attributes');
+var revenue_attributes = require('./revenue-attributes');
 var async = require('async');
 var classy = require('./classy-build');
 const app = classy.app();
@@ -20,6 +21,8 @@ const designee_question_id = 46763;
 
 // one place to change headers for import
 const csvConstituentHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
+
+const csvRevenueHeaders = ["Account System"];
 
 // constituentData and revenueData used to collect data for CSV creation.
 let constituentData = [];
@@ -86,6 +89,8 @@ var runReport = ((start_date, end_date) => {
 			// console.log("campaignIdKeyNameValue: ", campaignIdKeyNameValue);
 
 			constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
+
+			revenue_attributes.fetchAttributes(transaction, revenueData);
 		};
 
 		const numberOfPages = response.last_page;
@@ -112,6 +117,8 @@ var runReport = ((start_date, end_date) => {
 
 				// ~~~ Building constituentData for Promises ~~~
 				constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
+
+				revenue_attributes.fetchAttributes(transaction, revenueData);
 			});
 			// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to constituentData)
 		});
@@ -125,7 +132,7 @@ var runReport = ((start_date, end_date) => {
 			})
 
 		csv
-			.write( ["test revenue"])	
+			.write( revenueData, {headers: csvRevenueHeaders} )	
 			.pipe(revenue)
 			.on("finish", () => {
 				console.log("Revenue CSV complete")
