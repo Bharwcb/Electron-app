@@ -9,20 +9,35 @@ module.exports = {
 
 		let lookup_id = null;
 
-		// last/org/group/household name - if company name given, enter company name - otherwise, use full name
+		// ~~~ last_org ~~~
 		let last_org = null;
-		console.log("transaction id: ", transaction_id);
-		console.log("company name: ", indexedCompany.transaction_id);
+		let company_name = indexedCompany[transaction_id];
+		let first_name = transaction.billing_first_name;
+		let last_name = transaction.billing_last_name;
+		let full_name = [];
+		function nameExists(first_name, last_name) {
+			if ((first_name !== null) && (last_name !== null)) {
+				return true;
+			} else {
+				return false;
+			}
+		};
+		// if there's a company given, set last_org to company
+		if (( typeof company_name !== 'undefined' ) && ( company_name !== "" )) {
+			last_org = company_name;
+		} else {
+			// if no company name, set last_org to full name 
+			if (nameExists(first_name, last_name)) {
+				full_name.push(first_name, last_name);
+				full_name.filter(function(val) { return val !== null; });
+				// full_name = [first]
+				last_org = full_name.join(" ");
+			}
+		};
+		// ~~~ last_org end ~~~
 
-		// this is not detecting "A Sample Company";
 
 
-		// if ((indexedCompany.transaction_id != '') && (indexedCompany.transaction_id != null)) {
-		// 	last_org = "Valid company name";
-		// }
-		// console.log("Indexed company: ", indexedCompany);
-
-
-		revenueData.push([account_system, constituent, lookup_id, "last_org"]);
+		revenueData.push([account_system, constituent, lookup_id, last_org]);
 	}
 };

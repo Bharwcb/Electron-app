@@ -36,8 +36,9 @@ let indexedTempleName = {};
 let indexedDesignee = {};
 let campaignIdKeyNameValue = {};
 
-// const start_date = '2017-01-21T10:00:00';
-// const end_date = '2017-01-22T10:00:00';
+// const start_date = '2017-01-26T10:00:00';
+// const end_date = '2017-01-28T10:00:00';
+// indexed company trans id - 3077468
 
 prompt.start();
 console.log("Please enter Date/Time in the following format: YYYY-MM-DDTHH:MM:SS+0000 ");
