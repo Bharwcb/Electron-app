@@ -16,7 +16,7 @@ module.exports = {
 		let last_name = transaction.billing_last_name;
 		let full_name = [];
 		function nameExists(first_name, last_name) {
-			if ((first_name !== null) && (last_name !== null)) {
+			if ((first_name !== null) || (last_name !== null)) {
 				return true;
 			} else {
 				return false;
@@ -29,15 +29,17 @@ module.exports = {
 			// if no company name, set last_org to full name 
 			if (nameExists(first_name, last_name)) {
 				full_name.push(first_name, last_name);
+				// if last name OR first name isn't given (only possible with transactions via the API), use whatever is provided by filtering out null
 				full_name.filter(function(val) { return val !== null; });
-				// full_name = [first]
+				console.log("full name array: ", full_name);
 				last_org = full_name.join(" ");
+				console.log("either way, last_org: ", last_org);
 			}
 		};
 		// ~~~ last_org end ~~~
 
 
 
-		revenueData.push([account_system, constituent, lookup_id, last_org]);
+		revenueData.push([account_system, constituent, lookup_id, last_org, first_name]);
 	}
 };
