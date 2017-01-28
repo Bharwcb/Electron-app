@@ -89,9 +89,6 @@ var runReport = ((start_date, end_date) => {
 			// ~~~ Building constituentData for First Page ~~~
 			// console.log("campaignIdKeyNameValue: ", campaignIdKeyNameValue);
 
-			// both CSVs use these, so do the work here:
-			
-
 			constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
 
 			revenue_attributes.fetchAttributes(transaction, revenueData, indexedCompany, indexedMiddlename, indexedTitle, indexedSuffix);

@@ -32,10 +32,18 @@ module.exports = {
 		};
 		// ~~~ last_org end ~~~
 
+		// ~~~ address ~~~
+		let address = transaction.billing_address1;
+		if (transaction.billing_address2 !== null) {
+			console.log("address 1: ", address);
+			console.log("address 2: ", transaction.billing_address2);
+			address = address + " " + transaction.billing_address2;
+			console.log("after concat: ", address);
+		}
+		// ~~~ address end ~~~
 
 
-
-		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix]);
+		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address]);
 
 		function nameExists(first_name, last_name) {
 			if ((first_name !== null) || (last_name !== null)) {
@@ -44,5 +52,6 @@ module.exports = {
 				return false;
 			}
 		};
+
 	}
 };
