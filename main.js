@@ -22,7 +22,7 @@ const designee_question_id = 46763;
 // one place to change headers for import
 const csvConstituentHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
 
-const csvRevenueHeaders = ["Account System"];
+const csvRevenueHeaders = ["Account System", "Constituent", "Lookup ID", "Last/org/group/household name", "First Name", "Middle Name", "Title", "Suffix", "Address", "City", "State", "Zip", "Country", "Phone Number", "Email Address", "Amount", "Date", "Revenue Type", "Payment Method", "Inbound Channel", "Application", "Appeal", "Designation", "GL Post Status", "Card Type", "Gift Type", "Tribute Last Name", "Tribute", "Temple Name", "Organization", "Temple recognition credit type"];
 
 // constituentData and revenueData used to collect data for CSV creation.
 let constituentData = [];
@@ -36,8 +36,9 @@ let indexedTempleName = {};
 let indexedDesignee = {};
 let campaignIdKeyNameValue = {};
 
-// const start_date = '2017-01-21T10:00:00';
-// const end_date = '2017-01-22T10:00:00';
+// const start_date = '2017-01-26T10:00:00';
+// const end_date = '2017-01-28T10:00:00';
+// indexed company trans id - 3077468
 
 prompt.start();
 console.log("Please enter Date/Time in the following format: YYYY-MM-DDTHH:MM:SS+0000 ");
@@ -90,7 +91,7 @@ var runReport = ((start_date, end_date) => {
 
 			constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
 
-			revenue_attributes.fetchAttributes(transaction, revenueData);
+			revenue_attributes.fetchAttributes(transaction, revenueData, indexedCompany);
 		};
 
 		const numberOfPages = response.last_page;
@@ -118,7 +119,7 @@ var runReport = ((start_date, end_date) => {
 				// ~~~ Building constituentData for Promises ~~~
 				constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
 
-				revenue_attributes.fetchAttributes(transaction, revenueData);
+				revenue_attributes.fetchAttributes(transaction, revenueData, indexedCompany);
 			});
 			// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to constituentData)
 		});
