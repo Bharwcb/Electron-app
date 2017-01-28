@@ -1,10 +1,9 @@
 module.exports = {
 	fetchAttributes: function(transaction, revenueData) {
 		
-		// account_system
+		let account_system = "SHC Account";
 
-		
 
-		revenueData.push(["account_system"]);
+		revenueData.push([account_system]);
 	}
 };
