@@ -3,7 +3,10 @@ module.exports = {
 		
 		let account_system = "SHC Account";
 
+		let constituent = null;
 
-		revenueData.push([account_system]);
+		let lookup_id = null;
+
+		revenueData.push([account_system, constituent, lookup_id]);
 	}
 };
