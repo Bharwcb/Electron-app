@@ -121,9 +121,16 @@ var runReport = ((start_date, end_date) => {
 			.write( constituentData, {headers: csvConstituentHeaders} )
 			.pipe(constituent)
 			.on("finish", () => {
-				console.log("CSV complete");
+				console.log("Constituent CSV complete");
 				process.exit();
 			})
+
+		csv
+			.write( ["test revenue"])	
+			.pipe(revenue)
+			.on("finish", () => {
+				console.log("Revenue CSV complete")
+			})	
 
 	})
 	.catch((error) => {
