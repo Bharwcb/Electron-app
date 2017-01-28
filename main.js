@@ -122,7 +122,6 @@ var runReport = ((start_date, end_date) => {
 			.pipe(constituent)
 			.on("finish", () => {
 				console.log("Constituent CSV complete");
-				process.exit();
 			})
 
 		csv
