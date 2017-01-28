@@ -6,6 +6,3 @@ module.exports = {
 		revenueData.push([account_system]);
 	}
 };
-
-
-*/
