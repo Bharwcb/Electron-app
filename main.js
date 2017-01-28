@@ -90,7 +90,7 @@ var runReport = ((start_date, end_date) => {
 
 			constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
 
-			revenue_attributes.fetchAttributes(transaction, revenueData);
+			revenue_attributes.fetchAttributes(transaction, revenueData, indexedCompany);
 		};
 
 		const numberOfPages = response.last_page;
@@ -118,7 +118,7 @@ var runReport = ((start_date, end_date) => {
 				// ~~~ Building constituentData for Promises ~~~
 				constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
 
-				revenue_attributes.fetchAttributes(transaction, revenueData);
+				revenue_attributes.fetchAttributes(transaction, revenueData, indexedCompany);
 			});
 			// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to constituentData)
 		});
