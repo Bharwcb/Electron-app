@@ -42,8 +42,19 @@ module.exports = {
 		}
 		// ~~~ address end ~~~
 
+		let city = transaction.billing_city;
 
-		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address]);
+		let state = transaction.billing_state;
+
+		let zip = transaction.billing_postal_code;
+
+		let country = transaction.billing_country;
+
+		let phone = transaction.member_phone;
+
+		let email = transaction.member_email_address;
+
+		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email]);
 
 		function nameExists(first_name, last_name) {
 			if ((first_name !== null) || (last_name !== null)) {
