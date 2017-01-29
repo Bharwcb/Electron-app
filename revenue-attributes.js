@@ -32,12 +32,10 @@ module.exports = {
 		};
 		// ~~~ last_org end ~~~
 
-		// ~~~ address ~~~
 		let address = transaction.billing_address1;
 		if (transaction.billing_address2 !== null) {
 			address = address + " " + transaction.billing_address2;
 		}
-		// ~~~ address end ~~~
 
 		let city = transaction.billing_city;
 
@@ -58,17 +56,22 @@ module.exports = {
 		date.setDate(date.getDate());
 		transaction_date = ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
 
-		
-		// REFUNDED TRANSACTIONS ARE NOT SHOWING UP.. FILTERING ONLY SUCCESSFUL
+		// REFUNDED TRANSACTIONS ARE NOT SHOWING UP.. FILTERING ONLY SUCCESSFUL - WILL NOT WORK. CHECKING WITH PRODOR
 		let revenue_type = 'refund';
 		if (transaction.refunded_at == null) {
 			revenue_type = 'payment';
 		};
-		
 
+		// OPEN TICKET TO EXPOSE 'CARD_TYPE' ENDPOINT
+		let payment_method = transaction.card_type;
 
+		// CHECK WITH PRODOR
+		let inbound_channel = 'INBOUND_CHANNEL_PLACEHOLDER';
 
-		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type]);
+		// SLACKED TORI TO CONFIRM PRODOR'S LOGIC IS CORRECT IN ALL CASES	
+		let application = 'APPLICATION_PLACEHOLDER';
+
+		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application]);
 
 		function nameExists(first_name, last_name) {
 			if ((first_name !== null) || (last_name !== null)) {
