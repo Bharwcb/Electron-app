@@ -69,6 +69,7 @@ module.exports = {
 		let inbound_channel = 'INBOUND_CHANNEL_PLACEHOLDER';
 
 		// SLACKED TORI TO CONFIRM PRODOR'S LOGIC IS CORRECT IN ALL CASES	
+		// in meantime, submitted ticket #1247
 		let application = 'APPLICATION_PLACEHOLDER';
 
 		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application]);
