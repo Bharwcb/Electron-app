@@ -58,11 +58,17 @@ module.exports = {
 		date.setDate(date.getDate());
 		transaction_date = ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
 
+		
+		// REFUNDED TRANSACTIONS ARE NOT SHOWING UP.. FILTERING ONLY SUCCESSFUL
+		let revenue_type = 'refund';
+		if (transaction.refunded_at == null) {
+			revenue_type = 'payment';
+		};
+		
 
 
 
-
-		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date]);
+		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type]);
 
 		function nameExists(first_name, last_name) {
 			if ((first_name !== null) || (last_name !== null)) {
