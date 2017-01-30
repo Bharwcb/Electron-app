@@ -1,6 +1,4 @@
-// manages .env file
 require('dotenv').load();
-
 var fs = require('fs');
 var csv = require('fast-csv');
 var constituent_attributes = require('./constituent-attributes');
@@ -8,8 +6,6 @@ var revenue_attributes = require('./revenue-attributes');
 var async = require('async');
 var classy = require('./classy-build');
 const app = classy.app();
-var constituent = fs.createWriteStream('./constituent.csv');
-var revenue = fs.createWriteStream('./revenue.csv');
 var prompt = require('prompt');
 
 const title_question_id = 46362;
@@ -36,10 +32,6 @@ let indexedTempleName = {};
 let indexedDesignee = {};
 let campaignIdKeyNameValue = {};
 
-// const start_date = '2017-01-26T10:00:00';
-// const end_date = '2017-01-28T10:00:00';
-// indexed company trans id - 3077468
-
 prompt.start();
 console.log("Please enter Date/Time in the following format: YYYY-MM-DDTHH:MM:SS+0000 ");
 prompt.get(['start_date', 'end_date'], (err, result) => {
@@ -48,6 +40,22 @@ prompt.get(['start_date', 'end_date'], (err, result) => {
 	let end_date = result.end_date;
 	runReport(start_date, end_date);
 });
+
+// csv_date formats csv filenames to current datetime
+let csv_date = new Date();
+csv_date = 
+	csv_date.getFullYear() + 
+	('0' + (csv_date.getMonth() + 1)).slice(-2) + 
+	('0' + csv_date.getDate()).slice(-2) + '-' + 
+	('0' + csv_date.getHours()).slice(-2) + ':' +
+	('0' + csv_date.getMinutes()).slice(-2);
+
+var constituent = fs.createWriteStream('./Shriners-' + csv_date + '(constituent).csv');
+var revenue = fs.createWriteStream('./Shriners-' + csv_date + '(revenue).csv');
+
+// const start_date = '2017-01-26T10:00:00';
+// const end_date = '2017-01-28T10:00:00';
+
 
 var runReport = ((start_date, end_date) => {
 	console.log("Running report...");
