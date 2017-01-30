@@ -1,5 +1,5 @@
 module.exports = {
-	fetchAttributes: function(transaction, revenueData, indexedCompany, indexedMiddlename, indexedTitle, indexedSuffix, campaignIdKeyNameValue) {
+	fetchAttributes: function(transaction, revenueData, indexedCompany, indexedMiddlename, indexedTitle, indexedSuffix, campaignIdKeyNameValue, indexedDesignee) {
 		
 		let transaction_id = transaction.id;
 
@@ -74,7 +74,9 @@ module.exports = {
 
 		let appeal = campaignIdKeyNameValue[transaction.campaign_id];
 
-		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application, appeal]);
+		let designation = indexedDesignee[transaction_id];
+
+		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application, appeal, designation]);
 
 		function nameExists(first_name, last_name) {
 			if ((first_name !== null) || (last_name !== null)) {
