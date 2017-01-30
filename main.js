@@ -131,23 +131,41 @@ var runReport = ((start_date, end_date) => {
 			});
 			// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to constituentData)
 		});
-		// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", constituentData.length);
+		
+		// Set up CSV promises to ensure process.exit() only happens after all CSV's are complete.
+		let csvPromises = [];
+		
+		var constituentPromise = new Promise((resolve, reject) => {
+			csv
+				.write( constituentData, {headers: csvConstituentHeaders} )
+				.pipe(constituent)
+				.on("finish", () => {
+					console.log("Constituent CSV complete");
+					resolve();
+				})
+		});
 
-		csv
-			.write( constituentData, {headers: csvConstituentHeaders} )
-			.pipe(constituent)
-			.on("finish", () => {
-				console.log("Constituent CSV complete");
-			})
+		var revenuePromise = new Promise((resolve, reject) => {
+			csv
+				.write( revenueData, {headers: csvRevenueHeaders} )	
+				.pipe(revenue)
+				.on("finish", () => {
+					console.log("Revenue CSV complete");
+					resolve();
+				})	
+		});
+		
+		csvPromises.push(constituentPromise, revenuePromise);
 
-		csv
-			.write( revenueData, {headers: csvRevenueHeaders} )	
-			.pipe(revenue)
-			.on("finish", () => {
-				console.log("Revenue CSV complete")
-			})	
+		return Promise.all(csvPromises)
+		.then(() => {
+			console.log("All CSV's are complete");
+			process.exit();
+	  });
 
 	})
+	
+
 	.catch((error) => {
 		console.log("Error somewhere in the chain: " + error);
 	});
