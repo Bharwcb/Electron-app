@@ -1,5 +1,5 @@
 module.exports = {
-	fetchAttributes: function(transaction, revenueData, indexedCompany, indexedMiddlename, indexedTitle, indexedSuffix, campaignIdKeyNameValue, indexedDesignee) {
+	fetchAttributes: function(transaction, revenueData, indexedCompany, indexedMiddlename, indexedTitle, indexedSuffix, campaignIdKeyNameValue, indexedDesignee, indexedTempleName) {
 		
 		let transaction_id = transaction.id;
 
@@ -89,7 +89,24 @@ module.exports = {
 			gift_type = "Memory";
 		};
 
-		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application, appeal, designation, gl_post_status, card_type, gift_type]);
+		let tribute_last_name = null;
+		if (transaction.dedication !== null) { 
+			let tribute_full_name_arr = transaction.dedication.honoree_name.split(" "); 
+			tribute_first_name = tribute_full_name_arr[0];
+			if (tribute_full_name_arr.length > 1) {
+				tribute_last_name = tribute_full_name_arr[tribute_full_name_arr.length - 1];
+			};
+		};
+
+		let tribute = 'TRIBUTE PLACE HOLDER';
+
+		let temple_name = indexedTempleName[transaction_id];
+
+		let organization = 'ORGANIZATION PLACE HOLDER';
+
+		let temple_recognition = null;
+
+		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application, appeal, designation, gl_post_status, card_type, gift_type, tribute_last_name, tribute, temple_name, organization, temple_recognition]);
 
 		function nameExists(first_name, last_name) {
 			if ((first_name !== null) || (last_name !== null)) {
