@@ -49,7 +49,7 @@ module.exports = {
 		// gift type
 		let gift_type = transaction.in_honor_of; 
 		if (gift_type == null || gift_type == "" || gift_type == " ") {
-			gift_type = "Stand";
+			gift_type = "Standard";
 		} else if (gift_type.slice(0,11) == "in honor of") {
 			gift_type = "Tribute";
 		} else if (gift_type.slice(0,12) == "in memory of") {
