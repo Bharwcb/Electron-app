@@ -131,8 +131,8 @@ var runReport = ((start_date, end_date) => {
 			});
 			// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to constituentData)
 		});
-		// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", constituentData.length);
-
+		
+		// Set up CSV promises to ensure process.exit() only happens after all CSV's are complete.
 		let csvPromises = [];
 		
 		var constituentPromise = new Promise((resolve, reject) => {
@@ -159,9 +159,8 @@ var runReport = ((start_date, end_date) => {
 
 		return Promise.all(csvPromises)
 		.then(() => {
-			console.log("test");
+			console.log("All CSV's are complete");
 			process.exit();
-			
 	  });
 
 	})
