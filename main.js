@@ -50,8 +50,8 @@ csv_date =
 	('0' + csv_date.getHours()).slice(-2) + ':' +
 	('0' + csv_date.getMinutes()).slice(-2);
 
-var constituent = fs.createWriteStream('./Shriners-' + csv_date + '(constituent).csv');
-var revenue = fs.createWriteStream('./Shriners-' + csv_date + '(revenue).csv');
+var constituent = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(constituent).csv');
+var revenue = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenue).csv');
 
 // const start_date = '2017-01-26T10:00:00';
 // const end_date = '2017-01-28T10:00:00';
@@ -164,8 +164,6 @@ var runReport = ((start_date, end_date) => {
 	  });
 
 	})
-	
-
 	.catch((error) => {
 		console.log("Error somewhere in the chain: " + error);
 	});
