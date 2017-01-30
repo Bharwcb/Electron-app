@@ -76,7 +76,20 @@ module.exports = {
 
 		let designation = indexedDesignee[transaction_id];
 
-		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application, appeal, designation]);
+		let gl_post_status = 'Do Not Post';
+
+		let card_type = transaction.card_type;
+
+		let gift_type = transaction.in_honor_of; 
+		if (gift_type == null || gift_type == "" || gift_type == " ") {
+			gift_type = "Standard";
+		} else if (gift_type.slice(0,11) == "in honor of") {
+			gift_type = "Tribute";
+		} else if (gift_type.slice(0,12) == "in memory of") {
+			gift_type = "Memory";
+		};
+
+		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application, appeal, designation, gl_post_status, card_type, gift_type]);
 
 		function nameExists(first_name, last_name) {
 			if ((first_name !== null) || (last_name !== null)) {
