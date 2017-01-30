@@ -140,6 +140,7 @@ var runReport = ((start_date, end_date) => {
 				console.log("Constituent CSV complete");
 			})
 
+
 		csv
 			.write( revenueData, {headers: csvRevenueHeaders} )	
 			.pipe(revenue)
