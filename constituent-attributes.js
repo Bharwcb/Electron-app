@@ -44,7 +44,10 @@ module.exports = {
 		let transaction_date = transaction.purchased_at;
 		let date = new Date(transaction_date);
 		date.setDate(date.getDate());
-		transaction_date = ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
+		transaction_date = 
+			('0' + (date.getMonth() + 1)).slice(-2) + '/' + 
+			('0' + date.getDate()).slice(-2) + '/' + 
+			date.getFullYear();
 		
 		// gift type
 		let gift_type = transaction.in_honor_of; 
