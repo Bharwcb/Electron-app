@@ -133,22 +133,40 @@ var runReport = ((start_date, end_date) => {
 		});
 		// TEST - test total amount of transactions.. console.log("CLASSY DATA LENGTH", constituentData.length);
 
-		csv
-			.write( constituentData, {headers: csvConstituentHeaders} )
-			.pipe(constituent)
-			.on("finish", () => {
-				console.log("Constituent CSV complete");
-			})
+		let csvPromises = [];
+		
+		var constituentPromise = new Promise((resolve, reject) => {
+			csv
+				.write( constituentData, {headers: csvConstituentHeaders} )
+				.pipe(constituent)
+				.on("finish", () => {
+					console.log("Constituent CSV complete");
+					resolve();
+				})
+		});
 
+		var revenuePromise = new Promise((resolve, reject) => {
+			csv
+				.write( revenueData, {headers: csvRevenueHeaders} )	
+				.pipe(revenue)
+				.on("finish", () => {
+					console.log("Revenue CSV complete");
+					resolve();
+				})	
+		});
+		
+		csvPromises.push(constituentPromise, revenuePromise);
 
-		csv
-			.write( revenueData, {headers: csvRevenueHeaders} )	
-			.pipe(revenue)
-			.on("finish", () => {
-				console.log("Revenue CSV complete")
-			})	
+		return Promise.all(csvPromises)
+		.then(() => {
+			console.log("test");
+			process.exit();
+			
+	  });
 
 	})
+	
+
 	.catch((error) => {
 		console.log("Error somewhere in the chain: " + error);
 	});
