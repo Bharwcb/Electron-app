@@ -1,5 +1,5 @@
 module.exports = {
-	fetchAttributes: function(transaction, revenueData, indexedCompany, indexedMiddlename, indexedTitle, indexedSuffix) {
+	fetchAttributes: function(transaction, revenueData, indexedCompany, indexedMiddlename, indexedTitle, indexedSuffix, campaignIdKeyNameValue) {
 		
 		let transaction_id = transaction.id;
 
@@ -72,7 +72,9 @@ module.exports = {
 		// in meantime, submitted ticket #1247
 		let application = 'APPLICATION_PLACEHOLDER';
 
-		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application]);
+		let appeal = campaignIdKeyNameValue[transaction.campaign_id];
+
+		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application, appeal]);
 
 		function nameExists(first_name, last_name) {
 			if ((first_name !== null) || (last_name !== null)) {
