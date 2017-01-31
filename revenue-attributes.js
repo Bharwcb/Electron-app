@@ -80,7 +80,7 @@ module.exports = {
 
 		// SLACKED TORI TO CONFIRM PRODOR'S LOGIC IS CORRECT IN ALL CASES	
 		// in meantime, submitted ticket #1247
-		let application = 'APPLICATION_PLACEHOLDER';
+		let application = 'donation';
 
 		let appeal = campaignIdKeyNameValue[transaction.campaign_id];
 
