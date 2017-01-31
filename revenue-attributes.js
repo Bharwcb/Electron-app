@@ -68,7 +68,6 @@ module.exports = {
 		// OPEN TICKET TO EXPOSE 'CARD_TYPE' ENDPOINT
 		let payment_method = 'credit card';
 		if (transaction.payment_method == 'Offline') {
-			console.log("offline");
 			payment_method = 'xcheckout';
 		}; // else if transaction.card_type == mastercard ..
 		// else if transaction.card_type == visa ..
@@ -109,11 +108,11 @@ module.exports = {
 			};
 		};
 
-		let tribute = 'TRIBUTE PLACE HOLDER';
+		let tribute = null;
 
 		let temple_name = indexedTempleName[transaction_id];
 
-		let organization = 'ORGANIZATION PLACE HOLDER';
+		let organization = company_name;
 
 		let temple_recognition = null;
 
