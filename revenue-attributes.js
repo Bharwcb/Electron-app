@@ -66,10 +66,18 @@ module.exports = {
 		};
 
 		// OPEN TICKET TO EXPOSE 'CARD_TYPE' ENDPOINT
-		let payment_method = transaction.card_type;
+		let payment_method = 'credit card';
+		if (transaction.payment_method == 'Offline') {
+			console.log("offline");
+			payment_method = 'xcheckout';
+		}; // else if transaction.card_type == mastercard ..
+		// else if transaction.card_type == visa ..
+		// etc..
 
-		// CHECK WITH PRODOR
-		let inbound_channel = 'INBOUND_CHANNEL_PLACEHOLDER';
+		let inbound_channel = 'online';
+		if (transaction.payment_method == 'Offline') {
+			inbound_channel = 'offline';
+		}
 
 		// SLACKED TORI TO CONFIRM PRODOR'S LOGIC IS CORRECT IN ALL CASES	
 		// in meantime, submitted ticket #1247
