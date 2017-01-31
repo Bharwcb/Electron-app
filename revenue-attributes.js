@@ -68,7 +68,6 @@ module.exports = {
 		// OPEN TICKET TO EXPOSE 'CARD_TYPE' ENDPOINT
 		let payment_method = 'credit card';
 		if (transaction.payment_method == 'Offline') {
-			console.log("offline");
 			payment_method = 'xcheckout';
 		}; // else if transaction.card_type == mastercard ..
 		// else if transaction.card_type == visa ..
@@ -109,13 +108,20 @@ module.exports = {
 			};
 		};
 
-		let tribute = 'TRIBUTE PLACE HOLDER';
+		let tribute = null;
 
 		let temple_name = indexedTempleName[transaction_id];
 
-		let organization = 'ORGANIZATION PLACE HOLDER';
+		let organization = company_name;
 
 		let temple_recognition = null;
+
+		// ANONYMOUS DONORS:
+		if (transaction.is_anonymous == true) {
+			first_name = middle_name = title = suffix = address = city = state = zip = country = phone = email = tribute_last_name = organization = null;
+			last_org = 'Anonymous';
+			// no last name attr on this CSV, so set last_org to 'Anonymous'
+		};
 
 		revenueData.push([account_system, constituent, lookup_id, last_org, first_name, middle_name, title, suffix, address, city, state, zip, country, phone, email, amount, transaction_date, revenue_type, payment_method, inbound_channel, application, appeal, designation, gl_post_status, card_type, gift_type, tribute_last_name, tribute, temple_name, organization, temple_recognition]);
 

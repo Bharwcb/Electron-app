@@ -71,7 +71,6 @@ module.exports = {
 		// OPEN TICKET TO EXPOSE 'CARD_TYPE' ENDPOINT
 		let payment_method = 'credit card';
 		if (transaction.payment_method == 'Offline') {
-			console.log("offline");
 			payment_method = 'xcheckout';
 		}; // else if transaction.card_type == mastercard ..
 		// else if transaction.card_type == visa ..
@@ -144,6 +143,12 @@ module.exports = {
 		let donation_comment = null;
 		// Store Name - not used for import/dupe
 		let store_name = null;
+
+		// ANONYMOUS DONORS:
+		if (transaction.is_anonymous == true) {
+			title = first_name = middle_name = company_name = suffix = billing_email = phone = street1 = street2 = city = state = zip = country = member_id = billing_last_name = billing_first_name = billing_middle_name = billing_suffix = billing_street1 = billing_street2 = billing_city = billing_state = billing_zip = billing_phone = sender_last_name = sender_address1 = sender_address2 = sender_city = sender_state = sender_zip = sender_country = null;
+			last_name = 'Anonymous';
+		};
 
 		// !!! template for adding an attribute (each row is an array, using Fast CSV module): constituentData.push([transaction.member_id.toString()]);
 
