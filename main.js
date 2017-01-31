@@ -35,11 +35,14 @@ let indexedDesignee = {};
 let campaignIdKeyNameValue = {};
 
 prompt.start();
-console.log("Please enter Date/Time in the following format: YYYY-MM-DDTHH:MM:SS+0000 ");
+console.log("Please enter Date/Time in the following format: \nYYYY-MM-DDTHH:MM:SS+0000 \n(You may enter 'now' as a valid end date)");
 prompt.get(['start_date', 'end_date'], (err, result) => {
-	console.log("Input Received.");
 	let start_date = result.start_date;
 	let end_date = result.end_date;
+	if (end_date.toLowerCase() == 'now') {
+		let now = new Date().toISOString();
+		end_date = now;
+	};
 	runReport(start_date, end_date);
 });
 
@@ -62,7 +65,7 @@ var revenue = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenu
 // const end_date = '2017-01-28T10:00:00';
 
 var runReport = ((start_date, end_date) => {
-	console.log("Running report...");
+	console.log("~~~ Running report ~~~");
 	app
 	.then(() => {
 		return require('./custom-questions/title')(indexedTitle, start_date, end_date, title_question_id);
