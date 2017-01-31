@@ -7,6 +7,8 @@ var async = require('async');
 var classy = require('./classy-build');
 const app = classy.app();
 var prompt = require('prompt');
+// rimraf used to clear downloads contents
+var rmdir = require('rimraf');
 
 const title_question_id = 46362;
 const middlename_question_id = 46183;
@@ -41,6 +43,9 @@ prompt.get(['start_date', 'end_date'], (err, result) => {
 	runReport(start_date, end_date);
 });
 
+// clearFolder removes contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
+clearFolder('./downloads');
+
 // csv_date formats csv filenames to current datetime
 let csv_date = new Date();
 csv_date = 
@@ -55,7 +60,6 @@ var revenue = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenu
 
 // const start_date = '2017-01-26T10:00:00';
 // const end_date = '2017-01-28T10:00:00';
-
 
 var runReport = ((start_date, end_date) => {
 	console.log("Running report...");
@@ -169,7 +173,13 @@ var runReport = ((start_date, end_date) => {
 	});
 })
 
-
+function clearFolder(folder) {
+	files = fs.readdirSync('./downloads');
+	files.forEach(function(file, index) {
+		console.log("File index ...", index);
+		rmdir('./downloads/' + file, ((err) =>{}));
+	});
+}
 
 
 
