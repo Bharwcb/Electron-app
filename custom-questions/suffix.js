@@ -1,4 +1,4 @@
-classy = require('./classy-build');
+classy = require('../classy-build');
 
 // ~~ Start of Additional Requests ~~ 
 var buildCustomSuffixHash = function(indexedSuffix, start_date, end_date, suffix_question_id) {

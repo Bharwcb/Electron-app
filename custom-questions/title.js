@@ -7,7 +7,7 @@ then, when iterating through transactions, if doesn't find that transaction.id i
 }
 */
 
-classy = require('./classy-build');
+classy = require('../classy-build');
 
 // ~~ Start of Additional Requests ~~ 
 var buildCustomTitleHash = function(indexedTitle, start_date, end_date, title_question_id) {

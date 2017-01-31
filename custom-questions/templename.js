@@ -1,4 +1,4 @@
-classy = require('./classy-build');
+classy = require('../classy-build');
 
 // temple name will be a drop down 
 var buildTempleNameHash = function(indexedTempleName, start_date, end_date, temple_name_question_id) {

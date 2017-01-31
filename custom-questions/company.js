@@ -1,4 +1,4 @@
-classy = require('./classy-build');
+classy = require('../classy-build');
 
 // ~~ Start of Additional Requests ~~ 
 var buildCustomCompanyHash = function(indexedCompany, start_date, end_date, company_question_id) {

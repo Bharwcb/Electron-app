@@ -65,25 +65,25 @@ var runReport = ((start_date, end_date) => {
 	console.log("Running report...");
 	app
 	.then(() => {
-		return require('./title')(indexedTitle, start_date, end_date, title_question_id);
+		return require('./custom-questions/title')(indexedTitle, start_date, end_date, title_question_id);
 	})
 	.then(() => {
-		return require('./middlename')(indexedMiddlename, start_date, end_date, middlename_question_id);
+		return require('./custom-questions/middlename')(indexedMiddlename, start_date, end_date, middlename_question_id);
 	})
 	.then(() => {
-		return require('./company')(indexedCompany, start_date, end_date, company_question_id);
+		return require('./custom-questions/company')(indexedCompany, start_date, end_date, company_question_id);
 	})
 	.then(() => {
-		return require('./suffix')(indexedSuffix, start_date, end_date, suffix_question_id);
+		return require('./custom-questions/suffix')(indexedSuffix, start_date, end_date, suffix_question_id);
 	})
 	.then(() => {
-		return require('./templename')(indexedTempleName, start_date, end_date, temple_name_question_id);
+		return require('./custom-questions/templename')(indexedTempleName, start_date, end_date, temple_name_question_id);
 	})
 	.then(() => {
-		return require('./designee')(indexedDesignee, start_date, end_date, designee_question_id);
+		return require('./custom-questions/designee')(indexedDesignee, start_date, end_date, designee_question_id);
 	})
 	.then(() => {
-		return require('./campaign')(campaignIdKeyNameValue);
+		return require('./custom-questions/campaign')(campaignIdKeyNameValue);
 	})
 
 	// Finally, loop through all transactions (sample time filter), matching against custom question hashes, campaign reference hash, etc...
