@@ -1,4 +1,4 @@
-classy = require('./classy-build');
+classy = require('../classy-build');
 
 // ~~ Start of Additional Requests ~~ 
 var buildCustomMiddlenameHash = function(indexedMiddlename, start_date, end_date, middlename_question_id) {

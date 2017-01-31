@@ -7,7 +7,7 @@
 	}
 - Org/id/transactions returns only campaign_id but not the campaign name, ?with=campaign does not work, so this uses fewest API calls. 
 */
-classy = require('./classy-build');
+classy = require('../classy-build');
 
 var buildCampaign = function(campaignIdKeyNameValue) {
 

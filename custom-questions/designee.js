@@ -1,6 +1,6 @@
 // 'Designee 1 Administrative Name' is the hospital code and will be selected as a dropdown custom question.
 
-classy = require('./classy-build');
+classy = require('../classy-build');
 
 // temple name will be a drop down 
 var buildDesigneeHash = function(indexedDesignee, start_date, end_date, designee_question_id) {
