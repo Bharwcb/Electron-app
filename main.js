@@ -44,7 +44,7 @@ prompt.get(['start_date', 'end_date'], (err, result) => {
 });
 
 // clearFolder removes contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
-clearFolder('./downloads');
+clearFolder('downloads');
 
 // csv_date formats csv filenames to current datetime
 let csv_date = new Date();
@@ -176,7 +176,7 @@ var runReport = ((start_date, end_date) => {
 })
 
 function clearFolder(folder) {
-	files = fs.readdirSync('./downloads');
+	files = fs.readdirSync('./' + folder);
 	files.forEach(function(file, index) {
 		rmdir('./downloads/' + file, ((err) =>{}));
 	});
