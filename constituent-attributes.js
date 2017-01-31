@@ -68,8 +68,14 @@ module.exports = {
 		// origin of gift - not used for import
 		let origin_of_gift = null;
 
-		// payment method - OPEN TICKET TO EXPOSE 'CARD_TYPE' ENDPOINT
-		let payment_method = transaction.card_type;
+		// OPEN TICKET TO EXPOSE 'CARD_TYPE' ENDPOINT
+		let payment_method = 'credit card';
+		if (transaction.payment_method == 'Offline') {
+			console.log("offline");
+			payment_method = 'xcheckout';
+		}; // else if transaction.card_type == mastercard ..
+		// else if transaction.card_type == visa ..
+		// etc..
 
 		// Settlement Status - not used for import/dupe
 		let settlement_status = null;
