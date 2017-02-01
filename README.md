@@ -18,11 +18,11 @@
 
 * OFFSET: If using an offset, format according to our API documentation (https://developers.classy.org/api-docs/v2/index.html)
 
-** Example: 2017-01-26T10:00:00+0500 (January 26, 2017 at 10AM Eastern)
+* EXAMPLE: 2017-01-26T10:00:00+0500 (January 26, 2017 at 10AM Eastern)
 
 * You may select 'now' for your end_date to get the current DateTime
 
-6. Wait a few moments (for one day's transaction, around 5 seconds..)
+6. After end date is entered, report will run.
 
 7. Once report is complete, open project's 'Downloads/' directory contents - You will have two files created, a 'Constituent' and 'Revenue' CSV.
 
