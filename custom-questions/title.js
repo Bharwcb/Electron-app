@@ -12,9 +12,6 @@ classy = require('../classy-build');
 // ~~ Start of Additional Requests ~~ 
 var buildCustomTitleHash = function(indexedTitle, start_date, end_date, title_question_id) {
 
-	console.log("end date: ", end_date)
-	console.log('created_at>' + start_date + ',created_at<' + end_date);
-
 	return classy.questions.listAnswers(title_question_id, {
 		token: 'app',
 		filter: 'created_at>' + start_date + ',created_at<' + end_date
