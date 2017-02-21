@@ -124,11 +124,10 @@ var runReport = ((start_date, end_date) => {
 					})
 			);
 		};
-
+		
 		return Promise.all(transactionListPromises);
 	})
 	.then((results) => {
-
 		results.forEach(function(promisePageNumber) {
 			var arrayOfTransactions = promisePageNumber.data;
 			arrayOfTransactions.forEach(function(transaction, index) {
@@ -174,7 +173,11 @@ var runReport = ((start_date, end_date) => {
 
 	})
 	.catch((error) => {
-		console.log("Error somewhere in the chain: " + error);
+		console.trace();
+		console.log("Error somewhere in the chain: ", error.error);
+		console.log("KEYS: ", Object.keys(error));
+		console.log("LINE NUMBER: ", error.lineNumber);
+		console.log("ERROR STACK: ", error.stack);
 	});
 })
 
