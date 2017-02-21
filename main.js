@@ -94,7 +94,7 @@ var runReport = ((start_date, end_date) => {
 		return classy.organizations.listTransactions(34, {
 			token: 'app',
 			with: 'dedication',
-			filter: 'status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date
+			filter: 'member_email_address=bharris@classy.org,status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date
 			// filter ONLY success and refunded transactions
 		});
 		
@@ -119,7 +119,7 @@ var runReport = ((start_date, end_date) => {
 					classy.organizations.listTransactions(34, {
 						token: 'app',
 						with: 'dedication',
-						filter: 'status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date,
+						filter: 'member_email_address=bharris@classy.org,status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date,
 						page: page
 					})
 			);
