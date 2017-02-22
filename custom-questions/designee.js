@@ -7,6 +7,7 @@ var buildDesigneeHash = function(indexedDesignee, start_date, end_date, designee
 
 	return classy.questions.listAnswers(designee_question_id, {
 		token: 'app',
+		requestDebug: false,
 		filter: 'created_at>' + start_date + ',created_at<' + end_date
 	})
 	.then((answersResults) => {
@@ -25,6 +26,7 @@ var buildDesigneeHash = function(indexedDesignee, start_date, end_date, designee
 			designeePromises.push(
 				classy.questions.listAnswers(designee_question_id, {
 					token: 'app',
+					requestDebug: false,
 					page: page,
 					filter: 'created_at>' + start_date + ',created_at<' + end_date
 				})

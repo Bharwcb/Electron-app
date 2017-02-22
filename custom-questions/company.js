@@ -5,6 +5,7 @@ var buildCustomCompanyHash = function(indexedCompany, start_date, end_date, comp
 
 	return classy.questions.listAnswers(company_question_id, {
 		token: 'app',
+		requestDebug: false,
 		filter: 'created_at>' + start_date + ',created_at<' + end_date
 	})
 	.then((answersResults) => {
@@ -22,6 +23,7 @@ var buildCustomCompanyHash = function(indexedCompany, start_date, end_date, comp
 			companyPromises.push(
 				classy.questions.listAnswers(company_question_id, {
 					token: 'app',
+					requestDebug: false,
 					page: page,
 					filter: 'created_at>' + start_date + ',created_at<' + end_date
 				})
