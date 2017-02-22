@@ -10,6 +10,8 @@ var prompt = require('prompt');
 // rimraf used to clear downloads contents
 var rmdir = require('rimraf');
 var moment = require('moment');
+// path used for downloads directory management
+var path = require('path');
 
 const title_question_id = 46362;
 const middlename_question_id = 46183;
@@ -51,7 +53,9 @@ prompt.get(['start_date', 'end_date'], (err, result) => {
 	runReport(start_date, end_date);
 });
 
-// clearFolder removes contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
+// create downloads folder if does exist
+mkdirSync( path.join('downloads') );
+// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
 clearFolder('downloads');
 
 // csv_date formats csv filenames to current datetime
@@ -189,6 +193,7 @@ var runReport = ((start_date, end_date) => {
 	});
 })
 
+// ~~~ management of downloads folder ~~~
 function clearFolder(folder) {
 	files = fs.readdirSync('./' + folder);
 	files.forEach(function(file, index) {
@@ -196,5 +201,13 @@ function clearFolder(folder) {
 	});
 }
 
+function mkdirSync(path) {
+	try {
+		fs.mkdirSync(path);
+	} catch(e) {
+		if ( e.code != 'EEXIST' ) throw e;
+	}
+}
+// ~~~
 
 
