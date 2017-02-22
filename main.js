@@ -40,11 +40,14 @@ console.log("Please enter Date/Time in the following format: \nYYYY-MM-DDTHH:MM:
 prompt.get(['start_date', 'end_date'], (err, result) => {
 	let start_date = moment(result.start_date).format();
 	console.log("start: ", start_date);
+
 	let end_date = moment(result.end_date).format();
 	if (end_date.toLowerCase() == 'now') {
 		let now = moment().format();
 		end_date = now;
 	};
+	console.log("end: ", end_date);
+	
 	runReport(start_date, end_date);
 });
 
@@ -117,11 +120,15 @@ var runReport = ((start_date, end_date) => {
 		let transactionListPromises = [];
 		// Request all remaining pages after the first page, add to promises array to call asynchronously with Promise.all
 		for (var page = 2; page < (numberOfPages + 1); page++) {
+
+			console.log("PAGE: ", page);
+			console.log("NUMBEROFPAGES: ", numberOfPages);
+
 			transactionListPromises.push(
 					classy.organizations.listTransactions(34, {
 						token: 'app',
 						with: 'dedication',
-						filter: 'member_email_address=bharris@classy.org,status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date,
+						filter: 'status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date,
 						page: page
 					})
 			);
@@ -131,13 +138,18 @@ var runReport = ((start_date, end_date) => {
 	})
 	.then((results) => {
 		results.forEach(function(promisePageNumber) {
+
+			console.log("PROMISE PAGE NUMBER: ", promisePageNumber);
+
 			var arrayOfTransactions = promisePageNumber.data;
 			arrayOfTransactions.forEach(function(transaction, index) {
 
-				// ~~~ Building constituentData for Promises ~~~
+				// ~~~ Building constituentData & revenueData for Promises ~~~
 				constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
 
 				revenue_attributes.fetchAttributes(transaction, revenueData, indexedCompany, indexedMiddlename, indexedTitle, indexedSuffix, campaignIdKeyNameValue, indexedDesignee, indexedTempleName);
+				// ~~~
+
 			});
 			// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to constituentData)
 		});
