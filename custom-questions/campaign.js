@@ -13,6 +13,7 @@ var buildCampaign = function(campaignIdKeyNameValue) {
 
 	return classy.organizations.listCampaigns(34, {
 		token: 'app',
+		requestDebug: false,
 		filter: 'status=active'
 	})
 
@@ -31,6 +32,7 @@ var buildCampaign = function(campaignIdKeyNameValue) {
 			campaignPromises.push(
 				classy.organizations.listCampaigns(34, {
 					token: 'app',
+					requestDebug: false,
 					filter: 'status=active',
 					page: page
 				})

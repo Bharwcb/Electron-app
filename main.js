@@ -66,6 +66,7 @@ csv_date =
 var constituent = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(constituent).csv');
 var revenue = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenue).csv');
 
+// ~~~ Testing ~~~
 // const start_date = '2017-01-26T10:00:00';
 // const end_date = '2017-01-28T10:00:00';
 
@@ -99,6 +100,7 @@ var runReport = ((start_date, end_date) => {
 		return classy.organizations.listTransactions(34, {
 			token: 'app',
 			with: 'dedication',
+			requestDebug: false,
 			filter: 'status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date
 			// filter ONLY success and refunded transactions
 		});
@@ -121,13 +123,11 @@ var runReport = ((start_date, end_date) => {
 		// Request all remaining pages after the first page, add to promises array to call asynchronously with Promise.all
 		for (var page = 2; page < (numberOfPages + 1); page++) {
 
-			console.log("PAGE: ", page);
-			console.log("NUMBEROFPAGES: ", numberOfPages);
-
 			transactionListPromises.push(
 					classy.organizations.listTransactions(34, {
 						token: 'app',
 						with: 'dedication',
+						requestDebug: false,
 						filter: 'status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date,
 						page: page
 					})
@@ -138,8 +138,6 @@ var runReport = ((start_date, end_date) => {
 	})
 	.then((results) => {
 		results.forEach(function(promisePageNumber) {
-
-			console.log("PROMISE PAGE NUMBER: ", promisePageNumber);
 
 			var arrayOfTransactions = promisePageNumber.data;
 			arrayOfTransactions.forEach(function(transaction, index) {

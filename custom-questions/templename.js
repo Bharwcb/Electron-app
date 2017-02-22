@@ -5,6 +5,7 @@ var buildTempleNameHash = function(indexedTempleName, start_date, end_date, temp
 
 	return classy.questions.listAnswers(temple_name_question_id, {
 		token: 'app',
+		requestDebug: false,
 		filter: 'created_at>' + start_date + ',created_at<' + end_date
 	})
 	.then((answersResults) => {
@@ -23,6 +24,7 @@ var buildTempleNameHash = function(indexedTempleName, start_date, end_date, temp
 			templeNamePromises.push(
 				classy.questions.listAnswers(temple_name_question_id, {
 					token: 'app',
+					requestDebug: false,
 					page: page,
 					filter: 'created_at>' + start_date + ',created_at<' + end_date
 				})
