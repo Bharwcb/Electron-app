@@ -9,6 +9,7 @@ const app = classy.app();
 var prompt = require('prompt');
 // rimraf used to clear downloads contents
 var rmdir = require('rimraf');
+var moment = require('moment');
 
 const title_question_id = 46362;
 const middlename_question_id = 46183;
@@ -37,10 +38,11 @@ let campaignIdKeyNameValue = {};
 prompt.start();
 console.log("Please enter Date/Time in the following format: \nYYYY-MM-DDTHH:MM:SS+0000 \n(You may enter 'now' as a valid end date)");
 prompt.get(['start_date', 'end_date'], (err, result) => {
-	let start_date = result.start_date;
-	let end_date = result.end_date;
+	let start_date = moment(result.start_date).format();
+	console.log("start: ", start_date);
+	let end_date = moment(result.end_date).format();
 	if (end_date.toLowerCase() == 'now') {
-		let now = new Date().toISOString();
+		let now = moment().format();
 		end_date = now;
 	};
 	runReport(start_date, end_date);
@@ -94,7 +96,7 @@ var runReport = ((start_date, end_date) => {
 		return classy.organizations.listTransactions(34, {
 			token: 'app',
 			with: 'dedication',
-			filter: 'member_email_address=bharris@classy.org,status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date
+			filter: 'status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date
 			// filter ONLY success and refunded transactions
 		});
 		
@@ -173,11 +175,7 @@ var runReport = ((start_date, end_date) => {
 
 	})
 	.catch((error) => {
-		console.trace();
-		console.log("Error somewhere in the chain: ", error.error);
-		console.log("KEYS: ", Object.keys(error));
-		console.log("LINE NUMBER: ", error.lineNumber);
-		console.log("ERROR STACK: ", error.stack);
+		console.log("Error somewhere in the chain: ", error);
 	});
 })
 
