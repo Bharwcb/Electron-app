@@ -9,6 +9,7 @@ const app = classy.app();
 var prompt = require('prompt');
 // rimraf used to clear downloads contents
 var rmdir = require('rimraf');
+var moment = require('moment');
 
 const title_question_id = 46362;
 const middlename_question_id = 46183;
@@ -37,12 +38,16 @@ let campaignIdKeyNameValue = {};
 prompt.start();
 console.log("Please enter Date/Time in the following format: \nYYYY-MM-DDTHH:MM:SS+0000 \n(You may enter 'now' as a valid end date)");
 prompt.get(['start_date', 'end_date'], (err, result) => {
-	let start_date = result.start_date;
-	let end_date = result.end_date;
+	let start_date = moment(result.start_date).format();
+	console.log("start: ", start_date);
+
+	let end_date = moment(result.end_date).format();
 	if (end_date.toLowerCase() == 'now') {
-		let now = new Date().toISOString();
+		let now = moment().format();
 		end_date = now;
 	};
+	console.log("end: ", end_date);
+	
 	runReport(start_date, end_date);
 });
 
@@ -115,6 +120,10 @@ var runReport = ((start_date, end_date) => {
 		let transactionListPromises = [];
 		// Request all remaining pages after the first page, add to promises array to call asynchronously with Promise.all
 		for (var page = 2; page < (numberOfPages + 1); page++) {
+
+			console.log("PAGE: ", page);
+			console.log("NUMBEROFPAGES: ", numberOfPages);
+
 			transactionListPromises.push(
 					classy.organizations.listTransactions(34, {
 						token: 'app',
@@ -124,19 +133,23 @@ var runReport = ((start_date, end_date) => {
 					})
 			);
 		};
-
+		
 		return Promise.all(transactionListPromises);
 	})
 	.then((results) => {
-
 		results.forEach(function(promisePageNumber) {
+
+			console.log("PROMISE PAGE NUMBER: ", promisePageNumber);
+
 			var arrayOfTransactions = promisePageNumber.data;
 			arrayOfTransactions.forEach(function(transaction, index) {
 
-				// ~~~ Building constituentData for Promises ~~~
+				// ~~~ Building constituentData & revenueData for Promises ~~~
 				constituent_attributes.fetchAttributes(transaction, constituentData, indexedTitle, indexedMiddlename, indexedCompany, indexedSuffix, indexedTempleName, indexedDesignee, campaignIdKeyNameValue);
 
 				revenue_attributes.fetchAttributes(transaction, revenueData, indexedCompany, indexedMiddlename, indexedTitle, indexedSuffix, campaignIdKeyNameValue, indexedDesignee, indexedTempleName);
+				// ~~~
+
 			});
 			// TEST - print all transaction ID's here since member ID mostly the same. (make a new collection above, and push whereever push to constituentData)
 		});
@@ -174,7 +187,7 @@ var runReport = ((start_date, end_date) => {
 
 	})
 	.catch((error) => {
-		console.log("Error somewhere in the chain: " + error);
+		console.log("Error somewhere in the chain: ", error);
 	});
 })
 
