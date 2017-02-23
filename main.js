@@ -26,6 +26,7 @@ app_elec.on('activiate', () => {
 	}
 })
 
+// makes available in button.js
 exports.generateCSV = () => {
 	// fire off generate_csv.js, make this available in button.js
 	console.log("clicked generate CSV button")
