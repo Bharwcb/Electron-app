@@ -1,17 +1,67 @@
+/*
+ELECTRON
+*/
+const electron = require('electron');
+const app_elec = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+// const { app_elec, BrowserWindow } = require('electron');
+const path = require('path');
+const url = require('url');
 require('dotenv').load();
-var fs = require('fs');
-var csv = require('fast-csv');
-var constituent_attributes = require('./constituent-attributes');
-var revenue_attributes = require('./revenue-attributes');
-var async = require('async');
-var classy = require('./classy-build');
+let mainWindow;
+
+// when electron initializes and is ready to create browser windows
+app_elec.on('ready', createWindow);
+
+// for all OS's aside from OS X, menu closes last tab closed
+app_elec.on('window-all-closed', () => {
+	if (process.platform !== 'darwin') {
+		app.quit();
+	}
+});
+
+// when click on icon
+app_elec.on('activiate', () => {
+	if (mainWindow === null) {
+		createWindow();
+	}
+})
+
+
+
+
+
+function createWindow () {
+	// create browser window
+	mainWindow = new BrowserWindow({width: 800, height: 600});
+
+	// load index.html
+	mainWindow.loadURL(url.format({
+		pathname: path.join(__dirname, 'app', 'views', 'index.html'),
+		protocol: 'file',
+		slashes: true
+	}));
+
+	mainWindow.on('closed', () => {
+		mainWindow = null
+	})
+}
+
+
+/*
+API REQUESTS AND CSV FILE GENERATION
+*/
+const fs = require('fs');
+const csv = require('fast-csv');
+const constituent_attributes = require('./constituent-attributes');
+const revenue_attributes = require('./revenue-attributes');
+const async = require('async');
+const classy = require('./classy-build');
 const app = classy.app();
-var prompt = require('prompt');
+const prompt = require('prompt');
 // rimraf used to clear downloads contents
-var rmdir = require('rimraf');
-var moment = require('moment');
-// path used for downloads directory management
-var path = require('path');
+const rmdir = require('rimraf');
+const moment = require('moment');
 
 const title_question_id = 46362;
 const middlename_question_id = 46183;
@@ -37,24 +87,24 @@ let indexedTempleName = {};
 let indexedDesignee = {};
 let campaignIdKeyNameValue = {};
 
-prompt.start();
-console.log("Please enter Date/Time in the following format: \nYYYY-MM-DDTHH:MM:SS+0000 \n(You may enter 'now' as a valid end date)");
-prompt.get(['start_date', 'end_date'], (err, result) => {
-	let start_date = moment(result.start_date).format();
-	console.log("start: ", start_date);
+// prompt.start();
+// console.log("Please enter Date/Time in the following format: \nYYYY-MM-DDTHH:MM:SS+0000 \n(You may enter 'now' as a valid end date)");
+// prompt.get(['start_date', 'end_date'], (err, result) => {
+// 	let start_date = moment(result.start_date).format();
+// 	console.log("start: ", start_date);
 
-	let end_date = moment(result.end_date).format();
-	if (end_date.toLowerCase() == 'now') {
-		let now = moment().format();
-		end_date = now;
-	};
-	console.log("end: ", end_date);
+// 	let end_date = moment(result.end_date).format();
+// 	if (end_date.toLowerCase() == 'now') {
+// 		let now = moment().format();
+// 		end_date = now;
+// 	};
+// 	console.log("end: ", end_date);
 	
-	runReport(start_date, end_date);
-});
+// 	runReport(start_date, end_date);
+// });
 
 // create downloads folder if does exist
-mkdirSync( path.join('downloads') );
+mkdirSync( path.join(__dirname, 'downloads') );
 // remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
 clearFolder('downloads');
 
