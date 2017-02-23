@@ -54,5 +54,5 @@ var buildCampaign = function(campaignIdKeyNameValue) {
 		
 };
 
-// send this campaign reference object back to main.js
+// send this campaign reference object back to generate_csv.js
 module.exports = buildCampaign;
