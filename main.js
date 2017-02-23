@@ -26,9 +26,13 @@ app_elec.on('activiate', () => {
 	}
 })
 
+generateCSV();
 
-
-
+function generateCSV () {
+	// fire off generate_csv.js here, just to emulate after user selects date range in electron.
+	console.log("firing off generate_csv.js");
+	require('./generate_csv');
+}
 
 function createWindow () {
 	// create browser window
