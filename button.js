@@ -1,9 +1,8 @@
-const remote = require('electron').remote;
-const main = remote.require('./main.js');
+console.log("get here");
 
-const button = document.createElement('button');
-button.textContent = 'Generate CSV (with Present Date Range)';
-button.addEventListener('click', () => {
-	main.generateCSV();
+flatpickr(".flatpickr", {
+	enableTime: true,
+	altInput: true,
+	altFormat: "F j, Y h:i K"
 });
-document.body.appendChild(button);
+
