@@ -19,9 +19,14 @@ flatpickr("#flatpickr-end", {
 	}
 });
 
-// click "Generate CSV" button
+function generateCSV() {
+	// whatever start & end dates are set to at time of button click, export that to generate_csv.js
 
-	// export start and end dates to generate_csv.js
+	// then run generate_csv.exportCSVtoMain();???
+}
+
+
+	
 	
 	
 
