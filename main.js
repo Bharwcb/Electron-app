@@ -26,9 +26,11 @@ app_elec.on('activiate', () => {
 	}
 })
 
-// makes available in button.js
+// makes available in calendar.js
 exports.generateCSV = () => {
-	// fire off generate_csv.js, make this available in button.js
+	// fire off generate_csv.js, make this available in calendar.js
+
+
 	console.log("clicked generate CSV button")
 }
 
@@ -42,6 +44,9 @@ function createWindow () {
 		protocol: 'file',
 		slashes: true
 	}));
+
+	// open devtools for testing
+	mainWindow.webContents.openDevTools();
 
 	mainWindow.on('closed', () => {
 		mainWindow = null
