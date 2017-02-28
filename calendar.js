@@ -1,5 +1,6 @@
 // Calendar.js manages the start and end calendars and button to generate CSV
 
+const generate_file = require('./generate_csv');
 let start_date;
 let end_date;
 
@@ -20,9 +21,25 @@ flatpickr("#flatpickr-end", {
 });
 
 function generateCSV() {
-	// whatever start & end dates are set to at time of button click, export that to generate_csv.js
+	// fires off with click "Generate CSV" button
 
-	// then run generate_csv.exportCSVtoMain();???
+	// 1) whatever start & end dates are set to at time of button click, export that to generate_csv.js
+	// console.log("start date: ", start_date);
+	// console.log("end date: ", end_date);
+	module.exports = {
+		start_date: function() {
+			return start_date;
+		},
+		end_date: function() {
+			return end_date;
+		}
+	}
+
+	// 2) need to run 'node generate_csv.js' somehow to see if start date in generate_csv.js line 65 works.
+	generate_file.generateCSV();
+
+
+
 }
 
 
