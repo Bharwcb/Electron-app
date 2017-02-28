@@ -24,8 +24,4 @@ flatpickr("#flatpickr-end", {
 	// export start and end dates to generate_csv.js
 	
 	
-	exports.end_date = () => {
-		return end_date;
-	};
 
-// set end to be + 1 day? 

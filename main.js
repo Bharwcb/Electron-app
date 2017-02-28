@@ -26,13 +26,7 @@ app_elec.on('activiate', () => {
 	}
 })
 
-// makes available in calendar.js
-exports.generateCSV = () => {
-	// fire off generate_csv.js, make this available in calendar.js
 
-
-	console.log("clicked generate CSV button")
-}
 
 function createWindow () {
 	// create browser window
