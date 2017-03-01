@@ -2,12 +2,10 @@
 
 let start_date;
 let end_date;
-const generate_file = require('./generate_csv');
+
 
 module.exports = {
 	setup: function() {
-		
-
 		flatpickr("#flatpickr-start", {
 			minDate: "2016-10-1",
 			enableTime: true,
@@ -15,7 +13,6 @@ module.exports = {
 				start_date = selectedStart;
 			}
 		});
-
 		flatpickr("#flatpickr-end", {
 			maxDate: new Date(),
 			enableTime: true,
@@ -25,15 +22,9 @@ module.exports = {
 		})
 	},
 
-	// fires off with click "Generate CSV" button
-	// 1) whatever start & end dates are set to in calendar at time of button click, export that to generate_csv.js and run reports
+	// Export dates in calendars at time of button click to generate_csv.js file and run reports=
 	generateCSVbutton:	function() {
-		console.log("start date: ", start_date);
-		console.log("end date: ", end_date);
-
-		// if generate_file works above, could just run...
-		generate_file.generateCSV(start_date, end_date);
-
+		require('./generate_csv').generateCSV(start_date, end_date);
 	}
 
 }

@@ -79,6 +79,9 @@ let campaignIdKeyNameValue = {};
 
 
 function generateCSV(start_date, end_date) {
+	console.log("s: ", start_date);
+	console.log("e: ", end_date);
+
 	// create downloads folder if does exist
 	mkdirSync( path.join(__dirname, 'downloads') );
 	// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
@@ -236,7 +239,7 @@ function generateCSV(start_date, end_date) {
 };
 
 module.exports = {
-	generateCSV: function() {
-		return generateCSV();
+	generateCSV: function(start_date, end_date) {
+		return generateCSV(start_date, end_date);
 	}
 }

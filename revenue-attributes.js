@@ -1,5 +1,3 @@
-console.log("sup");
-
 module.exports = {
 	fetchAttributes: function(transaction, revenueData, indexedCompany, indexedMiddlename, indexedTitle, indexedSuffix, campaignIdKeyNameValue, indexedDesignee, indexedTempleName) {
 		
