@@ -78,7 +78,7 @@ let campaignIdKeyNameValue = {};
 // const end_date = '2017-01-28T10:00:00';
 
 
-function generateCSV() {
+function generateCSV(start_date, end_date) {
 	// create downloads folder if does exist
 	mkdirSync( path.join(__dirname, 'downloads') );
 	// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
@@ -152,13 +152,13 @@ function generateCSV() {
 			for (var page = 2; page < (numberOfPages + 1); page++) {
 
 				transactionListPromises.push(
-						classy.organizations.listTransactions(34, {
-							token: 'app',
-							with: 'dedication',
-							requestDebug: false,
-							filter: 'status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date,
-							page: page
-						})
+					classy.organizations.listTransactions(34, {
+						token: 'app',
+						with: 'dedication',
+						requestDebug: false,
+						filter: 'status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date,
+						page: page
+					})
 				);
 			};
 			

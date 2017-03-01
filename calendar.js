@@ -2,10 +2,11 @@
 
 let start_date;
 let end_date;
+const generate_file = require('./generate_csv');
 
 module.exports = {
 	setup: function() {
-		const generate_file = require('./generate_csv');
+		
 
 		flatpickr("#flatpickr-start", {
 			minDate: "2016-10-1",
@@ -31,8 +32,8 @@ module.exports = {
 		console.log("end date: ", end_date);
 
 		// if generate_file works above, could just run...
+		generate_file.generateCSV(start_date, end_date);
 
-		// generate_file.generateCSV();
 	}
 
 }
