@@ -18,12 +18,12 @@
 				<input id="flatpickr-end" type="text" placeholder="To">
 			</div>
 
-			<button onclick="foo.generateCSVbutton()">Generate CSV</button>
+			<button onclick="calendar.generateCSVbutton()">Generate CSV</button>
 
 		</div>
 		<script>
-			window.foo = require("../calendar.js");
-			foo.everything();
+			const calendar = require("../calendar.js");
+			calendar.setup();
 		</script>
 
 		<!-- <script src="../generate_csv.js"></script> -->

@@ -4,7 +4,7 @@ let start_date;
 let end_date;
 
 module.exports = {
-	everything: function() {
+	setup: function() {
 		const generate_file = require('./generate_csv');
 
 		flatpickr("#flatpickr-start", {
