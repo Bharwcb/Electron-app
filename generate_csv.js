@@ -2,7 +2,7 @@
 API REQUESTS AND CSV FILE GENERATION
 */
 
-function generateCSV() {
+function generateCSV(start_date, end_date) {
 
 	const path = require('path');
 	const url = require('url');
@@ -41,36 +41,17 @@ function generateCSV() {
 	let indexedTempleName = {};
 	let indexedDesignee = {};
 	let campaignIdKeyNameValue = {};
+	
+	console.log("calendar start date: ", start_date);
+	console.log("calendar end_date: ", end_date);
 
-	//  ~~~ COMMAND LINE TO GET START AND END DATE ~~~
-	// prompt.start();
-	// console.log("Please enter Date/Time in the following format: \nYYYY-MM-DDTHH:MM:SS+0000 \n(You may enter 'now' as a valid end date)");
-	// prompt.get(['start_date', 'end_date'], (err, result) => {
-	// 	let start_date = moment(result.start_date).format();
-	// 	console.log("start: ", start_date);
-
-	// 	let end_date = moment(result.end_date).format();
-	// 	if (end_date.toLowerCase() == 'now') {
-	// 		let now = moment().format();
-	// 		end_date = now;
-	// 	};
-	// 	console.log("end: ", end_date);
-		
-	runReport();
-	// });
+	runReport(start_date, end_date);
 
 	// ~~~ CALENDAR ~~~  Get start_date * end_date from calendar.js. generateCSV() runs when button is clicked
 
-	// const calendar = require('./calendar');
-	// let start_date = calendar.start_date();
-	// let end_date = calendar.end_date();
-	// console.log("TESTING START DATE: ", start_date);
-
 	// ~~~ Testing ~~~
-	const start_date = '2017-01-26';
-	const end_date = '2017-01-28';
-	console.log("calendar start date: ", start_date);
-	console.log("calendar end_date: ", end_date);
+	// const start_date = '2017-01-26T10:00:00';
+	// const end_date = '2017-01-28T10:00:00';
 
 	// create downloads folder if does exist
 	mkdirSync( path.join(__dirname, 'downloads') );
@@ -229,7 +210,7 @@ function generateCSV() {
 };
 
 module.exports = {
-	generateCSV: function() {
-		return generateCSV();
+	generateCSV: function(start_date, end_date) {
+		return generateCSV(start_date, end_date);
 	}
 }

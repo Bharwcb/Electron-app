@@ -26,16 +26,27 @@ module.exports = {
 
 	// Export dates in calendars at time of button click to generate_csv.js file and run reports=
 	generateCSVbutton:	function() {
-		// start_date = moment(start_date);
-		// end_date = moment(end_date);
+		start_date = moment(start_date);
+		end_date = moment(end_date);
 
-		// start_date = moment(start_date).isValid();
-		// end_date = moment(end_date).isValid();
+		start_date = moment(start_date).isValid();
+		end_date = moment(end_date).isValid();
 
-		require('./generate_csv').generateCSV();
+		require('./generate_csv').generateCSV(start_date, end_date);
 	}
 
 }
+
+
+// module.exports = {
+// 	start_date: function() {
+// 		return start_date;
+// 	},
+// 	end_date: function() {
+// 		return end_date;
+// 	}H
+// }
+
 
 	
 	
