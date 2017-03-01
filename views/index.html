@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta charset="UTF-8">
+		<meta charset="UTF-8">
 		<title>Shriners BB Import</title>
 		<link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
 		<script src="https://unpkg.com/flatpickr"></script>
-	
+		
 	</head>
 	<body>
 		<div class="wrapper">
@@ -18,9 +18,14 @@
 				<input id="flatpickr-end" type="text" placeholder="To">
 			</div>
 
-			<button onclick="generateCSV()">Generate CSV</button>
+			<button onclick="foo.generateCSVbutton()">Generate CSV</button>
 
 		</div>
-		<script src="../calendar.js"></script>
+		<script>
+			window.foo = require("../calendar.js");
+			foo.everything();
+		</script>
+
+		<!-- <script src="../generate_csv.js"></script> -->
 	</body>
 </html>
