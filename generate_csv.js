@@ -2,85 +2,75 @@
 API REQUESTS AND CSV FILE GENERATION
 */
 
-const path = require('path');
-const url = require('url');
-require('dotenv').load();
-const fs = require('fs');
-const csv = require('fast-csv');
-const constituent_attributes = require('./constituent-attributes');
-const revenue_attributes = require('./revenue-attributes');
-const async = require('async');
-const classy = require('./classy-build');
-const app = classy.app();
-const prompt = require('prompt');
-// rimraf used to clear downloads contents
-const rmdir = require('rimraf');
-const moment = require('moment');
+function generateCSV() {
 
-const title_question_id = 46362;
-const middlename_question_id = 46183;
-const company_question_id = 46182;
-const suffix_question_id = 46519;
-const temple_name_question_id = 46758;
-const designee_question_id = 46763;
+	const path = require('path');
+	const url = require('url');
+	require('dotenv').load();
+	const fs = require('fs');
+	const csv = require('fast-csv');
+	const constituent_attributes = require('./constituent-attributes');
+	const revenue_attributes = require('./revenue-attributes');
+	const async = require('async');
+	const classy = require('./classy-build');
+	const app = classy.app();
+	const prompt = require('prompt');
+	// rimraf used to clear downloads contents
+	const rmdir = require('rimraf');
+	const moment = require('moment');
 
-// one place to change headers for import
-const csvConstituentHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
-const csvRevenueHeaders = ["Account System", "Constituent", "Lookup ID", "Last/org/group/household name", "First Name", "Middle Name", "Title", "Suffix", "Address", "City", "State", "Zip", "Country", "Phone Number", "Email Address", "Amount", "Date", "Revenue Type", "Payment Method", "Inbound Channel", "Application", "Appeal", "Designation", "GL Post Status", "Card Type", "Gift Type", "Tribute Last Name", "Tribute", "Temple Name", "Organization", "Temple recognition credit type"];
+	const title_question_id = 46362;
+	const middlename_question_id = 46183;
+	const company_question_id = 46182;
+	const suffix_question_id = 46519;
+	const temple_name_question_id = 46758;
+	const designee_question_id = 46763;
 
-// constituentData and revenueData used to collect data for CSV creation.
-let constituentData = [];
-let revenueData = [];
-// the following indexed hashes are used for custom answers.. to avoid querying API for every transaction.
-let indexedTitle = {};
-let indexedMiddlename = {};
-let indexedCompany = {};
-let indexedSuffix = {};
-let indexedTempleName = {};
-let indexedDesignee = {};
-let campaignIdKeyNameValue = {};
+	// one place to change headers for import
+	const csvConstituentHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
+	const csvRevenueHeaders = ["Account System", "Constituent", "Lookup ID", "Last/org/group/household name", "First Name", "Middle Name", "Title", "Suffix", "Address", "City", "State", "Zip", "Country", "Phone Number", "Email Address", "Amount", "Date", "Revenue Type", "Payment Method", "Inbound Channel", "Application", "Appeal", "Designation", "GL Post Status", "Card Type", "Gift Type", "Tribute Last Name", "Tribute", "Temple Name", "Organization", "Temple recognition credit type"];
 
-//  ~~~ COMMAND LINE TO GET START AND END DATE ~~~
-// prompt.start();
-// console.log("Please enter Date/Time in the following format: \nYYYY-MM-DDTHH:MM:SS+0000 \n(You may enter 'now' as a valid end date)");
-// prompt.get(['start_date', 'end_date'], (err, result) => {
-// 	let start_date = moment(result.start_date).format();
-// 	console.log("start: ", start_date);
+	// constituentData and revenueData used to collect data for CSV creation.
+	let constituentData = [];
+	let revenueData = [];
+	// the following indexed hashes are used for custom answers.. to avoid querying API for every transaction.
+	let indexedTitle = {};
+	let indexedMiddlename = {};
+	let indexedCompany = {};
+	let indexedSuffix = {};
+	let indexedTempleName = {};
+	let indexedDesignee = {};
+	let campaignIdKeyNameValue = {};
 
-// 	let end_date = moment(result.end_date).format();
-// 	if (end_date.toLowerCase() == 'now') {
-// 		let now = moment().format();
-// 		end_date = now;
-// 	};
-// 	console.log("end: ", end_date);
-	
-// 	runReport(start_date, end_date);
-// });
+	//  ~~~ COMMAND LINE TO GET START AND END DATE ~~~
+	// prompt.start();
+	// console.log("Please enter Date/Time in the following format: \nYYYY-MM-DDTHH:MM:SS+0000 \n(You may enter 'now' as a valid end date)");
+	// prompt.get(['start_date', 'end_date'], (err, result) => {
+	// 	let start_date = moment(result.start_date).format();
+	// 	console.log("start: ", start_date);
 
+	// 	let end_date = moment(result.end_date).format();
+	// 	if (end_date.toLowerCase() == 'now') {
+	// 		let now = moment().format();
+	// 		end_date = now;
+	// 	};
+	// 	console.log("end: ", end_date);
+		
+	runReport();
+	// });
 
+	// ~~~ CALENDAR ~~~  Get start_date * end_date from calendar.js. generateCSV() runs when button is clicked
 
-// ~~~ CALENDAR ~~~  Get start_date * end_date from calendar.js. generateCSV() runs when button is clicked
+	// const calendar = require('./calendar');
+	// let start_date = calendar.start_date();
+	// let end_date = calendar.end_date();
+	// console.log("TESTING START DATE: ", start_date);
 
-// const calendar = require('./calendar');
-// let start_date = calendar.start_date();
-// let end_date = calendar.end_date();
-// console.log("TESTING START DATE: ", start_date);
-
-
-
-
-
-
-
-
-// ~~~ Testing ~~~
-// const start_date = '2017-01-26T10:00:00';
-// const end_date = '2017-01-28T10:00:00';
-
-
-function generateCSV(start_date, end_date) {
-	console.log("s: ", start_date);
-	console.log("e: ", end_date);
+	// ~~~ Testing ~~~
+	const start_date = '2017-01-26';
+	const end_date = '2017-01-28';
+	console.log("calendar start date: ", start_date);
+	console.log("calendar end_date: ", end_date);
 
 	// create downloads folder if does exist
 	mkdirSync( path.join(__dirname, 'downloads') );
@@ -99,9 +89,7 @@ function generateCSV(start_date, end_date) {
 	var constituent = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(constituent).csv');
 	var revenue = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenue).csv');
 
-
-
-	var runReport = ((start_date, end_date) => {
+	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
 		app
 		.then(() => {
@@ -138,6 +126,7 @@ function generateCSV(start_date, end_date) {
 			
 		})
 		.then((response) => {
+			console.log("response: ", response);
 			// response is an array of JSON transaction data, 20 per page. Add the first page of responses to var constituentData.
 			for (var i = 0; i < response.data.length; i++) {
 				var transaction = response.data[i];
@@ -168,6 +157,7 @@ function generateCSV(start_date, end_date) {
 			return Promise.all(transactionListPromises);
 		})
 		.then((results) => {
+			console.log("results: ", results);
 			results.forEach(function(promisePageNumber) {
 
 				var arrayOfTransactions = promisePageNumber.data;
@@ -218,7 +208,7 @@ function generateCSV(start_date, end_date) {
 		.catch((error) => {
 			console.log("Error somewhere in the chain: ", error);
 		});
-	})
+	}
 
 	// ~~~ management of downloads folder ~~~
 	function clearFolder(folder) {
@@ -239,7 +229,7 @@ function generateCSV(start_date, end_date) {
 };
 
 module.exports = {
-	generateCSV: function(start_date, end_date) {
-		return generateCSV(start_date, end_date);
+	generateCSV: function() {
+		return generateCSV();
 	}
 }
