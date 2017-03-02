@@ -42,14 +42,14 @@ function generateCSV(start_date, end_date) {
 	let indexedDesignee = {};
 	let campaignIdKeyNameValue = {};
 	
-	console.log("calendar start date: ", start_date);
-	console.log("calendar end_date: ", end_date);
+	console.log("Calendar Start Date: ", start_date);
+	console.log("Calendar End Date: ", end_date);
 
 	runReport(start_date, end_date);
 
 	// ~~~ CALENDAR ~~~  Get start_date * end_date from calendar.js. generateCSV() runs when button is clicked
 
-	// ~~~ Testing ~~~
+	// ~~~ Testing - NOTE: with release 2/28/17 need to feed ISO string to moment(date).format() ~~~
 	// const start_date = '2017-01-26T10:00:00';
 	// const end_date = '2017-01-28T10:00:00';
 
@@ -74,7 +74,6 @@ function generateCSV(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
 		app
 		.then(() => {
-			console.log("START: ", start_date);
 			return require('./custom-questions/title')(indexedTitle, start_date, end_date, title_question_id);
 		})
 		.then(() => {
@@ -108,7 +107,6 @@ function generateCSV(start_date, end_date) {
 			
 		})
 		.then((response) => {
-			console.log("response: ", response);
 			// response is an array of JSON transaction data, 20 per page. Add the first page of responses to var constituentData.
 			for (var i = 0; i < response.data.length; i++) {
 				var transaction = response.data[i];
@@ -139,7 +137,6 @@ function generateCSV(start_date, end_date) {
 			return Promise.all(transactionListPromises);
 		})
 		.then((results) => {
-			console.log("results: ", results);
 			results.forEach(function(promisePageNumber) {
 
 				var arrayOfTransactions = promisePageNumber.data;
@@ -183,7 +180,7 @@ function generateCSV(start_date, end_date) {
 			return Promise.all(csvPromises)
 			.then(() => {
 				console.log("All CSV's are complete");
-				process.exit();
+				// process.exit();
 		  });
 
 		})
