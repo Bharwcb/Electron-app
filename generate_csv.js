@@ -1,9 +1,9 @@
 /*
 API REQUESTS AND CSV FILE GENERATION
 */
-var exportCSVtoMain = function() {
-	console.log("get here?");
-	
+
+function generateCSV(start_date, end_date) {
+
 	const path = require('path');
 	const url = require('url');
 	require('dotenv').load();
@@ -28,7 +28,6 @@ var exportCSVtoMain = function() {
 
 	// one place to change headers for import
 	const csvConstituentHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
-
 	const csvRevenueHeaders = ["Account System", "Constituent", "Lookup ID", "Last/org/group/household name", "First Name", "Middle Name", "Title", "Suffix", "Address", "City", "State", "Zip", "Country", "Phone Number", "Email Address", "Amount", "Date", "Revenue Type", "Payment Method", "Inbound Channel", "Application", "Appeal", "Designation", "GL Post Status", "Card Type", "Gift Type", "Tribute Last Name", "Tribute", "Temple Name", "Organization", "Temple recognition credit type"];
 
 	// constituentData and revenueData used to collect data for CSV creation.
@@ -42,22 +41,17 @@ var exportCSVtoMain = function() {
 	let indexedTempleName = {};
 	let indexedDesignee = {};
 	let campaignIdKeyNameValue = {};
+	
+	console.log("calendar start date: ", start_date);
+	console.log("calendar end_date: ", end_date);
 
-	// prompt.start();
-	// console.log("Please enter Date/Time in the following format: \nYYYY-MM-DDTHH:MM:SS+0000 \n(You may enter 'now' as a valid end date)");
-	// prompt.get(['start_date', 'end_date'], (err, result) => {
-	// 	let start_date = moment(result.start_date).format();
-	// 	console.log("start: ", start_date);
+	runReport(start_date, end_date);
 
-	// 	let end_date = moment(result.end_date).format();
-	// 	if (end_date.toLowerCase() == 'now') {
-	// 		let now = moment().format();
-	// 		end_date = now;
-	// 	};
-	// 	console.log("end: ", end_date);
-		
-	// 	runReport(start_date, end_date);
-	// });
+	// ~~~ CALENDAR ~~~  Get start_date * end_date from calendar.js. generateCSV() runs when button is clicked
+
+	// ~~~ Testing ~~~
+	// const start_date = '2017-01-26T10:00:00';
+	// const end_date = '2017-01-28T10:00:00';
 
 	// create downloads folder if does exist
 	mkdirSync( path.join(__dirname, 'downloads') );
@@ -76,14 +70,11 @@ var exportCSVtoMain = function() {
 	var constituent = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(constituent).csv');
 	var revenue = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenue).csv');
 
-	// ~~~ Testing ~~~
-	const start_date = '2017-01-26T10:00:00';
-	const end_date = '2017-01-28T10:00:00';
-
-	var runReport = ((start_date, end_date) => {
+	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
 		app
 		.then(() => {
+			console.log("START: ", start_date);
 			return require('./custom-questions/title')(indexedTitle, start_date, end_date, title_question_id);
 		})
 		.then(() => {
@@ -117,6 +108,7 @@ var exportCSVtoMain = function() {
 			
 		})
 		.then((response) => {
+			console.log("response: ", response);
 			// response is an array of JSON transaction data, 20 per page. Add the first page of responses to var constituentData.
 			for (var i = 0; i < response.data.length; i++) {
 				var transaction = response.data[i];
@@ -134,19 +126,20 @@ var exportCSVtoMain = function() {
 			for (var page = 2; page < (numberOfPages + 1); page++) {
 
 				transactionListPromises.push(
-						classy.organizations.listTransactions(34, {
-							token: 'app',
-							with: 'dedication',
-							requestDebug: false,
-							filter: 'status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date,
-							page: page
-						})
+					classy.organizations.listTransactions(34, {
+						token: 'app',
+						with: 'dedication',
+						requestDebug: false,
+						filter: 'status!=incomplete,status!=canceled,status!=cb_initiated,status!=cb_lost,status!=test,status!=1,purchased_at>' + start_date + ',purchased_at<' + end_date,
+						page: page
+					})
 				);
 			};
 			
 			return Promise.all(transactionListPromises);
 		})
 		.then((results) => {
+			console.log("results: ", results);
 			results.forEach(function(promisePageNumber) {
 
 				var arrayOfTransactions = promisePageNumber.data;
@@ -197,7 +190,7 @@ var exportCSVtoMain = function() {
 		.catch((error) => {
 			console.log("Error somewhere in the chain: ", error);
 		});
-	})
+	}
 
 	// ~~~ management of downloads folder ~~~
 	function clearFolder(folder) {
@@ -217,4 +210,8 @@ var exportCSVtoMain = function() {
 	// ~~~
 };
 
-module.exports = exportCSVtoMain;
+module.exports = {
+	generateCSV: function(start_date, end_date) {
+		return generateCSV(start_date, end_date);
+	}
+}

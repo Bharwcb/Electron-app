@@ -26,11 +26,7 @@ app_elec.on('activiate', () => {
 	}
 })
 
-// makes available in button.js
-exports.generateCSV = () => {
-	// fire off generate_csv.js, make this available in button.js
-	console.log("clicked generate CSV button")
-}
+
 
 function createWindow () {
 	// create browser window
@@ -42,6 +38,9 @@ function createWindow () {
 		protocol: 'file',
 		slashes: true
 	}));
+
+	// open devtools for testing
+	mainWindow.webContents.openDevTools();
 
 	mainWindow.on('closed', () => {
 		mainWindow = null
