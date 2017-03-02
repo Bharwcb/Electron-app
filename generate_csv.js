@@ -74,6 +74,7 @@ function generateCSV(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
 		app
 		.then(() => {
+			console.log("START: ", start_date);
 			return require('./custom-questions/title')(indexedTitle, start_date, end_date, title_question_id);
 		})
 		.then(() => {
