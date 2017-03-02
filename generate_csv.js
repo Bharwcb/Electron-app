@@ -180,7 +180,7 @@ function generateCSV(start_date, end_date) {
 			return Promise.all(csvPromises)
 			.then(() => {
 				console.log("All CSV's are complete");
-				process.exit();
+				// process.exit();
 		  });
 
 		})
