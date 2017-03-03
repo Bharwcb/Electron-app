@@ -33,7 +33,7 @@ function createWindow () {
 	mainWindow = new BrowserWindow({
 		width: 800, 
 		height: 600,
-		icon: __dirname + '/views/assets/classy.png'
+		icon: __dirname + '/assets/images/classy.png'
 	});
 
 	// load index.html
