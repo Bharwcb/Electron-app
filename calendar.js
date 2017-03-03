@@ -5,11 +5,11 @@ const moment = require('moment');
 let start_date;
 let end_date;
 
-
 module.exports = {
 	setup: function() {
 		flatpickr("#flatpickr-start", {
 			minDate: "2016-10-1",
+			maxDate: new Date(),
 			enableTime: true,
 			onChange: (selectedStart) => {
 				start_date = selectedStart;
