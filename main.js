@@ -30,7 +30,11 @@ app_elec.on('activiate', () => {
 
 function createWindow () {
 	// create browser window
-	mainWindow = new BrowserWindow({width: 800, height: 600});
+	mainWindow = new BrowserWindow({
+		width: 800, 
+		height: 600,
+		icon: __dirname + '/views/assets/classy.png'
+	});
 
 	// load index.html
 	mainWindow.loadURL(url.format({
