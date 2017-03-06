@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Classy BB CRM Import</title>
+		<title>Shriners BB CRM Import</title>
 
 		<!-- stylesheets -->
 		<link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
@@ -19,8 +19,15 @@
 
 			<div class="window-content">
 				<div class="pane-group">
-					<div class="pane-sm sidebar padded">
-						<p>sidebar</p>
+
+					<div class="pane-sm sidebar padded-less">
+						<ul class="list-group">
+							<li class="list-group-header">Downloads</li>
+							<li class="list-group-item">
+									<p>file 1..</p>
+									<p>file 2..</p>
+							</li>
+						</ul>
 					</div>
 
 					<div class="pane padded-more">
@@ -31,13 +38,13 @@
 						<div class='test-cal'>
 							<input id="flatpickr-end" type="text" placeholder="To">
 						</div>
-						<button onclick="calendar.generateCSVbutton()">Generate CSV</button>
+						<button class="btn btn-primary" onclick="calendar.generateCSVbutton()">Generate CSV</button>
 					</div>
 				</div>
 			</div>
 
 			<footer class="toolbar toolbar-footer">
-		    <h1 class="title">Footer</h1>
+		    <h1 class="title">&#169; Classy.org 2017</h1>
 		  </footer>
 
 		</div>
