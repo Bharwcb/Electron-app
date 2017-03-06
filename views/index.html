@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Shriners BB Import</title>
+		<title>Classy BB CRM Import</title>
+
+		<!-- stylesheets -->
 		<link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
 		<link rel="stylesheet" href="../assets/css/photon.css">
+
+		<!-- flatpickr javascript -->
 		<script src="https://unpkg.com/flatpickr"></script>
 		
+		<!-- electron javascript -->
+
 	</head>
+
 	<body>
-		<div class="wrapper">
-			<h1>Shriners</h1>
+		<div class="window">
 
-			<div class='test-cal'>
-				<input id="flatpickr-start" type="text" placeholder="From">
-			</div>
-			<div class='test-cal'>
-				<input id="flatpickr-end" type="text" placeholder="To">
+			<div class="window-content">
+				<div class="pane-group">
+					<div class="pane-sm sidebar padded">
+						<p>sidebar</p>
+					</div>
+
+					<div class="pane padded-more">
+						<h1>Shriners</h1>
+						<div class='test-cal'>
+							<input id="flatpickr-start" type="text" placeholder="From">
+						</div>
+						<div class='test-cal'>
+							<input id="flatpickr-end" type="text" placeholder="To">
+						</div>
+						<button onclick="calendar.generateCSVbutton()">Generate CSV</button>
+					</div>
+				</div>
 			</div>
 
-			<button onclick="calendar.generateCSVbutton()">Generate CSV</button>
+			<footer class="toolbar toolbar-footer">
+		    <h1 class="title">Footer</h1>
+		  </footer>
 
 		</div>
 		<script>
