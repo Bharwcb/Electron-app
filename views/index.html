@@ -5,7 +5,7 @@
 
 		<!-- stylesheets -->
 		<link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
-		<link rel="stylesheet" href="../assets/css/photon.css">
+		<link rel="stylesheet" href="../assets/css/customPhoton.css">
 
 		<!-- flatpickr javascript -->
 		<script src="https://unpkg.com/flatpickr"></script>
@@ -41,7 +41,9 @@
 								<input id="flatpickr-end" type="text" placeholder="To">
 							</div>
 						</div>
-						<button class="btn btn-primary do-not-flex" onclick="calendar.generateCSVbutton()">Generate CSV</button>
+						<div id="generate-button-wrapper">
+							<button class="btn btn-large btn-primary" onclick="calendar.generateCSVbutton()">Generate CSV</button>
+						</div>
 					</div>
 					
 				</div>
@@ -53,6 +55,7 @@
 
 		</div>
 		<script>
+			// initializing flatpickr requires 'require', not just a script src
 			const calendar = require("../calendar.js");
 			calendar.setup();
 		</script>

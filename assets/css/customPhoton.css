@@ -2327,7 +2327,6 @@ td:last-child {
   display: flex;
 }
 
-/*not container*/
 .pane{
   position: relative;
   overflow-y: auto;
@@ -2341,5 +2340,14 @@ td:last-child {
   flex-direction: row;
   justify-content: space-around;
 }
+
+#generate-button-wrapper {
+  text-align: center;
+}
+
+#generate-button-wrapper button{
+  margin-top: 5%;
+}
+
 
 
