@@ -36,7 +36,7 @@ module.exports = {
 		end_date = moment(end_date).format();
 		// protencts against no dates input - new Date("") = "Invalid date"
 		if ((start_date ==  "Invalid date") || (end_date == "Invalid date")) {
-			alert("'From' & 'To' Dates Must Be Entered Before Generating Your CSV.");
+			alert("'From' & 'To' Dates Must Be Selected.");
 		} else {
 			require('./generate_csv').generateCSV(start_date, end_date);
 		}
