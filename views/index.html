@@ -24,22 +24,24 @@
 						<ul class="list-group">
 							<li class="list-group-header">Downloads</li>
 							<li class="list-group-item">
-									<p>file 1..</p>
-									<p>file 2..</p>
+								<p>file 1..</p>
+								<p>file 2..</p>
 							</li>
 						</ul>
 					</div>
 
-					<div class="pane padded-more">
-						<h1>Shriners</h1>
-						<div class='test-cal'>
+					<div class="pane padded-more cal-container">
+						<h1 id="test">Shriners</h1>
+						<div class='calendar'>
 							<input id="flatpickr-start" type="text" placeholder="From">
 						</div>
-						<div class='test-cal'>
+						<div class='calendar'>
 							<input id="flatpickr-end" type="text" placeholder="To">
 						</div>
-						<button class="btn btn-primary" onclick="calendar.generateCSVbutton()">Generate CSV</button>
 					</div>
+
+					<button class="btn btn-primary" onclick="calendar.generateCSVbutton()">Generate CSV</button>
+
 				</div>
 			</div>
 
