@@ -27,7 +27,7 @@ module.exports = {
 			}
 		})
 	},
-
+ 
 	// Export dates in calendars at time of button click to generate_csv.js file and run reports=
 	generateCSVbutton:	function() {
 		start_date = new Date(start_date);
