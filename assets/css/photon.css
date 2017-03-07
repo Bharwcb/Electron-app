@@ -2318,12 +2318,6 @@ td:last-child {
   padding: 3px 10px;
 }
 
-.pane {
-  position: relative;
-  overflow-y: auto;
-  flex: 1;
-  border-left: 1px solid #ddd;
-}
 .pane-group {
   position: absolute;
   top: 0;
@@ -2333,14 +2327,19 @@ td:last-child {
   display: flex;
 }
 
-.calendar {
-  background-color: black;
+/*not container*/
+.pane{
+  position: relative;
+  overflow-y: auto;
+  flex: 1;
+  border-left: 1px solid #ddd;
 }
 
 /* center calendars */
-.cal-container:not(#test) {
+.cal-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: yellow;
 }
+
+
