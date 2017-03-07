@@ -1,25 +1,61 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Shriners BB Import</title>
+		<title>Shriners BB CRM Import</title>
+
+		<!-- stylesheets -->
 		<link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
 		<link rel="stylesheet" href="../assets/css/photon.css">
+
+		<!-- flatpickr javascript -->
 		<script src="https://unpkg.com/flatpickr"></script>
 		
+		<!-- electron javascript -->
+
 	</head>
+
 	<body>
-		<div class="wrapper">
-			<h1>Shriners</h1>
+		<div class="window">
 
-			<div class='test-cal'>
-				<input id="flatpickr-start" type="text" placeholder="From">
-			</div>
-			<div class='test-cal'>
-				<input id="flatpickr-end" type="text" placeholder="To">
+			<div class="window-content">
+				<div class="pane-group">
+
+					<div class="pane-sm sidebar padded-less">
+						<ul class="list-group">
+							<li class="list-group-header">Downloads</li>
+							<li class="list-group-item">
+								<p>file 1..</p>
+								<p>file 2..</p>
+							</li>
+						</ul>
+					</div>
+
+					
+
+					<div class="pane padded-more">
+
+							<h1>Shriners BB CRM Integration</h1>
+							<hr>
+							<div class="cal-container">
+								<div class='calendar'>
+									<input id="flatpickr-start" type="text" placeholder="From">
+								</div>
+								<div class='calendar'>
+									<input id="flatpickr-end" type="text" placeholder="To">
+								</div>
+							</div>
+
+							<button class="btn btn-primary do-not-flex" onclick="calendar.generateCSVbutton()">Generate CSV</button>
+
+						</div>
+					
+
+				</div>
 			</div>
 
-			<button onclick="calendar.generateCSVbutton()">Generate CSV</button>
+			<footer class="toolbar toolbar-footer">
+		    <h1 class="title">&#169; Classy.org 2017</h1>
+		  </footer>
 
 		</div>
 		<script>

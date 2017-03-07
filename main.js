@@ -26,8 +26,6 @@ app_elec.on('activiate', () => {
 	}
 })
 
-
-
 function createWindow () {
 	// create browser window
 	mainWindow = new BrowserWindow({

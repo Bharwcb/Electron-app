@@ -8,6 +8,7 @@ let end_date;
 module.exports = {
 	setup: function() {
 		flatpickr("#flatpickr-start", {
+			altInput: true,
 			minDate: "2016-10-1",
 			maxDate: new Date(),
 			enableTime: true,
@@ -16,6 +17,7 @@ module.exports = {
 			}
 		});
 		flatpickr("#flatpickr-end", {
+			altInput: true,
 			maxDate: new Date(),
 			enableTime: true,
 			onChange: (selectedEnd) => {
