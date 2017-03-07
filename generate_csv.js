@@ -67,8 +67,8 @@ function generateCSV(start_date, end_date) {
 		('0' + csv_date.getHours()).slice(-2) + ':' +
 		('0' + csv_date.getMinutes()).slice(-2);
 
-	var constituent = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(constituent).csv');
-	var revenue = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenue).csv');
+	var constituentCSV = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(constituent).csv');
+	var revenueCSV = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenue).csv');
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -158,7 +158,7 @@ function generateCSV(start_date, end_date) {
 			var constituentPromise = new Promise((resolve, reject) => {
 				csv
 					.write( constituentData, {headers: csvConstituentHeaders} )
-					.pipe(constituent)
+					.pipe(constituentCSV)
 					.on("finish", () => {
 						console.log("Constituent CSV complete");
 						resolve();
@@ -168,7 +168,7 @@ function generateCSV(start_date, end_date) {
 			var revenuePromise = new Promise((resolve, reject) => {
 				csv
 					.write( revenueData, {headers: csvRevenueHeaders} )	
-					.pipe(revenue)
+					.pipe(revenueCSV)
 					.on("finish", () => {
 						console.log("Revenue CSV complete");
 						resolve();

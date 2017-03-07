@@ -1,7 +1,6 @@
 // Calendar.js manages the start and end calendars and button to generate CSV
 
 const moment = require('moment');
-
 let start_date;
 let end_date;
 
