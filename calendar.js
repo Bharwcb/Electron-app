@@ -12,6 +12,7 @@ module.exports = {
 			minDate: "2016-10-1",
 			maxDate: new Date(),
 			enableTime: true,
+			inline: true,
 			onChange: (selectedStart) => {
 				start_date = selectedStart;
 			}
@@ -20,6 +21,7 @@ module.exports = {
 			altInput: true,
 			maxDate: new Date(),
 			enableTime: true,
+			inline: true,
 			onChange: (selectedEnd) => {
 				end_date = selectedEnd;
 			}
