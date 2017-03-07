@@ -207,8 +207,15 @@ function generateCSV(start_date, end_date) {
 	// ~~~
 };
 
+function openThis() {
+	console.log("test");
+};
+
 module.exports = {
 	generateCSV: function(start_date, end_date) {
 		return generateCSV(start_date, end_date);
+	},
+	openExport: function() {
+		return openThis();
 	}
 }
