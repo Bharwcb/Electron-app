@@ -168,6 +168,7 @@ function generateCSV(start_date, end_date) {
 					.pipe(constituentCSV)
 					.on("finish", () => {
 						console.log("Constituent CSV complete");
+
 						resolve();
 					})
 			});
@@ -187,6 +188,7 @@ function generateCSV(start_date, end_date) {
 			return Promise.all(csvPromises)
 			.then(() => {
 				console.log("All CSV's are complete");
+				openCSV();
 				// process.exit();
 		  });
 
@@ -213,6 +215,7 @@ function generateCSV(start_date, end_date) {
 	}
 	// ~~~
 };
+
 
 function openCSV() {
 	opn(constituentCSVPath);
