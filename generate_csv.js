@@ -7,6 +7,9 @@ const opn = require('opn');
 
 let constituentCSV;
 let revenueCSV;
+// paths used for opening .csv with 'opn'
+let constituentCSVPath;
+let revenueCSVPath;
 
 function generateCSV(start_date, end_date) {
 
@@ -72,8 +75,10 @@ function generateCSV(start_date, end_date) {
 		('0' + csv_date.getHours()).slice(-2) + ':' +
 		('0' + csv_date.getMinutes()).slice(-2);
 
-	constituentCSV = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(constituent).csv');
-	revenueCSV = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenue).csv');
+	constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
+	revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
+	constituentCSV = fs.createWriteStream(constituentCSVPath);
+	revenueCSV = fs.createWriteStream(revenueCSVPath);
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -213,14 +218,17 @@ function generateCSV(start_date, end_date) {
 };
 
 function openCSV() {
-	
+	console.log("const: ", constituentCSVPath);
+	console.log("rev: ", revenueCSVPath);
+	opn(constituentCSVPath);
+	opn(revenueCSVPath);
 };
 
 module.exports = {
 	generateCSV: function(start_date, end_date) {
 		return generateCSV(start_date, end_date);
 	},
-	openExport: function() {
+	openCSV: function() {
 		return openCSV();
 	}
 }
