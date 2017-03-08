@@ -2,12 +2,17 @@
 API REQUESTS AND CSV FILE GENERATION
 */
 
+const fs = require('fs');
+const opn = require('opn');
+
+let constituentCSV;
+let revenueCSV;
+
 function generateCSV(start_date, end_date) {
 
 	const path = require('path');
 	const url = require('url');
 	require('dotenv').load();
-	const fs = require('fs');
 	const csv = require('fast-csv');
 	const constituent_attributes = require('./constituent-attributes');
 	const revenue_attributes = require('./revenue-attributes');
@@ -67,8 +72,8 @@ function generateCSV(start_date, end_date) {
 		('0' + csv_date.getHours()).slice(-2) + ':' +
 		('0' + csv_date.getMinutes()).slice(-2);
 
-	var constituent = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(constituent).csv');
-	var revenue = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenue).csv');
+	constituentCSV = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(constituent).csv');
+	revenueCSV = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenue).csv');
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -158,7 +163,7 @@ function generateCSV(start_date, end_date) {
 			var constituentPromise = new Promise((resolve, reject) => {
 				csv
 					.write( constituentData, {headers: csvConstituentHeaders} )
-					.pipe(constituent)
+					.pipe(constituentCSV)
 					.on("finish", () => {
 						console.log("Constituent CSV complete");
 						resolve();
@@ -168,7 +173,7 @@ function generateCSV(start_date, end_date) {
 			var revenuePromise = new Promise((resolve, reject) => {
 				csv
 					.write( revenueData, {headers: csvRevenueHeaders} )	
-					.pipe(revenue)
+					.pipe(revenueCSV)
 					.on("finish", () => {
 						console.log("Revenue CSV complete");
 						resolve();
@@ -207,8 +212,15 @@ function generateCSV(start_date, end_date) {
 	// ~~~
 };
 
+function openCSV() {
+	
+};
+
 module.exports = {
 	generateCSV: function(start_date, end_date) {
 		return generateCSV(start_date, end_date);
+	},
+	openExport: function() {
+		return openCSV();
 	}
 }
