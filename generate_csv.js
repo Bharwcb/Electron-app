@@ -7,6 +7,9 @@ const opn = require('opn');
 
 let constituentCSV;
 let revenueCSV;
+// paths used for opening .csv with 'opn'
+let constituentCSVPath;
+let revenueCSVPath;
 
 function generateCSV(start_date, end_date) {
 
@@ -63,17 +66,16 @@ function generateCSV(start_date, end_date) {
 	// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
 	clearFolder('downloads');
 
-	// csv_date formats csv filenames to current datetime
+	// csv_date formats csv file name to time report pulled
 	let csv_date = new Date();
 	csv_date = 
-		csv_date.getFullYear() + 
-		('0' + (csv_date.getMonth() + 1)).slice(-2) + 
-		('0' + csv_date.getDate()).slice(-2) + '-' + 
-		('0' + csv_date.getHours()).slice(-2) + ':' +
+		('0' + csv_date.getHours()).slice(-2) + '.' +
 		('0' + csv_date.getMinutes()).slice(-2);
 
-	constituentCSV = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(constituent).csv');
-	revenueCSV = fs.createWriteStream('./downloads/Shriners-' + csv_date + '(revenue).csv');
+	constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
+	revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
+	constituentCSV = fs.createWriteStream(constituentCSVPath);
+	revenueCSV = fs.createWriteStream(revenueCSVPath);
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -213,14 +215,15 @@ function generateCSV(start_date, end_date) {
 };
 
 function openCSV() {
-	
+	opn(constituentCSVPath);
+	opn(revenueCSVPath);
 };
 
 module.exports = {
 	generateCSV: function(start_date, end_date) {
 		return generateCSV(start_date, end_date);
 	},
-	openExport: function() {
+	openCSV: function() {
 		return openCSV();
 	}
 }

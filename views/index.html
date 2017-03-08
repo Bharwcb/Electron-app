@@ -48,7 +48,7 @@
 
 						<!-- TEST BUTTON FOR OPENING DOWNLOADS FOLDER -->
 						<div id="TEST">
-							<button onclick="generate.openExport()">TEST</button>
+							<button onclick="generate.openCSV()">TEST</button>
 						</div>
 
 
@@ -68,8 +68,6 @@
 			const calendar = require("../calendar.js");
 			calendar.setup();
 			// require generate_csv to open downloads folder
-
-			// ...SHOULD trigger openThis() in generate_csv.js
 			const generate = require("../generate_csv.js");
 		</script>
 
