@@ -3,7 +3,7 @@ API REQUESTS AND CSV FILE GENERATION
 */
 
 const fs = require('fs');
-
+const opn = require('opn');
 
 let constituentCSV;
 let revenueCSV;
