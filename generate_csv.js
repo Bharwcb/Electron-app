@@ -189,6 +189,7 @@ function generateCSV(start_date, end_date) {
 			.then(() => {
 				console.log("All CSV's are complete");
 				openCSV();
+				alert("Test");
 				// process.exit();
 		  });
 
