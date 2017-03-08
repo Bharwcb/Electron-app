@@ -66,13 +66,10 @@ function generateCSV(start_date, end_date) {
 	// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
 	clearFolder('downloads');
 
-	// csv_date formats csv filenames to current datetime
+	// csv_date formats csv file name to time report pulled
 	let csv_date = new Date();
 	csv_date = 
-		csv_date.getFullYear() + 
-		('0' + (csv_date.getMonth() + 1)).slice(-2) + 
-		('0' + csv_date.getDate()).slice(-2) + '-' + 
-		('0' + csv_date.getHours()).slice(-2) + ':' +
+		('0' + csv_date.getHours()).slice(-2) + '.' +
 		('0' + csv_date.getMinutes()).slice(-2);
 
 	constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
