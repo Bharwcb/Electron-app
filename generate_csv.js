@@ -218,8 +218,6 @@ function generateCSV(start_date, end_date) {
 };
 
 function openCSV() {
-	console.log("const: ", constituentCSVPath);
-	console.log("rev: ", revenueCSVPath);
 	opn(constituentCSVPath);
 	opn(revenueCSVPath);
 };
