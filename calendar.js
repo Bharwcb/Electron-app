@@ -4,27 +4,31 @@ const moment = require('moment');
 let start_date;
 let end_date;
 
+let flatpickr_start_instance = flatpickr("#flatpickr-start", {
+	altInput: true,
+	minDate: "2016-10-1",
+	maxDate: new Date(),
+	enableTime: true,
+	inline: true,
+	onChange: (selectedStart) => {
+		start_date = selectedStart;
+	}
+});
+
+let flatpickr_end_instance = flatpickr("#flatpickr-end", {
+	altInput: true,
+	maxDate: new Date(),
+	enableTime: true,
+	inline: true,
+	onChange: (selectedEnd) => {
+		end_date = selectedEnd;
+	}
+});
+
 module.exports = {
 	setup: function() {
-		flatpickr("#flatpickr-start", {
-			altInput: true,
-			minDate: "2016-10-1",
-			maxDate: new Date(),
-			enableTime: true,
-			inline: true,
-			onChange: (selectedStart) => {
-				start_date = selectedStart;
-			}
-		});
-		flatpickr("#flatpickr-end", {
-			altInput: true,
-			maxDate: new Date(),
-			enableTime: true,
-			inline: true,
-			onChange: (selectedEnd) => {
-				end_date = selectedEnd;
-			}
-		})
+		flatpickr_start_instance;
+		flatpickr_end_instance;
 	},
  
 	// Export dates in calendars at time of button click to generate_csv.js file and run reports=
@@ -42,6 +46,10 @@ module.exports = {
 		} else {
 			require('./generate_csv').generateCSV(start_date, end_date);
 		}
+	},
+
+	clearCalendars: function() {
+
 	}
 
 }

@@ -8,8 +8,6 @@ const path = require('path');
 const url = require('url');
 require('dotenv').load();
 let mainWindow;
-// inport generate_csv.js to listen for 'abort_abort' event when modal 'exit' clicked
-
 
 // when electron initializes and is ready to create browser windows
 app_elec.on('ready', createWindow);

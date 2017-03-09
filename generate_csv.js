@@ -236,6 +236,7 @@ function newReport() {
 	console.log("New report clicked");
 	dialog.close();
 	// clear dates
+	
 	// show downloaded files on left (angular)
 	
 }
