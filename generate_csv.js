@@ -11,6 +11,11 @@ let revenueCSV;
 let constituentCSVPath;
 let revenueCSVPath;
 
+let dialog = document.getElementById('newReportModal');
+
+// remote used to minimize window which shuts down electron when user clicks 'exit' in modal
+const remote = require('electron').remote;
+
 function generateCSV(start_date, end_date) {
 
 	const path = require('path');
@@ -49,13 +54,10 @@ function generateCSV(start_date, end_date) {
 	let indexedTempleName = {};
 	let indexedDesignee = {};
 	let campaignIdKeyNameValue = {};
-	
-	console.log("Calendar Start Date: ", start_date);
-	console.log("Calendar End Date: ", end_date);
 
 	runReport(start_date, end_date);
 
-	// ~~~ CALENDAR ~~~  Get start_date * end_date from calendar.js. generateCSV() runs when button is clicked
+	// ~~~ CALENDAR ~~~  Get start_date & end_date from calendar.js. generateCSV() runs when button is clicked
 
 	// ~~~ Testing - NOTE: with release 2/28/17 need to feed ISO string to moment(date).format() ~~~
 	// const start_date = '2017-01-26T10:00:00';
@@ -218,26 +220,30 @@ function generateCSV(start_date, end_date) {
 };
 
 function openModal() {
-	let dialog = document.getElementById('newReportModal');
 	dialog.showModal();
 };
 
+// exits modal and shuts down electron
 function exitModal() {
 	console.log("Exit clicked");
-	// closeModal();
-	// process.exit?
+	dialog.close();
+	// remote shuts down electron
+	var window = remote.getCurrentWindow();
+  window.close();
 }
 
+const calendar = require('./calendar.js');
 function newReport() {
 	console.log("New report clicked");
-	// closeModal();
+	dialog.close();
 	// clear dates
-	// show downloaded files on left (angular)
-}
+	calendar.clearCalendars();
 
-function closeModal() {
-	// use this in above two functions
-};
+	// show downloaded files on left (angular)
+
+
+
+}
 
 function openCSV() {
 	opn(constituentCSVPath);

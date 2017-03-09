@@ -14,9 +14,7 @@ app_elec.on('ready', createWindow);
 
 // for all OS's aside from OS X, menu closes last tab closed
 app_elec.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
+	app_elec.quit();
 });
 
 // when click on icon
@@ -48,8 +46,6 @@ function createWindow () {
 		mainWindow = null
 	})
 }
-
-
 
 
 
