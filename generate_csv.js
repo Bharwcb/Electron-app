@@ -238,8 +238,11 @@ function newReport() {
 	dialog.close();
 	// clear dates
 	calendar.clearCalendars();
+
 	// show downloaded files on left (angular)
-	
+
+
+
 }
 
 function openCSV() {
