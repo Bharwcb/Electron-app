@@ -57,7 +57,7 @@ function generateCSV(start_date, end_date) {
 
 	runReport(start_date, end_date);
 
-	// ~~~ CALENDAR ~~~  Get start_date * end_date from calendar.js. generateCSV() runs when button is clicked
+	// ~~~ CALENDAR ~~~  Get start_date & end_date from calendar.js. generateCSV() runs when button is clicked
 
 	// ~~~ Testing - NOTE: with release 2/28/17 need to feed ISO string to moment(date).format() ~~~
 	// const start_date = '2017-01-26T10:00:00';
@@ -232,11 +232,12 @@ function exitModal() {
   window.close();
 }
 
+const calendar = require('./calendar.js');
 function newReport() {
 	console.log("New report clicked");
 	dialog.close();
 	// clear dates
-	
+	calendar.clearCalendars();
 	// show downloaded files on left (angular)
 	
 }

@@ -31,7 +31,7 @@ module.exports = {
 		flatpickr_end_instance;
 	},
  
-	// Export dates in calendars at time of button click to generate_csv.js file and run reports=
+	// Function from generate_csv.js, takes dates in calendars at time of button click and run reports
 	generateCSVbutton:	function() {
 		start_date = new Date(start_date);
 		start_date = moment(start_date).format();
@@ -49,7 +49,8 @@ module.exports = {
 	},
 
 	clearCalendars: function() {
-
+		flatpickr_start_instance.clear();
+		flatpickr_end_instance.clear();
 	}
 
 }
