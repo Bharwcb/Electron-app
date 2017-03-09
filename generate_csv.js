@@ -168,6 +168,7 @@ function generateCSV(start_date, end_date) {
 					.pipe(constituentCSV)
 					.on("finish", () => {
 						console.log("Constituent CSV complete");
+
 						resolve();
 					})
 			});
@@ -187,6 +188,8 @@ function generateCSV(start_date, end_date) {
 			return Promise.all(csvPromises)
 			.then(() => {
 				console.log("All CSV's are complete");
+				openCSV();
+				openModal();
 				// process.exit();
 		  });
 
@@ -214,6 +217,28 @@ function generateCSV(start_date, end_date) {
 	// ~~~
 };
 
+function openModal() {
+	let dialog = document.getElementById('newReportModal');
+	dialog.showModal();
+};
+
+function exitModal() {
+	console.log("Exit clicked");
+	// closeModal();
+	// process.exit?
+}
+
+function newReport() {
+	console.log("New report clicked");
+	// closeModal();
+	// clear dates
+	// show downloaded files on left (angular)
+}
+
+function closeModal() {
+	// use this in above two functions
+};
+
 function openCSV() {
 	opn(constituentCSVPath);
 	opn(revenueCSVPath);
@@ -223,7 +248,15 @@ module.exports = {
 	generateCSV: function(start_date, end_date) {
 		return generateCSV(start_date, end_date);
 	},
+	// only exporting openCSV in case want to open old downloaded files in UI
 	openCSV: function() {
 		return openCSV();
+	},
+	// when click 'exit' or 'yes' in modal after CSV created
+	exitModal: function() {
+		return exitModal();
+	},
+	newReport: function() {
+		return newReport();
 	}
 }
