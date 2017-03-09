@@ -13,6 +13,9 @@ let revenueCSVPath;
 
 let dialog = document.getElementById('newReportModal');
 
+// remote used to minimize window which shuts down electron when user clicks 'exit' in modal
+const remote = require('electron').remote;
+
 function generateCSV(start_date, end_date) {
 
 	const path = require('path');
@@ -224,8 +227,9 @@ function openModal() {
 function exitModal() {
 	console.log("Exit clicked");
 	dialog.close();
-	// exit electron
-
+	// remote shuts down electron
+	var window = remote.getCurrentWindow();
+  window.close();
 }
 
 function newReport() {
