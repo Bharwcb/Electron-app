@@ -222,20 +222,22 @@ function openModal() {
 	dialog.showModal();
 };
 
-function closeModal() {
-
-};
-
 function exitModal() {
+	console.log("Exit clicked");
 	// closeModal();
 	// process.exit?
 }
 
 function newReport() {
+	console.log("New report clicked");
 	// closeModal();
 	// clear dates
 	// show downloaded files on left (angular)
 }
+
+function closeModal() {
+	// use this in above two functions
+};
 
 function openCSV() {
 	opn(constituentCSVPath);
@@ -249,5 +251,12 @@ module.exports = {
 	// only exporting openCSV in case want to open old downloaded files in UI
 	openCSV: function() {
 		return openCSV();
+	},
+	// when click 'exit' or 'yes' in modal after CSV created
+	exitModal: function() {
+		return exitModal();
+	},
+	newReport: function() {
+		return newReport();
 	}
 }
