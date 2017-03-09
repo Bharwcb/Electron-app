@@ -8,16 +8,20 @@ const path = require('path');
 const url = require('url');
 require('dotenv').load();
 let mainWindow;
+// inport generate_csv.js to listen for 'abort_abort' event when modal 'exit' clicked
+
 
 // when electron initializes and is ready to create browser windows
 app_elec.on('ready', createWindow);
 
 // for all OS's aside from OS X, menu closes last tab closed
 app_elec.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
+	app_elec.quit();
 });
+
+app_elec.on('abort_abort', () => {
+	app_elec.quit();
+})
 
 // when click on icon
 app_elec.on('activiate', () => {
@@ -48,8 +52,6 @@ function createWindow () {
 		mainWindow = null
 	})
 }
-
-
 
 
 

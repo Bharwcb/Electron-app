@@ -11,6 +11,8 @@ let revenueCSV;
 let constituentCSVPath;
 let revenueCSVPath;
 
+let dialog = document.getElementById('newReportModal');
+
 function generateCSV(start_date, end_date) {
 
 	const path = require('path');
@@ -49,9 +51,6 @@ function generateCSV(start_date, end_date) {
 	let indexedTempleName = {};
 	let indexedDesignee = {};
 	let campaignIdKeyNameValue = {};
-	
-	console.log("Calendar Start Date: ", start_date);
-	console.log("Calendar End Date: ", end_date);
 
 	runReport(start_date, end_date);
 
@@ -218,26 +217,24 @@ function generateCSV(start_date, end_date) {
 };
 
 function openModal() {
-	let dialog = document.getElementById('newReportModal');
 	dialog.showModal();
 };
 
+// exits modal and shuts down electron
 function exitModal() {
 	console.log("Exit clicked");
-	// closeModal();
-	// process.exit?
+	dialog.close();
+	// exit electron
+
 }
 
 function newReport() {
 	console.log("New report clicked");
-	// closeModal();
+	dialog.close();
 	// clear dates
 	// show downloaded files on left (angular)
+	
 }
-
-function closeModal() {
-	// use this in above two functions
-};
 
 function openCSV() {
 	opn(constituentCSVPath);
