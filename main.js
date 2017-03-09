@@ -19,10 +19,6 @@ app_elec.on('window-all-closed', () => {
 	app_elec.quit();
 });
 
-app_elec.on('abort_abort', () => {
-	app_elec.quit();
-})
-
 // when click on icon
 app_elec.on('activiate', () => {
 	if (mainWindow === null) {
