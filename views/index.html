@@ -41,7 +41,7 @@
 								<input id="flatpickr-end" type="text" placeholder="To">
 							</div>
 						</div>
-						<div id="generate-button-wrapper">
+						<div id="generateButtonWrapper">
 							<button class="btn btn-large btn-primary" onclick="calendar.generateCSVbutton()">Generate CSV</button>
 						</div>
 
@@ -66,11 +66,9 @@
 
 		</div>
 
-
 		<dialog id="newReportModal">
-			<div style="padding:50px;">
-				<h1>header</h1>
-				<p>paragraph</p>
+			<div id ="modalContent">
+				<p>paragraphparagraphparagraphparagraphparagraphparagraphparagraphparagraph</p>
 			</div>
 			<footer class="toolbar toolbar-footer">
 				<div class="toolbar-actions">
@@ -80,15 +78,12 @@
 			</footer>
 		</dialog>
 
-
-
 		<script>
 			// initializing flatpickr requires 'require', not just a script src
 			const calendar = require("../calendar.js");
 			calendar.setup();
 			// require generate_csv to open downloads folder
 			const generate = require("../generate_csv.js");
-			
 		</script>
 
 	</body>

@@ -1,7 +1,22 @@
-#generate-button-wrapper {
+#generateButtonWrapper {
   text-align: center;
 }
 
-#generate-button-wrapper button{
+#generateButtonWrapper button{
   margin-top: 5%;
+}
+
+#modalContent {
+	padding:50px;
+}
+
+dialog {
+	padding: 0;
+	border: 1px solid #bebebe;
+	border-radius: 6px;
+	box-shadow: 0 0 30px rgba(0,0,0,.1);
+	overflow: hidden;
+	&::backdrop {
+		background: rgba(0,0,0,0.2);
+	}
 }
