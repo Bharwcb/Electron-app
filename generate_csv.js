@@ -189,7 +189,8 @@ function generateCSV(start_date, end_date) {
 			.then(() => {
 				console.log("All CSV's are complete");
 				openCSV();
-				alert("Test");
+				// alert("Test");
+				openModal();
 				// process.exit();
 		  });
 
@@ -217,6 +218,10 @@ function generateCSV(start_date, end_date) {
 	// ~~~
 };
 
+function openModal() {
+	let dialog = document.getElementById('newReportModal');
+	dialog.showModal();
+}
 
 function openCSV() {
 	opn(constituentCSVPath);
