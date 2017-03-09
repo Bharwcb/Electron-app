@@ -227,6 +227,7 @@ module.exports = {
 	generateCSV: function(start_date, end_date) {
 		return generateCSV(start_date, end_date);
 	},
+	// only exporting openCSV in case want to open old downloaded files in UI
 	openCSV: function() {
 		return openCSV();
 	}
