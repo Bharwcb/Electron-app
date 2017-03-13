@@ -239,17 +239,21 @@ function exitModal() {
   window.close();
 }
 
-// click 'generate new report' after CSVs created
+// ~~~ click 'generate new report' after CSVs created
 const calendar = require('./calendar.js');
+const angularApp = require('./angularApp.js');
 function newReport() {
 	console.log("New report clicked");
 	dialog.close();
 	// clear dates (a flatpickr method)
 	calendar.clearCalendars();
-	// Display files in sidebar (by pushing to Angular model)
 
-
+	
+	// Display files in sidebar - push both constituent & revenue filenames to angularApp.js .files by returning both strings in an array here, and call it in index.html template 
+	// console.log([revenueCSVDisplaySidebar, constituentCSVDisplaySidebar]);
+	// angularApp.$scope.addFile(revenueCSVDisplaySidebar);
 }
+// ~~~
 
 function openCSV() {
 	opn(constituentCSVPath);
