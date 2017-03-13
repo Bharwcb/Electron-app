@@ -7,9 +7,12 @@ const opn = require('opn');
 
 let constituentCSV;
 let revenueCSV;
-// paths used for opening .csv with 'opn'
+// need full CSV paths used for opening .csv with 'opn'
 let constituentCSVPath;
 let revenueCSVPath;
+// remove ./downloads/ when display in sidebar
+let constituentCSVDisplaySidebar;
+let revenueCSVDisplaySidebar;
 
 let dialog = document.getElementById('newReportModal');
 
@@ -68,14 +71,18 @@ function generateCSV(start_date, end_date) {
 	// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
 	clearFolder('downloads');
 
-	// csv_date formats csv file name to time report pulled
+	// NAMING CSV FILES (csv_date grabs time report pulled)
 	let csv_date = new Date();
 	csv_date = 
 		('0' + csv_date.getHours()).slice(-2) + '.' +
 		('0' + csv_date.getMinutes()).slice(-2);
-
+	// Full path
 	constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
 	revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
+	// In sidebar, remove './downloads/' from title
+	constituentCSVDisplaySidebar = constituentCSVPath.replace('./downloads/', '');
+	constituentCSVDisplaySidebar = revenueCSVPath.replace('./downloads/', '');
+	// CSV
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
 
@@ -223,7 +230,7 @@ function openModal() {
 	dialog.showModal();
 };
 
-// exits modal and shuts down electron
+// click 'exit' after CSV created - shuts down electron
 function exitModal() {
 	console.log("Exit clicked");
 	dialog.close();
@@ -232,15 +239,14 @@ function exitModal() {
   window.close();
 }
 
+// click 'generate new report' after CSVs created
 const calendar = require('./calendar.js');
 function newReport() {
 	console.log("New report clicked");
 	dialog.close();
-	// clear dates
+	// clear dates (a flatpickr method)
 	calendar.clearCalendars();
-
-	// show downloaded files on left (angular)
-
+	// Display files in sidebar (by pushing to Angular model)
 
 
 }
