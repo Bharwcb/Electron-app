@@ -23,24 +23,21 @@
 			<div class="window-content">
 				<div class="pane-group">
 
+					<!-- SIDEBAR -->
 					<div class="pane-sm sidebar padded-less">
-
-
 						<div ng-app="fileListApp" ng-controller="fileListController">
-							<!-- <h1>Hello {{name}}</h1> -->
-							<h2>I can add {{1 + 1}}</h2>
+							<ul class="list-group">
+								<li class="list-group-header">Downloads</li>
+								<li class="list-group-item">
+									<p ng-repeat="file in files">
+										{{file}}
+									</p>
+								</li>
+							</ul>
 						</div>
-
-
-						<ul class="list-group">
-							<li class="list-group-header">Downloads</li>
-							<li class="list-group-item">
-								<p>file 1..</p>
-								<p>file 2..</p>
-							</li>
-						</ul>
 					</div>
 
+					<!-- MAIN CONTENT -->
 					<div class="pane padded-more">
 						<h1>Shriners BB CRM Integration</h1>
 						<hr>
