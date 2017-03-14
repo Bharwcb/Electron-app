@@ -79,12 +79,12 @@ function generateCSV(start_date, end_date) {
 	// Full path
 	constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
 	revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
-	// In sidebar, remove './downloads/' from title
-	constituentCSVDisplaySidebar = constituentCSVPath.replace('./downloads/', '');
-	constituentCSVDisplaySidebar = revenueCSVPath.replace('./downloads/', '');
 	// CSV
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
+	// In sidebar, remove './downloads/' from title
+	constituentCSVDisplaySidebar = constituentCSVPath.replace('./downloads/', '');
+	revenueCSVDisplaySidebar = revenueCSVPath.replace('./downloads/', '');
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -248,9 +248,10 @@ function newReport() {
 	// clear dates (a flatpickr method)
 	calendar.clearCalendars();
 
-	
+
 	// Display files in sidebar - push both constituent & revenue filenames to angularApp.js .files by returning both strings in an array here, and call it in index.html template 
-	// console.log([revenueCSVDisplaySidebar, constituentCSVDisplaySidebar]);
+	console.log("const: ", constituentCSVDisplaySidebar);
+	console.log("rev: ", revenueCSVDisplaySidebar);
 	// angularApp.$scope.addFile(revenueCSVDisplaySidebar);
 }
 // ~~~
