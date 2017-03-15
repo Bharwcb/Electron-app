@@ -1,7 +1,17 @@
-angular.module('fileListApp', []).controller('fileListController', function($scope) {
-	$scope.files = ['seed file 1', 'seed file 2', 'seed file 3'];
-	$scope.addFile = function(file) {
-		console.log("ANGULAR CONTROLLER CHANGED");
-		$scope.files.push(file);
-	}
+angular.module('fileListApp', [])
+.service('fileService', function() {
+  this.files = ['seed file 1', 'seed file 2'];
+  this.addFile = function(file){
+    this.files.push(file);
+  }
+})
+.controller('fileListController', function($scope, fileService) {
+    $scope.files = fileService.files;
+    $scope.addFile = function(file) {
+        fileService.addFile(file);
+    }
 });
+
+// $scope.addFile = function(file) { 
+//   fileService.addFile(file);
+// }

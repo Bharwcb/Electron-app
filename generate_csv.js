@@ -252,7 +252,10 @@ function newReport() {
 	// Display files in sidebar - push both constituent & revenue filenames to angularApp.js .files by returning both strings in an array here, and call it in index.html template 
 	console.log("const: ", constituentCSVDisplaySidebar);
 	console.log("rev: ", revenueCSVDisplaySidebar);
-	// angularApp.$scope.addFile(revenueCSVDisplaySidebar);
+
+	// need to be able to run addFile('test') here
+	
+
 }
 // ~~~
 
