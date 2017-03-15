@@ -9,9 +9,15 @@ angular.module('fileListApp', [])
     $scope.files = fileService.files;
     $scope.addFile = function(file) {
         fileService.addFile(file);
-    }
+    };
+     
+    // ipcRenderer.on('newReportNames', function(reportName) {
+    // 	console.log('new message', reportName);
+    // 	$scope.$apply(function() {
+				// // takes title that i emitted
+				// $scope.addFile(reportName);
+    // 	});
+    // });
+    
+    
 });
-
-// $scope.addFile = function(file) { 
-//   fileService.addFile(file);
-// }

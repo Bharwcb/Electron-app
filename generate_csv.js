@@ -11,13 +11,15 @@ let revenueCSV;
 let constituentCSVPath;
 let revenueCSVPath;
 // remove ./downloads/ when display in sidebar
-let constituentCSVDisplaySidebar;
-let revenueCSVDisplaySidebar;
+// window.constituentCSVDisplaySidebar;
+// window.revenueCSVDisplaySidebar;
 
 let dialog = document.getElementById('newReportModal');
 
 // remote used to minimize window which shuts down electron when user clicks 'exit' in modal
-const remote = require('electron').remote;
+const electron = require('electron');
+const remote = electron.remote;
+
 
 function generateCSV(start_date, end_date) {
 
@@ -83,8 +85,13 @@ function generateCSV(start_date, end_date) {
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
 	// In sidebar, remove './downloads/' from title
-	constituentCSVDisplaySidebar = constituentCSVPath.replace('./downloads/', '');
-	revenueCSVDisplaySidebar = revenueCSVPath.replace('./downloads/', '');
+	window.constituentCSVDisplaySidebar = constituentCSVPath.replace('./downloads/', '');
+	window.revenueCSVDisplaySidebar = revenueCSVPath.replace('./downloads/', '');
+
+	/*
+	 require(electron).ipcMain; // or whatever
+	 ipcMain.emit('newReportNames', revenueCSVDisplaySidebar)
+  */
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -253,6 +260,47 @@ function newReport() {
 	console.log("const: ", constituentCSVDisplaySidebar);
 	console.log("rev: ", revenueCSVDisplaySidebar);
 
+	remote.get
+	// how to implement here?
+	
+		// 1) GET SCOPE
+
+		// 2) $APPLY SCOPE
+
+
+
+
+
+
+
+
+
+
+	// console.log(angular.element(document.body).injector().get('fileService'));
+
+	// var injector = angular.element(document.body).injector();
+	// injector.invoke(function() {
+	// 	addFile('test')
+	// });
+
+
+	// angular.injector(['ng', 'fileListApp']).invoke(function($rootScope, fileService) {
+	// 	// fileService.addFile('test');
+	// 	console.log("fileservice: ", fileService);
+	// 	console.log("files: ", fileService.files);
+	// 	console.log("function: ", fileService.addFile);
+
+	// 	var scope = $rootScope.$new();
+	// 	angular.controller('fileListController', {$scope: scope});
+
+	// 	controller.addFile('test');
+	// 	$rootScope.$apply();
+
+	// 	alert('yo');
+	// })
+
+
+
 	// need to be able to run addFile('test') here
 	
 
@@ -279,5 +327,10 @@ module.exports = {
 	newReport: function() {
 		return newReport();
 	},
-	constituentCSVDisplaySidebar: constituentCSVDisplaySidebar
+	constituentCSVDisplaySidebar: function() {
+		return constituentCSVDisplaySidebar;
+	},
+	revenueCSVDisplaySidebar: function() {
+		return revenueCSVDisplaySidebar;
+	}
 }

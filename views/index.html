@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="fileListApp" ng-controller="fileListController">
+<html >
 	<head>
 		<title>Shriners BB CRM Import</title>
 
@@ -17,7 +17,7 @@
 		<script src="../angularApp.js"></script>
 	</head>
 
-	<body>
+	<body ng-app="fileListApp" ng-controller="fileListController">
 		<div class="window">
 
 			<div class="window-content">
@@ -81,7 +81,7 @@
 			<footer class="toolbar toolbar-footer">
 				<div class="toolbar-actions">
 				<button id="exit" onclick="generate.exitModal()" class="btn btn-default btn-large pull-left">Exit</button>
-				<button ng-click="addFile('file 4')" id="yes" onclick="generate.newReport()" class="btn btn-primary btn-large pull-right">Yes</button>
+				<button ng-click="addFile('testing file')" id="yes" onclick="generate.newReport();test();" class="btn btn-primary btn-large pull-right">Yes</button>
 				</div>
 			</footer>
 		</dialog>
@@ -97,5 +97,11 @@
 			const generate = require("../generate_csv.js");
 		</script>
 
+		<script>
+			var remote = require('electron').remote;
+			function test() {
+				console.log("test: ", window.constituentCSVDisplaySidebar);
+			}
+		</script>
 	</body>
 </html>
