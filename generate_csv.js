@@ -275,5 +275,6 @@ module.exports = {
 	},
 	newReport: function() {
 		return newReport();
-	}
+	},
+	constituentCSVDisplaySidebar: constituentCSVDisplaySidebar
 }
