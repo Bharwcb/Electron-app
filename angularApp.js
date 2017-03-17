@@ -1,14 +1,17 @@
 angular.module('fileListApp', [])
 .controller('fileListController', function($scope) {
   $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
-  $scope.findConstituentCSVDisplaySidebar = function() {
+  $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
+  $scope.displayFilesInSidebar = function() {
     $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
+    $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
   };
 	$scope.files = [];
-	$scope.addFile = function(file) {
-		console.log("type of file: ", typeof file);
-		console.log("about to add in controller: ", file);
-		$scope.files.push(file)
+  // add any number of files in template
+	$scope.addFile = function(...toDisplay) {
+    for (var file of toDisplay) {
+      $scope.files.push(file)
+    }
 	};
 
 })
