@@ -59,7 +59,6 @@ function generateCSV(start_date, end_date) {
 	let indexedTempleName = {};
 	let indexedDesignee = {};
 	let campaignIdKeyNameValue = {};
-
 	runReport(start_date, end_date);
 
 	// ~~~ CALENDAR ~~~  Get start_date & end_date from calendar.js. generateCSV() runs when button is clicked
@@ -84,14 +83,9 @@ function generateCSV(start_date, end_date) {
 	// CSV
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
-	// In sidebar, remove './downloads/' from title
+	// Create global variable to display CSV titles in sidebar UI, don't need './downloads/' 
 	window.constituentCSVDisplaySidebar = constituentCSVPath.replace('./downloads/', '');
 	window.revenueCSVDisplaySidebar = revenueCSVPath.replace('./downloads/', '');
-
-	/*
-	 require(electron).ipcMain; // or whatever
-	 ipcMain.emit('newReportNames', revenueCSVDisplaySidebar)
-  */
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -217,7 +211,7 @@ function generateCSV(start_date, end_date) {
 
 	// ~~~ management of downloads folder ~~~
 	function clearFolder(folder) {
-		files = fs.readdirSync('./' + folder);
+		var files = fs.readdirSync('./' + folder);
 		files.forEach(function(file, index) {
 			rmdir('./downloads/' + file, ((err) =>{}));
 		});
@@ -254,55 +248,6 @@ function newReport() {
 	dialog.close();
 	// clear dates (a flatpickr method)
 	calendar.clearCalendars();
-
-
-	// Display files in sidebar - push both constituent & revenue filenames to angularApp.js .files by returning both strings in an array here, and call it in index.html template 
-	console.log("const: ", constituentCSVDisplaySidebar);
-	console.log("rev: ", revenueCSVDisplaySidebar);
-
-	remote.get
-	// how to implement here?
-	
-		// 1) GET SCOPE
-
-		// 2) $APPLY SCOPE
-
-
-
-
-
-
-
-
-
-
-	// console.log(angular.element(document.body).injector().get('fileService'));
-
-	// var injector = angular.element(document.body).injector();
-	// injector.invoke(function() {
-	// 	addFile('test')
-	// });
-
-
-	// angular.injector(['ng', 'fileListApp']).invoke(function($rootScope, fileService) {
-	// 	// fileService.addFile('test');
-	// 	console.log("fileservice: ", fileService);
-	// 	console.log("files: ", fileService.files);
-	// 	console.log("function: ", fileService.addFile);
-
-	// 	var scope = $rootScope.$new();
-	// 	angular.controller('fileListController', {$scope: scope});
-
-	// 	controller.addFile('test');
-	// 	$rootScope.$apply();
-
-	// 	alert('yo');
-	// })
-
-
-
-	// need to be able to run addFile('test') here
-	
 
 }
 // ~~~

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html ng-app="fileListApp" ng-controller="fileListController">
 	<head>
 		<title>Shriners BB CRM Import</title>
 
@@ -15,9 +15,10 @@
 		<!-- angular js -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
 		<script src="../angularApp.js"></script>
+		
 	</head>
 
-	<body ng-app="fileListApp" ng-controller="fileListController">
+	<body>
 		<div class="window">
 
 			<div class="window-content">
@@ -81,7 +82,7 @@
 			<footer class="toolbar toolbar-footer">
 				<div class="toolbar-actions">
 				<button id="exit" onclick="generate.exitModal()" class="btn btn-default btn-large pull-left">Exit</button>
-				<button ng-click="addFile('testing file')" id="yes" onclick="generate.newReport();test();" class="btn btn-primary btn-large pull-right">Yes</button>
+				<button onclick="generate.newReport();setFoo();" ng-click="addFile(foo)" id="yes" class="btn btn-primary btn-large pull-right">Yes</button>
 				</div>
 			</footer>
 		</dialog>
@@ -96,12 +97,11 @@
 			// require generate_csv to open downloads folder
 			const generate = require("../generate_csv.js");
 		</script>
-
 		<script>
-			var remote = require('electron').remote;
-			function test() {
-				console.log("test: ", window.constituentCSVDisplaySidebar);
-			}
+		function setFoo() {
+			window.foo = "bar";
+			// console.log("window.constituentCSVDisplaySidebar: ", window.constituentCSVDisplaySidebar);
+		}
 		</script>
 	</body>
 </html>
