@@ -7,14 +7,19 @@ const opn = require('opn');
 
 let constituentCSV;
 let revenueCSV;
-// paths used for opening .csv with 'opn'
+// need full CSV paths used for opening .csv with 'opn'
 let constituentCSVPath;
 let revenueCSVPath;
+// remove ./downloads/ when display in sidebar
+window.constituentCSVDisplaySidebar;
+window.revenueCSVDisplaySidebar;
 
 let dialog = document.getElementById('newReportModal');
 
 // remote used to minimize window which shuts down electron when user clicks 'exit' in modal
-const remote = require('electron').remote;
+const electron = require('electron');
+const remote = electron.remote;
+
 
 function generateCSV(start_date, end_date) {
 
@@ -54,7 +59,6 @@ function generateCSV(start_date, end_date) {
 	let indexedTempleName = {};
 	let indexedDesignee = {};
 	let campaignIdKeyNameValue = {};
-
 	runReport(start_date, end_date);
 
 	// ~~~ CALENDAR ~~~  Get start_date & end_date from calendar.js. generateCSV() runs when button is clicked
@@ -68,16 +72,20 @@ function generateCSV(start_date, end_date) {
 	// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
 	clearFolder('downloads');
 
-	// csv_date formats csv file name to time report pulled
+	// NAMING CSV FILES (csv_date grabs time report pulled)
 	let csv_date = new Date();
 	csv_date = 
 		('0' + csv_date.getHours()).slice(-2) + '.' +
 		('0' + csv_date.getMinutes()).slice(-2);
-
+	// Full path
 	constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
 	revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
+	// CSV
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
+	// set global variable to display CSV titles in sidebar UI, don't need './downloads/' 
+	window.constituentCSVDisplaySidebar = constituentCSVPath.replace('./downloads/', '');
+	window.revenueCSVDisplaySidebar = revenueCSVPath.replace('./downloads/', '');
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -203,7 +211,7 @@ function generateCSV(start_date, end_date) {
 
 	// ~~~ management of downloads folder ~~~
 	function clearFolder(folder) {
-		files = fs.readdirSync('./' + folder);
+		var files = fs.readdirSync('./' + folder);
 		files.forEach(function(file, index) {
 			rmdir('./downloads/' + file, ((err) =>{}));
 		});
@@ -223,7 +231,7 @@ function openModal() {
 	dialog.showModal();
 };
 
-// exits modal and shuts down electron
+// click 'exit' after CSV created - shuts down electron
 function exitModal() {
 	console.log("Exit clicked");
 	dialog.close();
@@ -232,18 +240,16 @@ function exitModal() {
   window.close();
 }
 
+// ~~~ click 'generate new report' after CSVs created
 const calendar = require('./calendar.js');
+const angularApp = require('./angularApp.js');
 function newReport() {
-	console.log("New report clicked");
+	console.log("entered NewReport() function");
 	dialog.close();
-	// clear dates
+	// clear dates (a flatpickr method)
 	calendar.clearCalendars();
-
-	// show downloaded files on left (angular)
-
-
-
 }
+// ~~~
 
 function openCSV() {
 	opn(constituentCSVPath);
