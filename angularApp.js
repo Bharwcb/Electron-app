@@ -1,12 +1,16 @@
 angular.module('fileListApp', [])
 .controller('fileListController', function($scope) {
-  $scope.foo = window.foo;
+  $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
+  $scope.findConstituentCSVDisplaySidebar = function() {
+    $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
+  };
 	$scope.files = ['seed file 1', 'seed file 2'];
 	$scope.addFile = function(file) {
 		console.log("type of file: ", typeof file);
 		console.log("about to add in controller: ", file);
 		$scope.files.push(file)
 	};
+
 })
 
 

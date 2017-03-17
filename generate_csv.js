@@ -11,8 +11,8 @@ let revenueCSV;
 let constituentCSVPath;
 let revenueCSVPath;
 // remove ./downloads/ when display in sidebar
-// window.constituentCSVDisplaySidebar;
-// window.revenueCSVDisplaySidebar;
+window.constituentCSVDisplaySidebar;
+window.revenueCSVDisplaySidebar;
 
 let dialog = document.getElementById('newReportModal');
 
