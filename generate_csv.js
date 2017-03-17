@@ -83,7 +83,7 @@ function generateCSV(start_date, end_date) {
 	// CSV
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
-	// Create global variable to display CSV titles in sidebar UI, don't need './downloads/' 
+	// set global variable to display CSV titles in sidebar UI, don't need './downloads/' 
 	window.constituentCSVDisplaySidebar = constituentCSVPath.replace('./downloads/', '');
 	window.revenueCSVDisplaySidebar = revenueCSVPath.replace('./downloads/', '');
 
@@ -244,11 +244,10 @@ function exitModal() {
 const calendar = require('./calendar.js');
 const angularApp = require('./angularApp.js');
 function newReport() {
-	console.log("New report clicked");
+	console.log("entered NewReport() function");
 	dialog.close();
 	// clear dates (a flatpickr method)
 	calendar.clearCalendars();
-
 }
 // ~~~
 
@@ -271,11 +270,5 @@ module.exports = {
 	},
 	newReport: function() {
 		return newReport();
-	},
-	constituentCSVDisplaySidebar: function() {
-		return constituentCSVDisplaySidebar;
-	},
-	revenueCSVDisplaySidebar: function() {
-		return revenueCSVDisplaySidebar;
 	}
 }
