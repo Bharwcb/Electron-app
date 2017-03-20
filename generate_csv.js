@@ -20,6 +20,8 @@ let dialog = document.getElementById('newReportModal');
 const electron = require('electron');
 const remote = electron.remote;
 
+const classy = require('./classy-build');
+const app = classy.app();
 
 function generateCSV(start_date, end_date) {
 
@@ -30,8 +32,7 @@ function generateCSV(start_date, end_date) {
 	const constituent_attributes = require('./constituent-attributes');
 	const revenue_attributes = require('./revenue-attributes');
 	const async = require('async');
-	const classy = require('./classy-build');
-	const app = classy.app();
+	
 	const prompt = require('prompt');
 	// rimraf used to clear downloads contents
 	const rmdir = require('rimraf');
@@ -59,10 +60,10 @@ function generateCSV(start_date, end_date) {
 	let indexedTempleName = {};
 	let indexedDesignee = {};
 	let campaignIdKeyNameValue = {};
+
 	runReport(start_date, end_date);
 
 	// ~~~ CALENDAR ~~~  Get start_date & end_date from calendar.js. generateCSV() runs when button is clicked
-
 	// ~~~ Testing - NOTE: with release 2/28/17 need to feed ISO string to moment(date).format() ~~~
 	// const start_date = '2017-01-26T10:00:00';
 	// const end_date = '2017-01-28T10:00:00';
@@ -83,6 +84,7 @@ function generateCSV(start_date, end_date) {
 	// CSV
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
+
 	// set global variable to display CSV titles in sidebar UI, don't need './downloads/' 
 	window.constituentCSVDisplaySidebar = constituentCSVPath.replace('./downloads/', '');
 	window.revenueCSVDisplaySidebar = revenueCSVPath.replace('./downloads/', '');
@@ -91,6 +93,7 @@ function generateCSV(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
 		app
 		.then(() => {
+			console.log("RunReport(start,end) function calling all the custom questions...");
 			return require('./custom-questions/title')(indexedTitle, start_date, end_date, title_question_id);
 		})
 		.then(() => {
@@ -244,7 +247,6 @@ function exitModal() {
 const calendar = require('./calendar.js');
 const angularApp = require('./angularApp.js');
 function newReport() {
-	console.log("entered NewReport() function");
 	dialog.close();
 	// clear dates (a flatpickr method)
 	calendar.clearCalendars();

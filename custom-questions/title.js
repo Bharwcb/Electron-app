@@ -8,9 +8,11 @@ then, when iterating through transactions, if doesn't find that transaction.id i
 */
 
 classy = require('../classy-build');
+console.log("classy build: ", classy);
 
 // ~~ Start of Additional Requests ~~ 
 var buildCustomTitleHash = function(indexedTitle, start_date, end_date, title_question_id) {
+
 	return classy.questions.listAnswers(title_question_id, {
 		token: 'app',
 		requestDebug: false,
