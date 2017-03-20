@@ -71,7 +71,7 @@ function generateCSV(start_date, end_date) {
 	// const start_date = '2017-01-26T10:00:00';
 	// const end_date = '2017-01-28T10:00:00';
 
-	// create downloads folder if does exist
+	// create downloads folder
 	mkdirSync( path.join(__dirname, 'downloads') );
 	// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
 	clearFolder('downloads');
@@ -81,6 +81,7 @@ function generateCSV(start_date, end_date) {
 	csv_date = 
 		('0' + csv_date.getHours()).slice(-2) + '.' +
 		('0' + csv_date.getMinutes()).slice(-2);
+		
 	// Full csv paths
 	constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
 	revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
