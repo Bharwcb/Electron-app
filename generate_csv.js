@@ -85,24 +85,31 @@ function generateCSV(start_date, end_date) {
 		('0' + csv_date.getHours()).slice(-2) + '.' +
 		('0' + csv_date.getMinutes()).slice(-2);
 
+	buildCSVPaths();
+
 	// if file already exists (i.e. if a report was generated in the same minute), add (1), (2).. etc.
-	function CSVTitleAlreadyExists(file) {
-		try {
-			fs.accessSync(file);
-			return true;
-		} catch (e) {
-			return false;
-		}
-	}
 	if (CSVTitleAlreadyExists(constituentCSVPath) || (CSVTitleAlreadyExists(revenueCSVPath))) {
 		// add (1), (2), etc..
 		window.csvCopies += 1;
 		csv_date = csv_date + "(" + window.csvCopies + ")";
+		buildCSVPaths();
 	}
 
-	// Full csv paths
-	constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
-	revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
+	function buildCSVPaths() {
+		constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
+		revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
+	}
+
+	function CSVTitleAlreadyExists(file) {
+		try {
+			fs.accessSync(file);
+			console.log("file already exists: ", file);
+			return true;
+		} catch (e) {
+			console.log("new filename: ", file);
+			return false;
+		}
+	}
 
 	// CSV
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
