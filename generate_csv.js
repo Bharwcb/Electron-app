@@ -2,6 +2,9 @@
 API REQUESTS AND CSV FILE GENERATION
 */
 
+// in case multiple reports are pulled with equal titles
+window.csvCopies = 0;
+
 const fs = require('fs');
 const opn = require('opn');
 
@@ -81,10 +84,26 @@ function generateCSV(start_date, end_date) {
 	csv_date = 
 		('0' + csv_date.getHours()).slice(-2) + '.' +
 		('0' + csv_date.getMinutes()).slice(-2);
-		
+
+	// if file already exists (i.e. if a report was generated in the same minute), add (1), (2).. etc.
+	function CSVTitleAlreadyExists(file) {
+		try {
+			fs.accessSync(file);
+			return true;
+		} catch (e) {
+			return false;
+		}
+	}
+	if (CSVTitleAlreadyExists(constituentCSVPath) || (CSVTitleAlreadyExists(revenueCSVPath))) {
+		// add (1), (2), etc..
+		window.csvCopies += 1;
+		csv_date = csv_date + "(" + window.csvCopies + ")";
+	}
+
 	// Full csv paths
 	constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
 	revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
+
 	// CSV
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
