@@ -20,47 +20,48 @@ let dialog = document.getElementById('newReportModal');
 const electron = require('electron');
 const remote = electron.remote;
 
+const path = require('path');
+const url = require('url');
+require('dotenv').load();
+const csv = require('fast-csv');
+const constituent_attributes = require('./constituent-attributes');
+const revenue_attributes = require('./revenue-attributes');
+const async = require('async');
 const classy = require('./classy-build');
 const app = classy.app();
+const prompt = require('prompt');
+// rimraf used to clear downloads contents
+const rmdir = require('rimraf');
+const moment = require('moment');
+
+const title_question_id = 46362;
+const middlename_question_id = 46183;
+const company_question_id = 46182;
+const suffix_question_id = 46519;
+const temple_name_question_id = 46758;
+const designee_question_id = 46763;
+
+// one place to change headers for import
+const csvConstituentHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
+const csvRevenueHeaders = ["Account System", "Constituent", "Lookup ID", "Last/org/group/household name", "First Name", "Middle Name", "Title", "Suffix", "Address", "City", "State", "Zip", "Country", "Phone Number", "Email Address", "Amount", "Date", "Revenue Type", "Payment Method", "Inbound Channel", "Application", "Appeal", "Designation", "GL Post Status", "Card Type", "Gift Type", "Tribute Last Name", "Tribute", "Temple Name", "Organization", "Temple recognition credit type"];
+
+// constituentData and revenueData used to collect data for CSV creation.
+let constituentData = [];
+let revenueData = [];
+// the following indexed hashes are used for custom answers.. to avoid querying API for every transaction.
+let indexedTitle = {};
+let indexedMiddlename = {};
+let indexedCompany = {};
+let indexedSuffix = {};
+let indexedTempleName = {};
+let indexedDesignee = {};
+let campaignIdKeyNameValue = {};
 
 function generateCSV(start_date, end_date) {
 
-	const path = require('path');
-	const url = require('url');
-	require('dotenv').load();
-	const csv = require('fast-csv');
-	const constituent_attributes = require('./constituent-attributes');
-	const revenue_attributes = require('./revenue-attributes');
-	const async = require('async');
+	console.log("start: ", start_date);
+	console.log("end: ", end_date);
 	
-	const prompt = require('prompt');
-	// rimraf used to clear downloads contents
-	const rmdir = require('rimraf');
-	const moment = require('moment');
-
-	const title_question_id = 46362;
-	const middlename_question_id = 46183;
-	const company_question_id = 46182;
-	const suffix_question_id = 46519;
-	const temple_name_question_id = 46758;
-	const designee_question_id = 46763;
-
-	// one place to change headers for import
-	const csvConstituentHeaders = ["Contact ID", "Title", "Last Name", "First Name", "Middle Name", "Company", "Suffix", "Billing Email", "Phone", "Street 1", "Street 2", "City", "State/Providence", "ZIP/Postal Code", "Country", "Member ID", "Campaign Title", "Form Title", "Net Transaction Amount", "Transaction Date", "Gift Type", "Temple Name", "Designee 1 Administrative Name", "Origin of Gift", "Payment Method", "Settlement Status", "Billing Last Name", "Billing First Name", "Billing Middle Name", "Billing Suffix", "Billing Street1", "Billing Street2", "Billing City", "Billing State", "Billing Zip", "Billing Phone", "Is Honor Gift", "Tribute First Name", "Tribute Last Name", "Sender Title", "Sender First Name", "Sender Last Name", "Sender Address 1", "Sender Address 2", "Sender City", "Sender State", "Sender Zip", "Sender Country", "Source Code Type", "Source Code Text", "Sub Source Code Text", "Name of Staff Member", "Donation Comment", "Store Name"];
-	const csvRevenueHeaders = ["Account System", "Constituent", "Lookup ID", "Last/org/group/household name", "First Name", "Middle Name", "Title", "Suffix", "Address", "City", "State", "Zip", "Country", "Phone Number", "Email Address", "Amount", "Date", "Revenue Type", "Payment Method", "Inbound Channel", "Application", "Appeal", "Designation", "GL Post Status", "Card Type", "Gift Type", "Tribute Last Name", "Tribute", "Temple Name", "Organization", "Temple recognition credit type"];
-
-	// constituentData and revenueData used to collect data for CSV creation.
-	let constituentData = [];
-	let revenueData = [];
-	// the following indexed hashes are used for custom answers.. to avoid querying API for every transaction.
-	let indexedTitle = {};
-	let indexedMiddlename = {};
-	let indexedCompany = {};
-	let indexedSuffix = {};
-	let indexedTempleName = {};
-	let indexedDesignee = {};
-	let campaignIdKeyNameValue = {};
-
 	runReport(start_date, end_date);
 
 	// ~~~ CALENDAR ~~~  Get start_date & end_date from calendar.js. generateCSV() runs when button is clicked
