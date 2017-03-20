@@ -103,10 +103,8 @@ function generateCSV(start_date, end_date) {
 	function CSVTitleAlreadyExists(file) {
 		try {
 			fs.accessSync(file);
-			console.log("file already exists: ", file);
 			return true;
 		} catch (e) {
-			console.log("new filename: ", file);
 			return false;
 		}
 	}
