@@ -29,6 +29,8 @@ function createWindow () {
 	mainWindow = new BrowserWindow({
 		width: 900, 
 		height: 600,
+		title: 'Shriners BB CRM Import',
+		backgroundColor: '#970332',
 		icon: __dirname + '/assets/images/classy.png'
 	});
 

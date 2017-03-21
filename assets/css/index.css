@@ -10,6 +10,13 @@
 	padding:50px;
 }
 
+/* center calendars */
+.space-around {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 dialog {
 	padding: 0;
 	border: 1px solid #bebebe;
