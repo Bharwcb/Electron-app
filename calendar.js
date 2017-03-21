@@ -44,7 +44,6 @@ module.exports = {
 		} else if (end_date < start_date) {
 			alert("'To' Date Must Be Greater Than 'From' Date.");
 		} else {
-			console.log("In Calendar.js, calling generate_csv.generateCSV()...");
 			require('./generate_csv').generateCSV(start_date, end_date);
 		}
 	},

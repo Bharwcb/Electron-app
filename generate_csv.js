@@ -60,9 +60,6 @@ let campaignIdKeyNameValue = {};
 
 function generateCSV(start_date, end_date) {
 
-	console.log("start: ", start_date);
-	console.log("end: ", end_date);
-
 	// constituentData and revenueData used to collect data for CSV creation.
 	let constituentData = [];
 	let revenueData = [];
