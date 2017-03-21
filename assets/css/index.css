@@ -17,6 +17,12 @@
   justify-content: space-around;
 }
 
+.btn {
+	background-image: linear-gradient(to bottom, #970332 0%, #8C2540 100%);
+	border-color: #8C0340;
+
+}
+
 dialog {
 	padding: 0;
 	border: 1px solid #bebebe;
