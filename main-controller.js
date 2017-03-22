@@ -1,5 +1,8 @@
-angular.module('fileListApp', [])
-.controller('fileListController', function($scope) {
+var test = angular.module('mainApp', []);
+
+test.controller('mainController', filelistController);
+
+function filelistController($scope) {
   $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
   $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
   $scope.displayFilesInSidebar = function() {
@@ -13,5 +16,4 @@ angular.module('fileListApp', [])
       $scope.files.push(file)
     }
 	};
-
-})
+}

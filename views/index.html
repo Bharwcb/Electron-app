@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="fileListApp" ng-controller="fileListController">
+<html ng-app="mainApp" ng-controller="mainController">
 	<head>
 		<!-- stylesheets -->
 		<link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
@@ -10,10 +10,6 @@
 
 		<!-- electron js -->
 
-		<!-- angular js -->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
-		<script src="../angularApp.js"></script>
-		
 	</head>
 
 	<body>
@@ -88,14 +84,18 @@
 			</footer>
 		</dialog>
 
+		<!-- angular js -->
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+		<script src="../main-controller.js"></script>
+
+		<!-- initialize flatpickr - use 'require', not just a script src. -->
 		<script>
-			// initializing flatpickr requires 'require', not just a script src
 			const calendar = require("../calendar.js");
 			calendar.setup();
 		</script>
 
 		<script>
-			// require generate_csv to open downloads folder
+			// require generate_csv to open the downloads folder.
 			const generate = require("../generate_csv.js");
 		</script>
 

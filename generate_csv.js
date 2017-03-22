@@ -269,7 +269,7 @@ function exitModal() {
 
 // ~~~ click 'generate new report' after CSVs created
 const calendar = require('./calendar.js');
-const angularApp = require('./angularApp.js');
+const angularApp = require('./main-controller.js');
 function newReport() {
 	dialog.close();
 	// clear dates (a flatpickr method)
