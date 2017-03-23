@@ -255,7 +255,16 @@ function generateCSV(start_date, end_date) {
 };
 
 function openModal() {
+	stopGeneratingReportSpinner();
 	dialog.showModal();
+};
+
+function stopGeneratingReportSpinner() {
+	var scope = angular
+		.element(document.getElementById('spinner'))
+		.scope();
+	scope.stopSpin();
+	scope.$apply();
 };
 
 // click 'exit' after CSV created - shuts down electron
@@ -269,7 +278,7 @@ function exitModal() {
 
 // ~~~ click 'generate new report' after CSVs created
 const calendar = require('./calendar.js');
-const angularApp = require('./angularApp.js');
+const angularApp = require('./main-controller.js');
 function newReport() {
 	dialog.close();
 	// clear dates (a flatpickr method)
