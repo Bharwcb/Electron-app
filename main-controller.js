@@ -37,8 +37,11 @@ myApp.config(['usSpinnerConfigProvider', function(usSpinnerConfigProvider) {
   usSpinnerConfigProvider.setDefaults({
     color: '#970332',
     radius:16, 
-    width:4, 
-    length: 12,
-    opacity: 0.05
+    width: 4, 
+    length: 8,
+    opacity: 0.05,
+    scale: 2.50,
+    speed: 0.8,
+    trail: 100
   });
 }])
