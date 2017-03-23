@@ -261,7 +261,7 @@ function openModal() {
 
 function stopGeneratingReportSpinner() {
 	var scope = angular
-		.element(document.getElementById('controller'))
+		.element(document.getElementById('spinner'))
 		.scope();
 	scope.stopSpin();
 	scope.$apply();

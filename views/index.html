@@ -14,10 +14,12 @@
 
 	<body>
 		<div class="window">
-
 			<div class="window-content">
+				<div id="spinner">
+					<span us-spinner spinner-key="spinner"></span>
+				</div>
 				<div class="pane-group">
-
+				
 					<!-- SIDEBAR -->
 					<div class="pane-sm sidebar padded-less">
 						<div>
@@ -43,9 +45,6 @@
 							<div class='calendar'>
 								<input id="flatpickr-start" type="text" placeholder="From">
 							</div>
-							<div id="spinner">
-								<span us-spinner spinner-key="spinner"></span>
-							</div>
 							<div class='calendar'>
 								<input id="flatpickr-end" type="text" placeholder="To">
 							</div>
@@ -53,19 +52,7 @@
 						<div id="generateButtonWrapper">
 							<button class="btn btn-large btn-primary" ng-click="startSpin()" onclick="calendar.generateCSVbutton()">Generate CSV</button>
 						</div>
-
-						<!-- TEST BUTTON FOR OPENING DOWNLOADS FOLDER -->
-						<!-- <div id="TEST">
-							<button onclick="generate.openCSV()">TEST</button>
-						</div> -->
-
-						<div id="modal">
-							
-						</div>
-
-
 					</div>
-					
 				</div>
 			</div>
 
