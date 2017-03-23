@@ -256,6 +256,7 @@ function generateCSV(start_date, end_date) {
 
 function openModal() {
 	dialog.showModal();
+	// fire some event that DOM is listening for to then run stopSpin();
 };
 
 // click 'exit' after CSV created - shuts down electron

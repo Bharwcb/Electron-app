@@ -44,7 +44,6 @@
 								<input id="flatpickr-start" type="text" placeholder="From">
 							</div>
 							<div id="spinner">
-								<button ng-click="startSpin()">Start Spinner</button>
 								<span us-spinner spinner-key="spinner"></span>
 							</div>
 							<div class='calendar'>
@@ -52,7 +51,7 @@
 							</div>
 						</div>
 						<div id="generateButtonWrapper">
-							<button class="btn btn-large btn-primary" onclick="calendar.generateCSVbutton()">Generate CSV</button>
+							<button class="btn btn-large btn-primary" ng-click="startSpin()" onclick="calendar.generateCSVbutton()">Generate CSV</button>
 						</div>
 
 						<!-- TEST BUTTON FOR OPENING DOWNLOADS FOLDER -->

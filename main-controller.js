@@ -21,7 +21,14 @@ myApp.controller('mainController', ['$scope', 'usSpinnerService', function($scop
   // ~~~ spinner when generating report
   $scope.startSpin = function() {
     usSpinnerService.spin('spinner');
-  }
+
+    // DISABLE ALL BUTTONS
+
+  };
+
+  $scope.stopSpin = function() {
+    usSpinnerService.stop('spinner');
+  };
 
 }]);
 
