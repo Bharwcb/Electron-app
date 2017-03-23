@@ -43,6 +43,9 @@
 							<div class='calendar'>
 								<input id="flatpickr-start" type="text" placeholder="From">
 							</div>
+							<div id="spinner">
+								<span us-spinner></span>
+							</div>
 							<div class='calendar'>
 								<input id="flatpickr-end" type="text" placeholder="To">
 							</div>
@@ -87,6 +90,7 @@
 		<!-- angular js -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
 		<script src="../main-controller.js"></script>
+		<script src="../node_modules/angular-spinner/dist/angular-spinner.min.js"></script>
 
 		<!-- initialize flatpickr - use 'require', not just a script src. -->
 		<script>

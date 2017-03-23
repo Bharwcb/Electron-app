@@ -1,8 +1,17 @@
-var test = angular.module('mainApp', []);
+var myApp = angular.module('mainApp', ['angularSpinner']);
 
-test.controller('mainController', filelistController);
+myApp.controller('mainController', mainController);
 
-function filelistController($scope) {
+myApp.config(['usSpinnerConfigProvider', function(usSpinnerConfigProvider) {
+  usSpinnerConfigProvider.setDefaults({
+    color: '#970332',
+    radius:16, 
+    width:4, 
+    length: 12
+  });
+}])
+
+function mainController($scope) {
   $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
   $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
   $scope.displayFilesInSidebar = function() {
@@ -17,3 +26,4 @@ function filelistController($scope) {
     }
 	};
 }
+
