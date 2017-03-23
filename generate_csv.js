@@ -255,8 +255,16 @@ function generateCSV(start_date, end_date) {
 };
 
 function openModal() {
+	stopGeneratingReportSpinner();
 	dialog.showModal();
-	// fire some event that DOM is listening for to then run stopSpin();
+};
+
+function stopGeneratingReportSpinner() {
+	var scope = angular
+		.element(document.getElementById('controller'))
+		.scope();
+	scope.stopSpin();
+	scope.$apply();
 };
 
 // click 'exit' after CSV created - shuts down electron
