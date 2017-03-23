@@ -2,16 +2,8 @@ var myApp = angular.module('mainApp', ['angularSpinner']);
 
 myApp.controller('mainController', mainController);
 
-myApp.config(['usSpinnerConfigProvider', function(usSpinnerConfigProvider) {
-  usSpinnerConfigProvider.setDefaults({
-    color: '#970332',
-    radius:16, 
-    width:4, 
-    length: 12
-  });
-}])
-
 function mainController($scope) {
+  // ~~~ display CSV titles in sidebar
   $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
   $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
   $scope.displayFilesInSidebar = function() {
@@ -25,5 +17,24 @@ function mainController($scope) {
       $scope.files.push(file)
     }
 	};
+  // ~~~
+
+  // ~~~ spinner when generating report
+  // $scope.startSpin = function() {
+    
+  // }
+
+
+
 }
 
+// spinner settings
+myApp.config(['usSpinnerConfigProvider', function(usSpinnerConfigProvider) {
+  usSpinnerConfigProvider.setDefaults({
+    color: '#970332',
+    radius:16, 
+    width:4, 
+    length: 12,
+    opacity: 0.05
+  });
+}])
