@@ -26,12 +26,13 @@ const remote = electron.remote;
 
 const path = require('path');
 const url = require('url');
-require('dotenv').load();
+require('dotenv').config();
 const csv = require('fast-csv');
 const constituent_attributes = require('./constituent-attributes');
 const revenue_attributes = require('./revenue-attributes');
 const async = require('async');
 const classy = require('./classy-build');
+console.log("classy: ", classy);
 const app = classy.app();
 const prompt = require('prompt');
 // rimraf used to clear downloads contents
