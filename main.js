@@ -6,8 +6,8 @@ const app_elec = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
-require('dotenv').load();
-let mainWindow;
+require('dotenv').config();
+let mainWindow = null;
 
 // when electron initializes and is ready to create browser windows
 app_elec.on('ready', createWindow);

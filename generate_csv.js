@@ -26,7 +26,6 @@ const remote = electron.remote;
 
 const path = require('path');
 const url = require('url');
-require('dotenv').config();
 const csv = require('fast-csv');
 const constituent_attributes = require('./constituent-attributes');
 const revenue_attributes = require('./revenue-attributes');
