@@ -7,6 +7,11 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 // require('dotenv').config();
+
+var config = require('config');
+var ID = config.get('classyCredentials.ID');
+console.log("ID: ", ID);
+
 let mainWindow = null;
 
 // when electron initializes and is ready to create browser windows
