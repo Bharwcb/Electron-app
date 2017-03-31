@@ -9,8 +9,8 @@ const url = require('url');
 // require('dotenv').config();
 
 var config = require('config');
-var ID = config.get('classyCredentials.ID');
-console.log("ID: ", ID);
+var id = config.get('classyCredentials.id');
+console.log("ID: ", id);
 
 let mainWindow = null;
 
