@@ -72,9 +72,7 @@ function generateCSV(start_date, end_date) {
 	// const end_date = '2017-01-28T10:00:00';
 
 	// create downloads folder
-	console.log("get here?");
 	mkdirSync( path.join(__dirname, 'downloads') );
-	console.log("here?");
 	// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
 	clearFolder('downloads');
 

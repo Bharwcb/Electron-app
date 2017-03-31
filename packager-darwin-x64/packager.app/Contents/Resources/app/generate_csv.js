@@ -73,8 +73,9 @@ function generateCSV(start_date, end_date) {
 
 	// create downloads folder
 	mkdirSync( path.join(__dirname, 'downloads') );
+	
 	// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
-	clearFolder('downloads');
+	clearFolder(path.join(__dirname, 'downloads'));
 
 	// NAMING CSV FILES (csv_date grabs time report pulled)
 	let csv_date = new Date();
@@ -93,7 +94,10 @@ function generateCSV(start_date, end_date) {
 	}
 
 	function buildCSVPaths() {
-		constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
+		// constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
+		console.log("__dirname: ", __dirname);
+		constituentCSVPath = path.join(__dirname, 'downloads', 'Shriners-' +csv_date, '(constituent).csv');
+		console.log("constituentCSVPath: ", constituentCSVPath);
 		revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
 	}
 
@@ -287,8 +291,10 @@ function newReport() {
 // ~~~
 
 function openCSV() {
-	opn(constituentCSVPath);
-	opn(revenueCSVPath);
+	console.log("get here?");
+	opn(path.join(__dirname, constituentCSVPath));
+	opn(path.join(__dirname, revenueCSVPath));
+	console.log("or here?");
 };
 
 module.exports = {
