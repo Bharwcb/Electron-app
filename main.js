@@ -8,6 +8,10 @@ const path = require('path');
 const url = require('url');
 // require('dotenv').config();
 
+if (process.versions && process.versions.electron) {
+  process.env.NODE_CONFIG_DIR = require('electron').app.getAppPath() + '/config';
+}
+
 let mainWindow = null;
 
 // when electron initializes and is ready to create browser windows
