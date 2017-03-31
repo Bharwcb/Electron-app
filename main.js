@@ -8,10 +8,6 @@ const path = require('path');
 const url = require('url');
 // require('dotenv').config();
 
-var config = require('config');
-var id = config.get('classyCredentials.id');
-console.log("ID: ", id);
-
 let mainWindow = null;
 
 // when electron initializes and is ready to create browser windows
