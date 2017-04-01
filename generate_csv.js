@@ -72,7 +72,9 @@ function generateCSV(start_date, end_date) {
 	// const end_date = '2017-01-28T10:00:00';
 
 	// create downloads folder
+
 	mkdirSync( path.join(__dirname, 'downloads') );
+
 	// remove contents of downloads since CSV filenames will be different with each report pulled (different timestamps)
 	clearFolder('downloads');
 
@@ -93,8 +95,10 @@ function generateCSV(start_date, end_date) {
 	}
 
 	function buildCSVPaths() {
-		constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
-		revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv'
+		// constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
+		// revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv';
+		constituentCSVPath = path.join(__dirname, 'downloads', 'Shriners-' + csv_date + '(constituent).csv')
+		revenueCSVPath = path.join(__dirname, 'downloads', 'Shriners-' + csv_date + '(revenue).csv')
 	}
 
 	function CSVTitleAlreadyExists(file) {
@@ -238,9 +242,13 @@ function generateCSV(start_date, end_date) {
 
 	// ~~~ management of downloads folder ~~~
 	function clearFolder(folder) {
-		var files = fs.readdirSync('./' + folder);
+		var files = fs.readdirSync( path.join(__dirname, folder) );
+
 		files.forEach(function(file, index) {
-			rmdir('./downloads/' + file, ((err) =>{}));
+			// rmdir('./downloads/' + file, ((err) =>{}));
+			var foo = path.join(__dirname, 'downloads', file);
+			console.log("foo: ", foo);
+			rmdir(foo, ((err) =>{}));
 		});
 	}
 

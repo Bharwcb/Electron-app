@@ -1,14 +1,17 @@
-var Classy = require('classy-node');
+const Classy = require('classy-node');
 
-// 'config' module since 'dotenv' does not work with electron
-var config = require('config');
-var id = config.get('classyCredentials.id');
-var secret = config.get('classyCredentials.secret');
+// const jsonfile = require('jsonfile');
+// const path = require('path');
+// const file = path.join(__dirname, 'downloads', 'default.json');
 
+// let creds = jsonfile.readFileSync(file);
+// let id = creds.classyCredentials.id;
+// let secret = creds.classyCredentials.secret;
+	
 var classy = new Classy({
 	baseUrl: 'https://stagingapi.stayclassy.org',
-	clientId: id,
-	clientSecret: secret,
+	clientId: "v3bRrAhDTjwaulmS",
+	clientSecret: "jphbp16qxsvgShTT",
 	requestDebug: false
 });
 
