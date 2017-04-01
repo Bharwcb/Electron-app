@@ -14,7 +14,7 @@ let revenueCSV;
 // need full CSV paths used for opening .csv with 'opn'
 let constituentCSVPath;
 let revenueCSVPath;
-// remove ./downloads/ when display in sidebar
+// what to display in sidebar for filename
 window.constituentCSVDisplaySidebar;
 window.revenueCSVDisplaySidebar;
 
@@ -31,7 +31,8 @@ const constituent_attributes = require('./constituent-attributes');
 const revenue_attributes = require('./revenue-attributes');
 const async = require('async');
 const classy = require('./classy-build');
-console.log("classy: ", classy);
+// testing env variables:
+// console.log("classy: ", classy);
 const app = classy.app();
 const prompt = require('prompt');
 // rimraf used to clear downloads contents
@@ -95,8 +96,6 @@ function generateCSV(start_date, end_date) {
 	}
 
 	function buildCSVPaths() {
-		// constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
-		// revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv';
 		constituentCSVPath = path.join(__dirname, 'downloads', 'Shriners-' + csv_date + '(constituent).csv')
 		revenueCSVPath = path.join(__dirname, 'downloads', 'Shriners-' + csv_date + '(revenue).csv')
 	}
@@ -114,9 +113,9 @@ function generateCSV(start_date, end_date) {
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
 
-	// set global variable to display CSV titles in sidebar UI, don't need './downloads/' 
-	window.constituentCSVDisplaySidebar = constituentCSVPath.replace('./downloads/', '');
-	window.revenueCSVDisplaySidebar = revenueCSVPath.replace('./downloads/', '');
+	// set global variable to display CSV titles in sidebar UI, lot of Electron path stuff we don't want to display
+	window.constituentCSVDisplaySidebar = constituentCSVPath.split("downloads/")[1];
+	window.revenueCSVDisplaySidebar = revenueCSVPath.split("downloads/")[1];
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -245,10 +244,7 @@ function generateCSV(start_date, end_date) {
 		var files = fs.readdirSync( path.join(__dirname, folder) );
 
 		files.forEach(function(file, index) {
-			// rmdir('./downloads/' + file, ((err) =>{}));
-			var foo = path.join(__dirname, 'downloads', file);
-			console.log("foo: ", foo);
-			rmdir(foo, ((err) =>{}));
+			rmdir(path.join(__dirname, 'downloads', file), ((err) =>{}));
 		});
 	}
 
