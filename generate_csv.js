@@ -95,8 +95,6 @@ function generateCSV(start_date, end_date) {
 	}
 
 	function buildCSVPaths() {
-		// constituentCSVPath = './downloads/Shriners-' + csv_date + '(constituent).csv';
-		// revenueCSVPath = './downloads/Shriners-' + csv_date + '(revenue).csv';
 		constituentCSVPath = path.join(__dirname, 'downloads', 'Shriners-' + csv_date + '(constituent).csv')
 		revenueCSVPath = path.join(__dirname, 'downloads', 'Shriners-' + csv_date + '(revenue).csv')
 	}
@@ -245,10 +243,7 @@ function generateCSV(start_date, end_date) {
 		var files = fs.readdirSync( path.join(__dirname, folder) );
 
 		files.forEach(function(file, index) {
-			// rmdir('./downloads/' + file, ((err) =>{}));
-			var foo = path.join(__dirname, 'downloads', file);
-			console.log("foo: ", foo);
-			rmdir(foo, ((err) =>{}));
+			rmdir(path.join(__dirname, 'downloads', file), ((err) =>{}));
 		});
 	}
 
