@@ -61,6 +61,8 @@ let campaignIdKeyNameValue = {};
 
 function generateCSV(start_date, end_date) {
 
+	startGeneratingReportSpinner();
+
 	// constituentData and revenueData used to collect data for CSV creation.
 	let constituentData = [];
 	let revenueData = [];
@@ -239,6 +241,14 @@ function generateCSV(start_date, end_date) {
 		});
 	}
 
+	function startGeneratingReportSpinner() {
+		var scope = angular
+			.element(document.getElementById('spinner'))
+			.scope();
+		scope.startSpin();
+		scope.$apply();
+	};
+	
 	// ~~~ management of downloads folder ~~~
 	function clearFolder(folder) {
 		var files = fs.readdirSync( path.join(__dirname, folder) );
