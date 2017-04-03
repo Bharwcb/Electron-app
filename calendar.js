@@ -41,10 +41,8 @@ module.exports = {
 		if ((start_date ==  "Invalid date") || (end_date == "Invalid date")) {
 			// protects against no dates entered - new Date("") = "Invalid date"
 			alert("'From' & 'To' Dates Must Be Selected.");
-			stopGeneratingReportSpinner();
 		} else if (end_date < start_date) {
 			alert("'To' Date Must Be Greater Than 'From' Date.");
-			stopGeneratingReportSpinner();
 		} else {
 			require('./generate_csv').generateCSV(start_date, end_date);
 		}
