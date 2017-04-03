@@ -4,3 +4,4 @@ result.csv
 node_modules
 downloads/*
 !downloads/.gitkeep
+packager-darwin-x64
