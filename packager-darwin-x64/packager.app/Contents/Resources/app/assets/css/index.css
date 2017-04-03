@@ -1,0 +1,39 @@
+#generateButtonWrapper {
+  text-align: center;
+}
+
+#generateButtonWrapper button{
+  margin-top: 5%;
+}
+
+#modalContent {
+	padding:50px;
+}
+
+/* center calendars */
+.space-around {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.btn-primary  {
+	background-image: linear-gradient(to bottom, #970332 0%, #8C2540 100%);
+	border-color: #8C0340;
+}
+
+.btn-primary:active {
+	background-image: linear-gradient(to bottom, #541B2D 0%, #7D2843 100%);
+	border-color: #7D2843;
+}
+
+dialog {
+	padding: 0;
+	border: 1px solid #bebebe;
+	border-radius: 6px;
+	box-shadow: 0 0 30px rgba(0,0,0,.1);
+	overflow: hidden;
+	&::backdrop {
+		background: rgba(0,0,0,0.2);
+	}
+}
