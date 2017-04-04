@@ -32,8 +32,8 @@ app_elec.on('activiate', () => {
 function createWindow () {
 	// create browser window
 	mainWindow = new BrowserWindow({
-		width: 900, 
-		height: 600,
+		width: 960, 
+		height: 680,
 		title: 'Shriners BB CRM Import',
 		backgroundColor: '#970332',
 		icon: __dirname + '/assets/images/classy.png'
