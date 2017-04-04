@@ -14,7 +14,7 @@ let flatpickr_start_instance = flatpickr("#flatpickr-start", {
 		start_date = selectedStart;
 	}
 });
-
+// 
 let flatpickr_end_instance = flatpickr("#flatpickr-end", {
 	altInput: true,
 	maxDate: new Date(),
