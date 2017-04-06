@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build-mac": "electron-packager . --overwrite Classy --platform=darwin --arch=x64 --icon=assets/images/classy.icns"
+    "build-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/images/classy.icns --prune=true Classy",
+    "build-pc": "electron-packager . --overwrite --platform=win32 --asar=true --prune=true --iconUrl=http://go.classy.org/hubfs/product/classy.ico Classy"
   },
   "repository": {
     "type": "git",
