@@ -1,8 +1,13 @@
-/*
-ELECTRON
-*/
+// Packaging for Windows
+const setupEvents = require('./installers/setupEvents');
+if (setupEvents.handleSquirrelEvent()) {
+  // squirrel event handled and app will exit in 1000ms, so don't do anything else
+  return;
+}
+
 const electron = require('electron');
 const app_elec = electron.app;
+const {ipcMain} = require('electron');
 const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');

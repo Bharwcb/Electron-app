@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron .",
     "build-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/images/classy.icns --prune=true Classy",
-    "build-pc": "electron-packager . --overwrite --platform=win32 --asar=true --prune=true --iconUrl=http://go.classy.org/hubfs/product/classy.ico Classy"
+    "build-win": "electron-packager . --overwrite --platform=win32 --arch=x64 --icon=assets/images/classy.ico Classy",
+    "create-installer-win": "node installers/windows/createinstaller.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "electron-packager": "^8.6.0",
-    "electron-winstaller": "^2.5.2"
+    "electron-winstaller": "^2.5.2",
+    "wine": "0.0.3"
   }
 }
