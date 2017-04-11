@@ -6,13 +6,18 @@ myApp.controller('mainController', ['$scope', 'usSpinnerService', function($scop
   $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
   $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
   $scope.displayFilesInSidebar = function() {
+    console.log("get to displayFilesInSidebar()?")
+    console.log("inside displayFilesInSidebar(), var constituentCSVDisplaySidebar: ", constituentCSVDisplaySidebar);
+    console.log("inside displayFilesInSidebar(), var revenueCSVDisplaySidebar: ", revenueCSVDisplaySidebar);
     $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
     $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
   };
   $scope.files = [];
   // add any number of files in template
   $scope.addFile = function(...toDisplay) {
+    console.log("get to addFile()? this may be it.. '...toDisplay'");
     for (var file of toDisplay) {
+      console.log("inside addFile(), var file: ", file);
       $scope.files.push(file)
     }
   };
