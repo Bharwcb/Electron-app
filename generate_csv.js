@@ -294,12 +294,9 @@ function exitModal() {
 const calendar = require('./calendar.js');
 const angularApp = require('./main-controller.js');
 function newReport() {
-	console.log("get here? newReport()");
 	dialog.close();
-	console.log("close dialog in newReport()?");
 	// clear dates (a flatpickr method)
 	calendar.clearCalendars();
-	console.log("exit newReport()");
 }
 // ~~~
 

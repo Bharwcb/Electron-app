@@ -6,7 +6,6 @@ myApp.controller('mainController', ['$scope', 'usSpinnerService', function($scop
   $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
   $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
   $scope.displayFilesInSidebar = function() {
-    console.log("get to displayFilesInSidebar()?")
     console.log("inside displayFilesInSidebar(), var constituentCSVDisplaySidebar: ", constituentCSVDisplaySidebar);
     console.log("inside displayFilesInSidebar(), var revenueCSVDisplaySidebar: ", revenueCSVDisplaySidebar);
     $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
