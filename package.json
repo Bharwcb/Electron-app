@@ -6,8 +6,7 @@
   "scripts": {
     "start": "electron .",
     "build-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/images/classy.icns --prune=true Classy",
-    "build-win": "electron-packager . --overwrite --platform=win32 --arch=x64 --icon=assets/images/classy.ico Classy",
-    "create-installer-win": "node installers/windows/createinstaller.js"
+    "build-win": "electron-packager . --overwrite --platform=win32 --arch=x64 --icon=assets/images/classy.ico Classy"
   },
   "repository": {
     "type": "git",
