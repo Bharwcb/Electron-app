@@ -1,22 +1,29 @@
+// const generate_csv = require('/../generate_csv');
+const path = require('path');
+
+let revenueCSVDisplaySidebar;
+let constituentCSVDisplaySidebar;
+
 var myApp = angular.module('mainApp', ['angularSpinner']);
 
 myApp.controller('mainController', ['$scope', 'usSpinnerService', function($scope, usSpinnerService) {
 
   // ~~~ display CSV titles in sidebar
-  $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
-  $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
   $scope.displayFilesInSidebar = function() {
-    console.log("window.constituentCSVDisplaySidebar: ", window.constituentCSVDisplaySidebar);
-    console.log("window: ", window);
-    console.log("inside displayFilesInSidebar(), var constituentCSVDisplaySidebar: ", constituentCSVDisplaySidebar);
-    console.log("inside displayFilesInSidebar(), var revenueCSVDisplaySidebar: ", revenueCSVDisplaySidebar);
-    $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
-    $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
+    console.log("DIRNAME: ", __dirname);
+    const generate_csv = require(path.join(__dirname, 'generate_csv.js'));
+    revenueCSVDisplaySidebar = generate_csv.revenueCSVDisplaySidebar;
+    constituentCSVDisplaySidebar = generate_csv.constituentCSVDisplaySidebar;
+
+    console.log("inside displayFilesInSidebar(), var constituentCSVDisplaySidebar = ", constituentCSVDisplaySidebar);
+    console.log("inside displayFilesInSidebar(), var revenueCSVDisplaySidebar = ", revenueCSVDisplaySidebar);
+    $scope.constituentCSVDisplaySidebar = constituentCSVDisplaySidebar;
+    $scope.revenueCSVDisplaySidebar = revenueCSVDisplaySidebar;
   };
   $scope.files = [];
-  // add any number of files in template
+
+  // add any number of files to display in downloads 
   $scope.addFile = function(...toDisplay) {
-    console.log("get to addFile()? this may be it.. '...toDisplay'");
     for (var file of toDisplay) {
       console.log("inside addFile(), var file: ", file);
       $scope.files.push(file)

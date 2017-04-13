@@ -10,6 +10,12 @@ const url = require('url');
 //   process.env.NODE_CONFIG_DIR = require('electron').app.getAppPath() + '/config';
 // }
 
+
+revenueCSVDisplaySidebar = "";
+constituentCSVDisplaySidebar = "";
+exports.revenueCSVDisplaySidebar = revenueCSVDisplaySidebar;
+exports.constituentCSVDisplaySidebar = constituentCSVDisplaySidebar;
+
 let mainWindow = null;
 
 // when electron initializes and is ready to create browser windows
