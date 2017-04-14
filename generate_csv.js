@@ -118,13 +118,13 @@ function generateCSV(start_date, end_date) {
 	constituentCSVDisplaySidebar = constituentCSVPath.split("downloads/")[1];
 	revenueCSVDisplaySidebar = revenueCSVPath.split("downloads/")[1];
 
-	// CHANGING THIS
-	console.log("in generate function.. constituentCSVDisplaySidebar: ", constituentCSVDisplaySidebar)
-
 	module.exports.constituentCSVDisplaySidebar = function() {
 		return constituentCSVDisplaySidebar;
 	}
-	// TO THIS
+
+	module.exports.revenueCSVDisplaySidebar = function() {
+		return revenueCSVDisplaySidebar;
+	}
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -326,8 +326,5 @@ module.exports = {
 	},
 	newReport: function() {
 		return newReport();
-	},
-	revenueCSVDisplaySidebar: function() {
-		return revenueCSVDisplaySidebar;
 	}
 }

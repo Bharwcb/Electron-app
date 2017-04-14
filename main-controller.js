@@ -5,12 +5,9 @@ myApp.controller('mainController', ['$scope', 'usSpinnerService', function($scop
   // ~~~ display CSV titles in sidebar
   $scope.displayFilesInSidebar = function() {
 
-    console.log("DIRNAME: ", __dirname);
     const generate_csv = require('./generate_csv.js');
     revenueCSVDisplaySidebar = generate_csv.revenueCSVDisplaySidebar();
     constituentCSVDisplaySidebar = generate_csv.constituentCSVDisplaySidebar();
-    console.log("var constituentCSVDisplaySidebar = ", constituentCSVDisplaySidebar);
-    console.log("var revenueCSVDisplaySidebar = ", revenueCSVDisplaySidebar);
 
     $scope.constituentCSVDisplaySidebar = constituentCSVDisplaySidebar;
     $scope.revenueCSVDisplaySidebar = revenueCSVDisplaySidebar;
