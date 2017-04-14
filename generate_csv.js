@@ -14,6 +14,8 @@ let revenueCSV;
 // need full CSV paths used for opening .csv with 'opn'
 let constituentCSVPath;
 let revenueCSVPath;
+let constituentCSVDisplaySidebar = "";
+let revenueCSVDisplaySidebar = "";
 
 let dialog = document.getElementById('newReportModal');
 
@@ -113,10 +115,16 @@ function generateCSV(start_date, end_date) {
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
 
 	// declare variables to display CSV titles in sidebar UI, lot of Electron path stuff we don't want to display.. then export to use in Angular controller (main-controller.js)
-	let constituentCSVDisplaySidebar = constituentCSVPath.split("downloads/")[1];
-	let revenueCSVDisplaySidebar = revenueCSVPath.split("downloads/")[1];
-	exports.revenueCSVDisplaySidebar = revenueCSVDisplaySidebar;
-	exports.constituentCSVDisplaySidebar = constituentCSVDisplaySidebar;
+	constituentCSVDisplaySidebar = constituentCSVPath.split("downloads/")[1];
+	revenueCSVDisplaySidebar = revenueCSVPath.split("downloads/")[1];
+
+	// CHANGING THIS
+	console.log("in generate function.. constituentCSVDisplaySidebar: ", constituentCSVDisplaySidebar)
+
+	module.exports.constituentCSVDisplaySidebar = function() {
+		return constituentCSVDisplaySidebar;
+	}
+	// TO THIS
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
@@ -318,5 +326,8 @@ module.exports = {
 	},
 	newReport: function() {
 		return newReport();
+	},
+	revenueCSVDisplaySidebar: function() {
+		return revenueCSVDisplaySidebar;
 	}
 }

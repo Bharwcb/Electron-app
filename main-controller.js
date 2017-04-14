@@ -1,22 +1,17 @@
-// const generate_csv = require('/../generate_csv');
-const path = require('path');
-
-let revenueCSVDisplaySidebar;
-let constituentCSVDisplaySidebar;
-
 var myApp = angular.module('mainApp', ['angularSpinner']);
 
 myApp.controller('mainController', ['$scope', 'usSpinnerService', function($scope, usSpinnerService) {
 
   // ~~~ display CSV titles in sidebar
   $scope.displayFilesInSidebar = function() {
-    console.log("DIRNAME: ", __dirname);
-    const generate_csv = require(path.join(__dirname, 'generate_csv.js'));
-    revenueCSVDisplaySidebar = generate_csv.revenueCSVDisplaySidebar;
-    constituentCSVDisplaySidebar = generate_csv.constituentCSVDisplaySidebar;
 
-    console.log("inside displayFilesInSidebar(), var constituentCSVDisplaySidebar = ", constituentCSVDisplaySidebar);
-    console.log("inside displayFilesInSidebar(), var revenueCSVDisplaySidebar = ", revenueCSVDisplaySidebar);
+    console.log("DIRNAME: ", __dirname);
+    const generate_csv = require('./generate_csv.js');
+    revenueCSVDisplaySidebar = generate_csv.revenueCSVDisplaySidebar();
+    constituentCSVDisplaySidebar = generate_csv.constituentCSVDisplaySidebar();
+    console.log("var constituentCSVDisplaySidebar = ", constituentCSVDisplaySidebar);
+    console.log("var revenueCSVDisplaySidebar = ", revenueCSVDisplaySidebar);
+
     $scope.constituentCSVDisplaySidebar = constituentCSVDisplaySidebar;
     $scope.revenueCSVDisplaySidebar = revenueCSVDisplaySidebar;
   };
@@ -25,7 +20,6 @@ myApp.controller('mainController', ['$scope', 'usSpinnerService', function($scop
   // add any number of files to display in downloads 
   $scope.addFile = function(...toDisplay) {
     for (var file of toDisplay) {
-      console.log("inside addFile(), var file: ", file);
       $scope.files.push(file)
     }
   };
