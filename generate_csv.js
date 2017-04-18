@@ -115,8 +115,8 @@ function generateCSV(start_date, end_date) {
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
 
 	// declare variables to display CSV titles in sidebar UI, lot of Electron path stuff we don't want to display.. then export to use in Angular controller (main-controller.js)
-	constituentCSVDisplaySidebar = constituentCSVPath.split("downloads/")[1];
-	revenueCSVDisplaySidebar = revenueCSVPath.split("downloads/")[1];
+	constituentCSVDisplaySidebar = constituentCSVPath.split("downloads")[1];
+	revenueCSVDisplaySidebar = revenueCSVPath.split("downloads")[1];
 
 	module.exports.constituentCSVDisplaySidebar = function() {
 		return constituentCSVDisplaySidebar;
