@@ -1,8 +1,6 @@
-/*
-ELECTRON
-*/
 const electron = require('electron');
 const app_elec = electron.app;
+const {ipcMain} = require('electron');
 const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
@@ -11,6 +9,12 @@ const url = require('url');
 // if (process.versions && process.versions.electron) {
 //   process.env.NODE_CONFIG_DIR = require('electron').app.getAppPath() + '/config';
 // }
+
+
+revenueCSVDisplaySidebar = "";
+constituentCSVDisplaySidebar = "";
+exports.revenueCSVDisplaySidebar = revenueCSVDisplaySidebar;
+exports.constituentCSVDisplaySidebar = constituentCSVDisplaySidebar;
 
 let mainWindow = null;
 

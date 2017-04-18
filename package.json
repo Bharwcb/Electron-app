@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build-mac": "electron-packager . --overwrite Classy --platform=darwin --arch=x64 --icon=assets/images/classy.icns"
+    "build-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/images/classy.icns --prune=true Classy",
+    "build-win": "electron-packager . --overwrite --platform=win32 --arch=x64 --icon=assets/images/classy.ico Classy"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,6 @@
     "classy-node": "^2.1.7",
     "electron": "^1.4.15",
     "fast-csv": "2.3.0",
-    "jsonfile": "^2.4.0",
     "moment": "^2.17.1",
     "opn": "^4.0.2",
     "path": "^0.12.7",
@@ -31,6 +31,8 @@
     "rimraf": "2.5.4"
   },
   "devDependencies": {
-    "electron-packager": "^8.6.0"
+    "electron-packager": "^8.6.0",
+    "electron-winstaller": "^2.5.2",
+    "wine": "0.0.3"
   }
 }

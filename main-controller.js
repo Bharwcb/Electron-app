@@ -3,14 +3,18 @@ var myApp = angular.module('mainApp', ['angularSpinner']);
 myApp.controller('mainController', ['$scope', 'usSpinnerService', function($scope, usSpinnerService) {
 
   // ~~~ display CSV titles in sidebar
-  $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
-  $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
   $scope.displayFilesInSidebar = function() {
-    $scope.constituentCSVDisplaySidebar = window.constituentCSVDisplaySidebar;
-    $scope.revenueCSVDisplaySidebar = window.revenueCSVDisplaySidebar;
+
+    const generate_csv = require('./generate_csv.js');
+    revenueCSVDisplaySidebar = generate_csv.revenueCSVDisplaySidebar();
+    constituentCSVDisplaySidebar = generate_csv.constituentCSVDisplaySidebar();
+
+    $scope.constituentCSVDisplaySidebar = constituentCSVDisplaySidebar;
+    $scope.revenueCSVDisplaySidebar = revenueCSVDisplaySidebar;
   };
   $scope.files = [];
-  // add any number of files in template
+
+  // add any number of files to display in downloads 
   $scope.addFile = function(...toDisplay) {
     for (var file of toDisplay) {
       $scope.files.push(file)

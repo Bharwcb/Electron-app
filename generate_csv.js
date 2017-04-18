@@ -3,7 +3,7 @@ API REQUESTS AND CSV FILE GENERATION
 */
 
 // in case multiple reports are pulled with equal titles
-window.csvCopies = 0;
+csvCopies = 0;
 
 const fs = require('fs');
 const opn = require('opn');
@@ -14,9 +14,8 @@ let revenueCSV;
 // need full CSV paths used for opening .csv with 'opn'
 let constituentCSVPath;
 let revenueCSVPath;
-// what to display in sidebar for filename
-window.constituentCSVDisplaySidebar;
-window.revenueCSVDisplaySidebar;
+let constituentCSVDisplaySidebar = "";
+let revenueCSVDisplaySidebar = "";
 
 let dialog = document.getElementById('newReportModal');
 
@@ -92,8 +91,8 @@ function generateCSV(start_date, end_date) {
 	// if file already exists (i.e. if a report was generated in the same minute), add (1), (2).. etc.
 	if (CSVTitleAlreadyExists(constituentCSVPath) || (CSVTitleAlreadyExists(revenueCSVPath))) {
 		// add (1), (2), etc..
-		window.csvCopies += 1;
-		csv_date = csv_date + "(" + window.csvCopies + ")";
+		csvCopies += 1;
+		csv_date = csv_date + "(" + csvCopies + ")";
 		buildCSVPaths();
 	}
 
@@ -115,9 +114,17 @@ function generateCSV(start_date, end_date) {
 	constituentCSV = fs.createWriteStream(constituentCSVPath);
 	revenueCSV = fs.createWriteStream(revenueCSVPath);
 
-	// set global variable to display CSV titles in sidebar UI, lot of Electron path stuff we don't want to display
-	window.constituentCSVDisplaySidebar = constituentCSVPath.split("downloads/")[1];
-	window.revenueCSVDisplaySidebar = revenueCSVPath.split("downloads/")[1];
+	// declare variables to display CSV titles in sidebar UI, lot of Electron path stuff we don't want to display.. then export to use in Angular controller (main-controller.js)
+	constituentCSVDisplaySidebar = constituentCSVPath.split("downloads")[1];
+	revenueCSVDisplaySidebar = revenueCSVPath.split("downloads")[1];
+
+	module.exports.constituentCSVDisplaySidebar = function() {
+		return constituentCSVDisplaySidebar;
+	}
+
+	module.exports.revenueCSVDisplaySidebar = function() {
+		return revenueCSVDisplaySidebar;
+	}
 
 	function runReport(start_date, end_date) {
 		console.log("~~~ Running report ~~~");
