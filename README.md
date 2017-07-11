@@ -2,6 +2,19 @@
 
 ## Classy - BB CRM Import
 
+### Setup
+
+1. Create /config/default.json
+
+2. Enter credentials in format:
+
+{
+  "classyCredentials": {
+  	"id": "111...",
+  	"secret": "111..."
+  }
+} 
+
 ### How To Use
 
 1. Have NPM up and running on your computer
