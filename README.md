@@ -2,6 +2,19 @@
 
 ## Classy - BB CRM Import
 
+### Setup
+
+1. Create /config/default.json
+
+2. Enter credentials in format:
+
+{
+  "classyCredentials": {
+  	"id": "111...",
+  	"secret": "111..."
+  }
+} 
+
 ### How To Use
 
 1. Have NPM up and running on your computer
@@ -27,6 +40,8 @@
 7. Once report is complete, open project's 'Downloads/' directory contents - You will have two files created, a 'Constituent' and 'Revenue' CSV.
 
 8. Right click and open in Excel..
+
+
 
 
 
