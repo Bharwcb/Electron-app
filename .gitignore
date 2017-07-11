@@ -6,3 +6,4 @@ downloads/*
 !downloads/.gitkeep
 classy-darwin-x64
 classy-win32-x64
+config/*
