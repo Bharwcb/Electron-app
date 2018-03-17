@@ -10,8 +10,8 @@ const Classy = require('classy-node');
 	
 var classy = new Classy({
 	baseUrl: 'https://stagingapi.stayclassy.org',
-	clientId: "v3bRrAhDTjwaulmS",
-	clientSecret: "jphbp16qxsvgShTT",
+	clientId: "{{add_env_key}}",
+	clientSecret: "{{add_env_secret}}",
 	requestDebug: false
 });
 
